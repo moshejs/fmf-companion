@@ -238,12 +238,13 @@
  },
  {
   "key": "Cacan2021",
-  "text": "Çaçan MA, et al. Serum IL-1β, IL-18 and caspase-1 levels in familial Mediterranean fever patients during attack and attack-free periods. Journal of Contemporary Medicine. 2021. https://doaj.org/article/6905c7b03e1f4ba0adc08f5e800c526d (first-author spelling and page numbers unverified)",
-  "link": "https://doaj.org/article/6905c7b03e1f4ba0adc08f5e800c526d",
+  "text": "Cacan E, Citli S, Yildirimtepe Caldiran F, Deveci K. IL-1b, IL-18 and Caspase-1 Levels in Serum as an Early Marker in Familial Mediterranean Fever. Journal of Contemporary Medicine. 2021;11(4):494-499.",
+  "link": "https://dergipark.org.tr/tr/pub/jcm/issue/61403/907284",
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": false,
+  "note": "Earlier entry paraphrased the title. DOAJ holds two records with the author order reversed; the DergiPark page is authoritative."
  },
  {
   "key": "Cam2024",
@@ -256,12 +257,13 @@
  },
  {
   "key": "CAPS-ALL-HSCT",
-  "text": "Case of an intermediate-severity CAPS (Muckle-Wells) phenotype in complete remission of both ALL and CAPS 7 years after allogeneic HSCT performed for acute lymphoblastic leukemia, as cited in a 2022 Expert Review of Clinical Immunology review of CAPS treatment. (unverified — primary case report not retrieved)",
-  "link": "",
+  "text": "Mori T, Saburi M, Hagihara M, Mori M, Yamazaki R, Kato J. Long-term remission of cryopyrin-associated periodic syndrome after allogeneic haematopoietic stem cell transplantation. Ann Rheum Dis. 2021;80(4):542-543. PMID 33158880. doi:10.1136/annrheumdis-2020-218695. (Two-page letter, paywalled and not abstracted; the transplant indication and the duration of remission could not be confirmed and are not stated in this app.)",
+  "link": "https://pubmed.ncbi.nlm.nih.gov/33158880/",
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": true,
+  "note": "Specific details beyond long-term remission after transplant remain unconfirmed."
  },
  {
   "key": "Casgevy2023",
@@ -274,12 +276,12 @@
  },
  {
   "key": "Cattan2003",
-  "text": "Cattan D. Familial Mediterranean fever: is low mortality from tuberculosis a specific advantage for MEFV mutations carriers? Clin Exp Rheumatol. 2003;21(4 Suppl 30):S53-54. PMID 14727462 (letter; content unverified)",
+  "text": "Cattan D. Familial Mediterranean fever: is low mortality from tuberculosis a specific advantage for MEFV mutation carriers? Clin Exp Rheumatol. 2003;21(4 Suppl 30):S53-4 (letter, with author reply at S54). PMID 14727462.",
   "link": "https://pubmed.ncbi.nlm.nih.gov/14727462/",
   "areas": [
    "A"
   ],
-  "unverified": true
+  "unverified": false
  },
  {
   "key": "Cazeneuve1999",
@@ -404,12 +406,12 @@
  },
  {
   "key": "Delplanque2024",
-  "text": "Delplanque M, Benech N, Rolhion N, et al. (Sokol H, senior author). Gut microbiota alterations are associated with phenotype and genotype in familial Mediterranean fever. Rheumatology (Oxford). 2024;63(4):1039-1048. doi:10.1093/rheumatology/kead322. Open copy: https://hal.inrae.fr/hal-04565247 (middle-author list unverified)",
-  "link": "https://hal.inrae.fr/hal-04565247",
+  "text": "Delplanque M, Benech N, Rolhion N, Oeuvray C, Straube M, Galbert C, Brot L, Henry T, Jamilloux Y, Savey L, Grateau G, Sokol H, Georgin-Lavialle S. Gut microbiota in familial Mediterranean fever. Rheumatology (Oxford). 2024;63(4):1039-1048. doi:10.1093/rheumatology/kead322",
+  "link": "https://doi.org/10.1093/rheumatology/kead322",
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": false
  },
  {
   "key": "Dember2007",
@@ -431,12 +433,12 @@
  },
  {
   "key": "DFV890",
-  "text": "First-in-human safety, tolerability and pharmacokinetic results of DFV890, an oral low-molecular-weight NLRP3 inhibitor. Clin Transl Sci. 2024. https://doaj.org/article/544f9b79ee9a4b83b08ad5aa687ef191 (author list unverified). Phase 2 FCAS trial: NCT04868968.",
-  "link": "https://doaj.org/article/544f9b79ee9a4b83b08ad5aa687ef191",
+  "text": "Gatlik E, Mehes B, Voltz E, Sommer U, Tritto E, Lestini G, Liu X, Pal P, Velinova M, Denney WS, Fu Y, Opipari A, Dean D, Junge G. First-in-human safety, tolerability and pharmacokinetics of DFV890, an oral NLRP3 inhibitor. Clin Transl Sci. 2024;17(5):e13789. PMID 38761014. PMCID PMC11101992. Open access.",
+  "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11101992/",
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": false
  },
  {
   "key": "DiavCitrin2010",
@@ -459,12 +461,13 @@
  },
  {
   "key": "DiCiaula2020",
-  "text": "Di Ciaula A, Iacoviello M, Bonfrate L, et al. Gut microbiota between environment and genetic background in familial Mediterranean fever (FMF). Genes (Basel). 2020;11(9):1041. PMCID PMC7563178. (includes the Armenian L. acidophilus probiotic data; middle-author list unverified)",
-  "link": "",
+  "text": "Di Ciaula A, Stella A, Bonfrate L, Wang DQH, Portincasa P. Gut Microbiota between Environment and Genetic Background in Familial Mediterranean Fever (FMF). Genes (Basel). 2020;11(9):1041. PMID 32899315. PMCID PMC7563178. doi:10.3390/genes11091041",
+  "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7563178/",
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": false,
+  "note": "Earlier entry named the wrong second author."
  },
  {
   "key": "Dinarello1974",
@@ -577,12 +580,13 @@
  },
  {
   "key": "Fioredda2017",
-  "text": "Fioredda F, et al. Allogeneic transplant in ELANE and MEFV mutation positive severe cyclic neutropenia: review of prognostic factors for secondary severe events. PMCID PMC5286543. (journal/year/volume unverified)",
-  "link": "",
+  "text": "Okolo ON, Katsanis E, Yun S, Reveles CY, Anwer F. Allogeneic Transplant in ELANE and MEFV Mutation Positive Severe Cyclic Neutropenia: Review of Prognostic Factors for Secondary Severe Events. Case Rep Hematol. 2017;2017:5375793. PMID 28197346. PMCID PMC5286543. doi:10.1155/2017/5375793",
+  "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5286543/",
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": false,
+  "note": "Earlier entry named the wrong authors entirely."
  },
  {
   "key": "FMFAID",
@@ -735,12 +739,12 @@
  },
  {
   "key": "Gok2017",
-  "text": "Gök K, et al. Tofacitinib suppresses disease activity and febrile attacks in a patient with coexisting rheumatoid arthritis and familial Mediterranean fever. Acta Reumatol Port. 2017. https://avesis.erciyes.edu.tr/yayin/4d85f1a9-bfb1-4479-aea4-596095adcec2/ (volume:pages unverified)",
-  "link": "https://avesis.erciyes.edu.tr/yayin/4d85f1a9-bfb1-4479-aea4-596095adcec2/",
+  "text": "Gok K, Cengiz G, Erol K, Ozgocmen S. Tofacitinib suppresses disease activity and febrile attacks in a patient with coexisting rheumatoid arthritis and familial Mediterranean fever. Acta Reumatol Port. 2017;42(1):88-90. PMID 28371574.",
+  "link": "https://pubmed.ncbi.nlm.nih.gov/28371574/",
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": false
  },
  {
   "key": "Goldfinger1972",
@@ -799,12 +803,13 @@
  },
  {
   "key": "Hakobyan2024",
-  "text": "Generation of iPSCs from a patient with the M694V mutation in the MEFV gene associated with familial Mediterranean fever and their differentiation into macrophages. Int J Mol Sci. 2024;25(11):6102. PMCID PMC11173119. https://www.mdpi.com/1422-0067/25/11/6102 (author list unverified; Armenian cohort)",
-  "link": "https://www.mdpi.com/1422-0067/25/11/6102",
+  "text": "Grigor'eva EV, Karapetyan LV, Malakhova AA, Medvedev SP, Minina JM, Hayrapetyan VH, Vardanyan VS, Zakian SM, Arakelyan A, Zakharyan R. Int J Mol Sci. 2024;25(11):6102. PMCID PMC11173119.",
+  "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11173119/",
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": false,
+  "note": "Earlier entry named the wrong authors."
  },
  {
   "key": "Hashkes2012",
@@ -827,12 +832,12 @@
  },
  {
   "key": "Haznedaroglu2005",
-  "text": "Haznedaroglu S, Oztürk MA, Sancak B, et al. Serum interleukin 17 and interleukin 18 levels in familial Mediterranean fever. Clin Exp Rheumatol. 2005;23(4). https://www.clinexprheumatol.org/article.asp?a=2729 (page numbers unverified)",
-  "link": "https://www.clinexprheumatol.org/article.asp?a=2729",
+  "text": "Haznedaroglu S, Ozturk MA, Sancak B, Goker B, Onat AM, Bukan N, Ertenli I, Kiraz S, Calguneri M. Serum interleukin 17 and interleukin 18 levels in familial Mediterranean fever. Clin Exp Rheumatol. 2005;23(4 Suppl 38):S77-80. PMID 16273770.",
+  "link": "https://pubmed.ncbi.nlm.nih.gov/16273770/",
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": false
  },
  {
   "key": "Heilig2018",
@@ -1116,12 +1121,13 @@
  },
  {
   "key": "Klughammer2023",
-  "text": "A randomized, double-blind phase 1b study evaluating the safety, tolerability, pharmacokinetics and pharmacodynamics of the NLRP3 inhibitor selnoflast in patients with moderate to severe active ulcerative colitis. Br J Clin Pharmacol. 2023. PMCID PMC10644327. (first author and volume unverified)",
-  "link": "",
+  "text": "Klughammer B, Piali L, Nica A, Nagel S, Bailey L, Jochum C, Ignatenko S, Blaeuer A, Danilin S, Gulati P, Hayward J, Scepanovic P, Zhang JD, Bhosale S, Chong CF, Christ A. Selnoflast (RO7486967) phase 1b study. Clin Transl Med. 2023;13(11):e1471. PMID 37962000. PMCID PMC10644327. doi:10.1002/ctm2.1471",
+  "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10644327/",
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": false,
+  "note": "Earlier entry gave the wrong journal."
  },
  {
   "key": "KocThesis2016",
@@ -1130,7 +1136,8 @@
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": true,
+  "note": "Institutional record is access-restricted. Turkey's national thesis centre (tez.yok.gov.tr) is the alternative place to look."
  },
  {
   "key": "Koga2022",
@@ -1460,7 +1467,8 @@
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": true,
+  "note": "EULAR conference abstract in an Annals of the Rheumatic Diseases supplement. Such supplements are not indexed individually, so no alternative location exists. Treat as a conference abstract, not a peer-reviewed result."
  },
  {
   "key": "Melikoglu2000",
@@ -1547,12 +1555,13 @@
  },
  {
   "key": "Nakagawa2021",
-  "text": "Review in Ann Rheum Dis. 2021;80(4):542 stating that CAPS could theoretically be cured by allogeneic HSCT, with no CAPS patients reported transplanted at the time of writing. https://ard.bmj.com/content/80/4/542 (authors unverified)",
-  "link": "https://ard.bmj.com/content/80/4/542",
+  "text": "Mori T, Saburi M, Hagihara M, Mori M, Yamazaki R, Kato J. Long-term remission of cryopyrin-associated periodic syndrome after allogeneic haematopoietic stem cell transplantation. Ann Rheum Dis. 2021;80(4):542-543. PMID 33158880. doi:10.1136/annrheumdis-2020-218695",
+  "link": "https://pubmed.ncbi.nlm.nih.gov/33158880/",
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": false,
+  "note": "Earlier entry misdescribed this as a review stating no CAPS patient had been transplanted. It is a case report of long-term remission after transplantation."
  },
  {
   "key": "NCT00582907",
@@ -1664,21 +1673,22 @@
  },
  {
   "key": "NOMID-UCBT2023",
-  "text": "Case report series on NOMID in which one patient was reported cured by umbilical cord blood stem cell transplantation. Front Immunol. 2023;14:1291345. doi:10.3389/fimmu.2023.1291345. (authors unverified)",
-  "link": "https://doi.org/10.3389/fimmu.2023.1291345",
+  "text": "Zhao C, Liu C, Li X. Umbilical cord blood transplantation for neonatal-onset multisystem inflammatory disease (NOMID). Front Immunol. 2023;14:1291345. PMID 38250066. PMCID PMC10799342. Open access.",
+  "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10799342/",
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": false
  },
  {
   "key": "Nunes2021",
-  "text": "The impact of NLRP3 activation on hematopoietic stem cell transplantation. Int J Mol Sci. 2021;22(21). PMCID PMC8584591. (first author unverified)",
-  "link": "",
+  "text": "Espinoza JL, Kamio K, Lam VQ, Takami A. The Impact of NLRP3 Activation on Hematopoietic Stem Cell Transplantation. Int J Mol Sci. 2021;22(21):11845. PMID 34769275. PMCID PMC8584591. doi:10.3390/ijms222111845",
+  "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8584591/",
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": false,
+  "note": "Earlier entry named the wrong first author."
  },
  {
   "key": "Onen2004",
@@ -1731,12 +1741,12 @@
  },
  {
   "key": "Ozen2020",
-  "text": "Ozen S, Ben-Chetrit E, Foeldvari I, et al. Long-term efficacy and safety of canakinumab in patients with colchicine-resistant familial Mediterranean fever: results from the randomised phase III CLUSTER trial. Ann Rheum Dis. 2020;79(10):1362-1369. https://ard.bmj.com/content/79/10/1362 (middle-author list unverified)",
-  "link": "https://ard.bmj.com/content/79/10/1362",
+  "text": "Ozen S, Ben-Chetrit E, Foeldvari I, Amarilyo G, Ozdogan H, Vanderschueren S, Marzan K, Kahlenberg JM, Dekker E, De Benedetti F, Kone-Paut I. Long-term efficacy and safety of canakinumab in patients with colchicine-resistant familial Mediterranean fever: results from the randomised phase III CLUSTER trial. Ann Rheum Dis. 2020;79(10):1362-1369. PMID 32571870. PMCID PMC7509527. Open access. doi:10.1136/annrheumdis-2020-217419",
+  "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7509527/",
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": false
  },
  {
   "key": "Ozen2021",
@@ -1860,12 +1870,12 @@
  },
  {
   "key": "Rathkey2018",
-  "text": "Rathkey JK, Zhao J, Liu Z, et al. Chemical disruption of the pyroptotic pore-forming protein gasdermin D inhibits inflammatory cell death and sepsis. Sci Immunol. 2018;3(26):eaat2738. (necrosulfonamide; volume/article verified from secondary citation, (unverified) for author list)",
-  "link": "",
+  "text": "Rathkey JK, Zhao J, Liu Z, Chen Y, Yang J, Kondolf HC, Benson BL, Chirieleison SM, Huang AY, Dubyak GR, Xiao TS, Li X, Abbott DW. Chemical disruption of the pyroptotic pore-forming protein gasdermin D inhibits inflammatory cell death and sepsis. Sci Immunol. 2018;3(26):eaat2738. PMID 30143556. PMCID PMC6462819.",
+  "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6462819/",
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": false
  },
  {
   "key": "Reimann1948",
@@ -1941,12 +1951,13 @@
  },
  {
   "key": "Salehzadeh2026",
-  "text": "Salehzadeh F, et al. JAK inhibitors in colchicine-resistant familial Mediterranean fever: a retrospective case series. Mediterr J Rheumatol. 2026;37(3):603-607. https://mjrheum.org/assets/files/792/file766_2575.pdf (unverified — outcomes not retrieved)",
-  "link": "https://mjrheum.org/assets/files/792/file766_2575.pdf",
+  "text": "Salehzadeh F, Molatefi R, Khoei F. JAK Inhibitors in Colchicine Resistant FMF Patients: A Case-Based Review. Mediterr J Rheumatol. 2026;37(3):603-607. doi:10.31138/mjr.281125.mrk",
+  "link": "https://doi.org/10.31138/mjr.281125.mrk",
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": false,
+  "note": "Published as a case-based review, not a retrospective case series."
  },
  {
   "key": "Sari2014",
@@ -2242,12 +2253,12 @@
  },
  {
   "key": "TurkishPilot",
-  "text": "Alterations in gut microbiota composition in adult patients with familial Mediterranean fever: a pilot case-control study. Turk J Med Sci. 2026;56(3). https://journals.tubitak.gov.tr/medical/vol56/iss3/20 (unverified — authors and pages not retrieved)",
-  "link": "https://journals.tubitak.gov.tr/medical/vol56/iss3/20",
+  "text": "Yasar Bilge NS, Perez Brocal V, Kasifoglu T, Bilge U, Kasifoglu N, Moya A, Dinleyici EC. Intestinal microbiota composition of patients with familial Mediterranean fever: a pilot study. Turk J Med Sci. 2026;56(3):801-807. PMID 42499440. PMCID PMC13398580. Open access.",
+  "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13398580/",
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": false
  },
  {
   "key": "Twig2014",
@@ -2324,12 +2335,13 @@
  },
  {
   "key": "VX765",
-  "text": "Belnacasan (VX-765) caspase-1 inhibitor clinical trial listing (Phase II in psoriasis, partial epilepsy and COVID-19; epilepsy trial NCT01501383 terminated). https://www.selleckchem.com/products/VX-765/clinical-trials.html (unverified — vendor-mirrored registry data; the frequently repeated claim that VX-765 was stopped for liver toxicity traces only to vendor copy, not a primary source)",
-  "link": "https://www.selleckchem.com/products/VX-765/clinical-trials.html",
+  "text": "Belnacasan (VX-765), caspase-1 inhibitor. ClinicalTrials.gov NCT01501383 (treatment-resistant partial epilepsy, Vertex, phase 2, n=55): status TERMINATED, reason given in the registry verbatim as \"Terminated by Sponsor\". NCT00205465 (psoriasis, Vertex, phase 2, n=64): status COMPLETED. The registry gives no toxicity reason; claims that the programme stopped for liver toxicity have no primary support.",
+  "link": "https://clinicaltrials.gov/study/NCT01501383",
   "areas": [
    "F"
   ],
-  "unverified": true
+  "unverified": false,
+  "note": "Checked through the ClinicalTrials.gov v2 API rather than a vendor summary."
  },
  {
   "key": "Xu2014",

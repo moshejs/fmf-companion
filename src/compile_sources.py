@@ -85,6 +85,26 @@ for i, a in enumerate(keys):
             if drop == a: break
 for k, v in alias.items(): print(f"MERGED {k} -> {v}")
 
+# apply validated corrections (survives regeneration; see source-corrections.json)
+corr_path = pathlib.Path(__file__).resolve().parent / "source-corrections.json"
+applied, unknown = 0, []
+if corr_path.exists():
+    corr = json.loads(corr_path.read_text(encoding="utf-8"))
+    for key, fields in corr.items():
+        if key.startswith("_"): continue
+        target = key if key in srcs else next((k for k, v in srcs.items() if key in v.get("aliases", [])), None)
+        if target is None:
+            unknown.append(key); continue
+        rec = srcs[target]
+        for f, v in fields.items():
+            if f == "verified":
+                if v: rec["unverified"] = False
+            else:
+                rec[f] = v
+        applied += 1
+    print(f"applied {applied} source corrections")
+    for k in unknown: print(f"CORRECTION for unknown key: {k}")
+
 def sortkey(s):
     return s["key"].lower()
 lst = sorted(srcs.values(), key=sortkey)
