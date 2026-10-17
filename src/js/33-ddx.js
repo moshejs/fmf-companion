@@ -85,15 +85,26 @@ const DD_CLUE=[
 ];
 inits.ddx=()=>{
   const svg=$('#ddSvg'),rg=$('#ddT');let sel='fmf',clue=-1;
-  const X0=178,X1=648,xd=d=>X0+d/60*(X1-X0),RH=35,Y0=28;
   const KC={f:'var(--terra)',u:'var(--warn)',a:'var(--muted)',c:'var(--sea)',p:'var(--bad)',d:'var(--terra)'};
   function draw(t){const day=t*60;let s='';const hl=clue>=0?DD_CLUE[clue].ids:null;const act=[];
-    for(let d=0;d<=60;d+=10){s+=`<line x1="${f1(xd(d))}" x2="${f1(xd(d))}" y1="${Y0-4}" y2="${Y0+RH*10}" class="grid"/><text x="${f1(xd(d))}" y="${Y0+RH*10+16}" class="t-xs t-mid">${d}</text>`}
-    s+=`<text x="${X1}" y="${Y0+RH*10+32}" class="t-xs t-end">days</text><text x="${X0}" y="14" class="t-xs">TYPICAL EPISODE PATTERN · 60-DAY WINDOW · LENGTHS CITED, SPACING SCHEMATIC</text><text x="684" y="14" class="t-xs t-mid">source</text>`;
-    DD_DZ.forEach((D,i)=>{const y0=Y0+i*RH,bt=y0+6,bh=22,dim=hl&&!hl.includes(D.id);let g='';
-      if(D.id==='fmf')g+=`<rect x="2" y="${y0+1}" width="716" height="${RH-2}" rx="8" style="fill:var(--terra-soft);opacity:.75"/>`;
-      if(hl&&!dim)g+=`<rect x="2" y="${y0+1}" width="716" height="${RH-2}" rx="8" style="fill:var(--sea-soft)"/>`;
-      g+=`<text x="10" y="${y0+16}" class="t-lbl">${D.n}</text><text x="10" y="${y0+29}" class="t-xs">${D.sub}</text>`;
+    /* narrow: the disease name sits above its own track, so the 60-day window gets the full width */
+    const N=vb(svg,'720 420','400 604');
+    const L=N?{W:400,X0:10,X1:386,RH:52,Y0:46,bo:20,bh:22,bx:342,bw:52}
+             :{W:720,X0:178,X1:648,RH:35,Y0:28,bo:6,bh:22,bx:656,bw:56};
+    const X0=L.X0,X1=L.X1,RH=L.RH,Y0=L.Y0,xd=d=>X0+d/60*(X1-X0);
+    const yEnd=Y0+RH*10;
+    if(N){s+=`<text x="4" y="13" class="t-xs">60-DAY WINDOW · LENGTHS CITED, SPACING SCHEMATIC</text>`;
+      for(let d=0;d<=60;d+=10)s+=`<text x="${f1(xd(d))}" y="33" class="t-xs t-mid">${d}</text>`}
+    else{for(let d=0;d<=60;d+=10)s+=`<line x1="${f1(xd(d))}" x2="${f1(xd(d))}" y1="${Y0-4}" y2="${yEnd}" class="grid"/>`;
+      s+=`<text x="${X0}" y="14" class="t-xs">TYPICAL EPISODE PATTERN · 60-DAY WINDOW · LENGTHS CITED, SPACING SCHEMATIC</text><text x="684" y="14" class="t-xs t-mid">source</text>`}
+    for(let d=0;d<=60;d+=10)s+=`<text x="${f1(xd(d))}" y="${yEnd+16}" class="t-xs t-mid">${d}</text>`;
+    s+=`<text x="${X1}" y="${yEnd+32}" class="t-xs t-end">days</text>`;
+    DD_DZ.forEach((D,i)=>{const y0=Y0+i*RH,bt=y0+L.bo,bh=L.bh,dim=hl&&!hl.includes(D.id);let g='';
+      if(D.id==='fmf')g+=`<rect x="2" y="${y0+1}" width="${L.W-4}" height="${RH-2}" rx="8" style="fill:var(--terra-soft);opacity:.75"/>`;
+      if(hl&&!dim)g+=`<rect x="2" y="${y0+1}" width="${L.W-4}" height="${RH-2}" rx="8" style="fill:var(--sea-soft)"/>`;
+      if(N)g+=`<text x="8" y="${y0+14}" class="t-lbl">${D.n}</text><text x="336" y="${y0+14}" class="t-xs t-end">${D.sub}</text>`;
+      else g+=`<text x="10" y="${y0+16}" class="t-lbl">${D.n}</text><text x="10" y="${y0+29}" class="t-xs">${D.sub}</text>`;
+      if(N)for(let d=0;d<=60;d+=10)g+=`<line x1="${f1(xd(d))}" x2="${f1(xd(d))}" y1="${bt-3}" y2="${bt+bh+3}" class="grid"/>`;
       g+=`<line x1="${X0}" x2="${X1}" y1="${bt+bh}" y2="${bt+bh}" class="axis"/>`;
       let on=false;
       D.ep.forEach(([st,du,k])=>{const c=KC[k],xa=xd(st),xb=xd(Math.min(60,st+du)),lit=clamp((day-st)/du),xl=lerp(xa,xb,lit),live=day>=st&&day<=st+du;if(live)on=true;
@@ -116,10 +127,12 @@ inits.ddx=()=>{
       if(D.id==='pfapa'){const a=xd(4+4.8),b=xd(32);g+=`<line x1="${f1(a+3)}" x2="${f1(b-3)}" y1="${bt+bh/2}" y2="${bt+bh/2}" style="stroke:var(--muted);stroke-dasharray:2 3"/><text x="${f1((xd(4)+xd(32))/2+20)}" y="${bt+bh/2-4}" class="t-xs t-mid">~28 d</text>`}
       if(on)act.push(D.n);
       const cited=D.src==='cited';
-      g+=`<rect x="656" y="${y0+9}" width="56" height="17" rx="5" style="fill:${cited?'var(--good-soft)':'var(--warn-soft)'}"/><text x="684" y="${y0+21}" class="t-xs t-mid" style="fill:${cited?'var(--good)':'var(--warn)'};font-weight:700">${cited?'cited':'teaching'}</text>`;
-      if(D.id===sel)g+=`<rect x="2" y="${y0+1}" width="716" height="${RH-2}" rx="8" style="fill:none;stroke:var(--ink);stroke-width:2"/>`;
-      s+=`<g class="clk" data-dd="${D.id}" style="opacity:${dim?.28:1}"><rect x="0" y="${y0}" width="720" height="${RH}" style="fill:transparent"/>${g}</g>`});
-    s+=`<line x1="${f1(xd(day))}" x2="${f1(xd(day))}" y1="${Y0-6}" y2="${Y0+RH*10}" style="stroke:var(--ink);stroke-width:1.5;opacity:.6"/><circle cx="${f1(xd(day))}" cy="${Y0-6}" r="4" style="fill:var(--ink)"/>`;
+      g+=`<rect x="${L.bx}" y="${y0+(N?2:9)}" width="${L.bw}" height="17" rx="5" style="fill:${cited?'var(--good-soft)':'var(--warn-soft)'}"/><text x="${L.bx+L.bw/2}" y="${y0+(N?14:21)}" class="t-xs t-mid" style="fill:${cited?'var(--good)':'var(--warn)'};font-weight:700">${cited?'cited':'teaching'}</text>`;
+      if(D.id===sel)g+=`<rect x="2" y="${y0+1}" width="${L.W-4}" height="${RH-2}" rx="8" style="fill:none;stroke:var(--ink);stroke-width:2"/>`;
+      s+=`<g class="clk" data-dd="${D.id}" style="opacity:${dim?.28:1}"><rect x="0" y="${y0}" width="${L.W}" height="${RH}" style="fill:transparent"/>${g}</g>`});
+    if(N){DD_DZ.forEach((D,i)=>{const bt=Y0+i*RH+L.bo;s+=`<line x1="${f1(xd(day))}" x2="${f1(xd(day))}" y1="${bt-5}" y2="${bt+L.bh+5}" style="stroke:var(--ink);stroke-width:1.5;opacity:.6"/>`});
+      s+=`<path d="M${f1(xd(day)-5)} 38 L${f1(xd(day)+5)} 38 L${f1(xd(day))} 46Z" style="fill:var(--ink)"/>`}
+    else s+=`<line x1="${f1(xd(day))}" x2="${f1(xd(day))}" y1="${Y0-6}" y2="${yEnd}" style="stroke:var(--ink);stroke-width:1.5;opacity:.6"/><circle cx="${f1(xd(day))}" cy="${Y0-6}" r="4" style="fill:var(--ink)"/>`;
     svg.innerHTML=s;
     $('#ddRead').innerHTML=`<span>day <b>${Math.floor(day)}</b></span><span>active now <b>${act.length?act.join(', '):'none'}</b></span>`;
   }

@@ -94,23 +94,27 @@ inits.dx=()=>{
     return{pre:$('#dxPre1').checked&&$('#dxPre2').checked,gN,cN}};
   function gauge(gv,cv,need,met,G,Cn){
     let s='';
-    s+=`<text x="20" y="16" class="t-sm">ARM 1 · MEFV GENOTYPE + CLINICAL ITEMS</text>`;
+    /* narrow: the segment bar and the 0–9 arc both run the full width of a taller stage */
+    const N=vb(g,'400 262','400 356');
+    const Q=N?{bx:10,bw:88,bs:96,by:30,bh:28,ty:16,lab:48,mk1:24,mk2:62,mky:76,sumY:96,arm2:124,cx:200,cy:310,R:158,endX:390}
+             :{bx:20,bw:84,bs:92,by:26,bh:20,ty:16,lab:40,mk1:20,mk2:52,mky:64,sumY:80,arm2:104,cx:200,cy:232,R:100,endX:380};
+    s+=`<text x="${Q.bx}" y="${Q.ty}" class="t-sm">ARM 1 · MEFV GENOTYPE + CLINICAL ITEMS</text>`;
     const dim=need?1:.35;
-    for(let i=0;i<4;i++){const x=20+i*92,f=clamp(gv-i);
-      s+=`<rect x="${x}" y="26" width="84" height="20" rx="6" style="fill:var(--panel-2);stroke:var(--line);opacity:${dim}"/>`;
-      if(f>0)s+=`<rect x="${x}" y="26" width="${f1(84*f)}" height="20" rx="6" style="fill:${met.g?'var(--good)':'var(--terra)'};opacity:${f1(.38*dim)}"/>`;
-      if(f>.98)s+=`<rect x="${x}" y="26" width="84" height="20" rx="6" style="fill:none;stroke:${met.g?'var(--good)':'var(--terra)'};stroke-width:2;opacity:${dim}"/>`;
-      s+=`<text x="${x+42}" y="40" class="t-xs t-mid" style="fill:${f>.5&&need?'var(--ink)':'var(--muted)'};font-weight:700">${['1–3 d','arthritis','chest','abdomen'][i]}</text>`}
-    if(need){const x=20+need*92-4;s+=`<line x1="${x}" x2="${x}" y1="20" y2="52" style="stroke:var(--ink);stroke-width:2.5"/><text x="${x}" y="64" class="t-xs t-mid" style="fill:var(--ink)">need ≥${need}</text>`;
-      s+=`<text x="380" y="80" class="t-sm t-end" style="fill:${met.g?'var(--good)':'var(--muted)'}">${G} of 4 items · ${met.g?'arm met':'arm not met'}</text>`}
-    else s+=`<text x="200" y="72" class="t-sm t-mid">no qualifying genotype: arm 1 does not apply</text>`;
-    s+=`<text x="20" y="104" class="t-sm">ARM 2 · CLINICAL ONLY (≥6 OF 9)</text>`;
-    const cx=200,cy=232,R=100,pt=v=>{const a=Math.PI-Math.PI*v/9;return[cx+R*Math.cos(a),cy-R*Math.sin(a)]};
+    for(let i=0;i<4;i++){const x=Q.bx+i*Q.bs,f=clamp(gv-i);
+      s+=`<rect x="${x}" y="${Q.by}" width="${Q.bw}" height="${Q.bh}" rx="6" style="fill:var(--panel-2);stroke:var(--line);opacity:${dim}"/>`;
+      if(f>0)s+=`<rect x="${x}" y="${Q.by}" width="${f1(Q.bw*f)}" height="${Q.bh}" rx="6" style="fill:${met.g?'var(--good)':'var(--terra)'};opacity:${f1(.38*dim)}"/>`;
+      if(f>.98)s+=`<rect x="${x}" y="${Q.by}" width="${Q.bw}" height="${Q.bh}" rx="6" style="fill:none;stroke:${met.g?'var(--good)':'var(--terra)'};stroke-width:2;opacity:${dim}"/>`;
+      s+=`<text x="${x+Q.bw/2}" y="${Q.lab}" class="t-xs t-mid" style="fill:${f>.5&&need?'var(--ink)':'var(--muted)'};font-weight:700">${['1–3 d','arthritis','chest','abdomen'][i]}</text>`}
+    if(need){const x=Q.bx+need*Q.bs-4;s+=`<line x1="${x}" x2="${x}" y1="${Q.mk1}" y2="${Q.mk2}" style="stroke:var(--ink);stroke-width:2.5"/><text x="${x}" y="${Q.mky}" class="t-xs t-mid" style="fill:var(--ink)">need ≥${need}</text>`;
+      s+=`<text x="${Q.endX}" y="${Q.sumY}" class="t-sm t-end" style="fill:${met.g?'var(--good)':'var(--muted)'}">${G} of 4 items · ${met.g?'arm met':'arm not met'}</text>`}
+    else s+=`<text x="200" y="${Q.sumY-8}" class="t-sm t-mid">no qualifying genotype: arm 1 does not apply</text>`;
+    s+=`<text x="${Q.bx}" y="${Q.arm2}" class="t-sm">ARM 2 · CLINICAL ONLY (≥6 OF 9)</text>`;
+    const cx=Q.cx,cy=Q.cy,R=Q.R,pt=v=>{const a=Math.PI-Math.PI*v/9;return[cx+R*Math.cos(a),cy-R*Math.sin(a)]};
     s+=`<path d="M${cx-R} ${cy} A${R} ${R} 0 0 1 ${cx+R} ${cy}" style="fill:none;stroke:var(--panel-2);stroke-width:22;stroke-linecap:butt"/>`;
     if(cv>.01){const[ex,ey]=pt(cv);s+=`<path d="M${cx-R} ${cy} A${R} ${R} 0 0 1 ${f1(ex)} ${f1(ey)}" style="fill:none;stroke:${met.c?'var(--good)':'var(--terra)'};stroke-width:22"/>`}
     for(let v=1;v<9;v++){const a=Math.PI-Math.PI*v/9;s+=`<line x1="${f1(cx+(R-11)*Math.cos(a))}" y1="${f1(cy-(R-11)*Math.sin(a))}" x2="${f1(cx+(R+11)*Math.cos(a))}" y2="${f1(cy-(R+11)*Math.sin(a))}" style="stroke:var(--panel);stroke-width:2"/>`}
     {const a=Math.PI/3;s+=`<line x1="${f1(cx+(R-14)*Math.cos(a))}" y1="${f1(cy-(R-14)*Math.sin(a))}" x2="${f1(cx+(R+16)*Math.cos(a))}" y2="${f1(cy-(R+16)*Math.sin(a))}" style="stroke:var(--ink);stroke-width:3"/><text x="${f1(cx+(R+26)*Math.cos(a))}" y="${f1(cy-(R+26)*Math.sin(a)+4)}" class="t-sm t-mid" style="fill:var(--ink)">6</text>`}
-    s+=`<text x="${cx-R}" y="252" class="t-xs t-mid">0</text><text x="${cx+R}" y="252" class="t-xs t-mid">9</text>`;
+    s+=`<text x="${cx-R}" y="${cy+20}" class="t-xs t-mid">0</text><text x="${cx+R}" y="${cy+20}" class="t-xs t-mid">9</text>`;
     s+=`<text x="${cx}" y="${cy-8}" class="t-big t-mid" style="font-size:38px;fill:${met.c?'var(--good)':'var(--ink)'}">${Cn}</text><text x="${cx}" y="${cy+14}" class="t-xs t-mid">of 9 · ${met.c?'arm met':'arm not met'}</text>`;
     g.innerHTML=s;
   }
@@ -173,7 +177,7 @@ inits.dx=()=>{
 
   /* ---------- labs across an attack ---------- */
   const ls=$('#dxLabSvg'),lr=$('#dxLabT');let pers=false;
-  const D0=-3,D1=28,X0=150,X1=700,xd=d=>X0+(d-D0)/(D1-D0)*(X1-X0),dOf=t=>D0+t*(D1-D0);
+  const D0=-3,D1=28,dOf=t=>D0+t*(D1-D0);
   const gF=(d,tp,tau)=>d<0?0:d<tp?ease(d/tp):Math.exp(-(d-tp)/tau);
   const ROWS=[
    {n:'SAA',u:'mg/L',c:'var(--gold)',pk:693,b:6,sc:750,f:d=>gF(d,1.5,1.8),p:1},
@@ -184,22 +188,40 @@ inits.dx=()=>{
    {n:'Platelets',u:'no change',c:'var(--muted)',f:()=>.42,flat:1}];
   const val=(R,d)=>{let v=R.f(d);if(pers&&R.p&&!R.flat){const fl=.09*R.p;v=fl+(1-fl)*v}return v};
   function drawLab(t){const d=dOf(t);let s='';
-    s+=`<rect x="${f1(xd(0))}" y="20" width="${f1(xd(3)-xd(0))}" height="350" style="fill:var(--terra-soft);opacity:.7"/><text x="${f1(xd(1.5))}" y="14" class="t-xs t-mid" style="fill:var(--terra)">attack (1–3 days)</text>`;
-    [-2,0,2,4,7,14,21,28].forEach(k=>{s+=`<line x1="${f1(xd(k))}" x2="${f1(xd(k))}" y1="20" y2="370" class="grid"/><text x="${f1(xd(k))}" y="386" class="t-xs t-mid">${k}</text>`});
-    s+=`<text x="${X1}" y="403" class="t-xs t-end">days since the attack began</text>`;
-    s+=`<text x="${X1}" y="14" class="t-xs t-end">curve shapes are schematic: no published day-by-day curve exists</text>`;
-    ROWS.forEach((R,i)=>{const y0=26+i*58,yb=y0+50,h=44,yv=v=>yb-h*clamp(v,0,1.05);
-      s+=`<text x="10" y="${y0+20}" class="t-lbl" style="fill:${R.flat?'var(--muted)':'var(--ink)'}">${R.n}</text><text x="10" y="${y0+36}" class="t-xs">${R.u}</text>`;
+    /* narrow: each row keeps its track but the name moves onto a header line above it,
+       the names are shortened and the day axis loses its most crowded ticks */
+    const N=vb(ls,'720 410','400 524');
+    const L=N?{X0:8,X1:392,Y0:30,RH:74,TOP:18,H:44,ticks:[-2,0,4,7,14,21,28]}
+             :{X0:150,X1:700,Y0:26,RH:58,TOP:6,H:44,ticks:[-2,0,2,4,7,14,21,28]};
+    const X0=L.X0,X1=L.X1,xd=k=>X0+(k-D0)/(D1-D0)*(X1-X0),yEnd=L.Y0+L.RH*6;
+    const NB=` · `;
+    if(N)s+=`<text x="${f1(xd(1.5))}" y="13" class="t-xs t-mid" style="fill:var(--terra)">attack (1–3 days)</text><text x="${X1}" y="13" class="t-xs t-end">curves are schematic</text>`;
+    else{s+=`<rect x="${f1(xd(0))}" y="20" width="${f1(xd(3)-xd(0))}" height="350" style="fill:var(--terra-soft);opacity:.7"/><text x="${f1(xd(1.5))}" y="14" class="t-xs t-mid" style="fill:var(--terra)">attack (1–3 days)</text>`;
+      L.ticks.forEach(k=>{s+=`<line x1="${f1(xd(k))}" x2="${f1(xd(k))}" y1="20" y2="370" class="grid"/>`});
+      s+=`<text x="${X1}" y="14" class="t-xs t-end">curve shapes are schematic: no published day-by-day curve exists</text>`}
+    L.ticks.forEach(k=>{s+=`<text x="${f1(xd(k))}" y="${N?yEnd+16:386}" class="t-xs t-mid">${k}</text>`});
+    s+=`<text x="${X1}" y="${N?yEnd+32:403}" class="t-xs t-end">days since the attack began</text>`;
+    ROWS.forEach((R,i)=>{const y0=L.Y0+i*L.RH,yb=y0+L.TOP+L.H,h=L.H,yv=v=>yb-h*clamp(v,0,1.05);
+      if(N){let rt=`<tspan>${R.un||R.u}</tspan>`;
+        if(R.pk&&d>=1.5)rt+=`<tspan style="fill:${R.c}">${NB}attack median ${R.pk}</tspan>`;
+        if(R.pk&&d>=8)rt+=`<tspan>${NB}${pers?'stays raised':'between '+R.b}</tspan>`;
+        if(R.flat&&d>=1)rt+=`<tspan style="fill:var(--good)">${NB}flat through the attack</tspan>`;
+        s+=`<text x="6" y="${y0+12}" class="t-lbl" style="fill:${R.flat?'var(--muted)':'var(--ink)'}">${R.nn||R.n}</text><text x="${X1}" y="${y0+12}" class="t-xs t-end">${rt}</text>`;
+        s+=`<rect x="${f1(xd(0))}" y="${y0+L.TOP}" width="${f1(xd(3)-xd(0))}" height="${h}" style="fill:var(--terra-soft);opacity:.7"/>`;
+        L.ticks.forEach(k=>{s+=`<line x1="${f1(xd(k))}" x2="${f1(xd(k))}" y1="${y0+L.TOP}" y2="${yb}" class="grid"/>`})}
+      else s+=`<text x="10" y="${y0+20}" class="t-lbl" style="fill:${R.flat?'var(--muted)':'var(--ink)'}">${R.n}</text><text x="10" y="${y0+36}" class="t-xs">${R.u}</text>`;
       s+=`<line x1="${X0}" x2="${X1}" y1="${yb}" y2="${yb}" class="axis"/>`;
       let gp='',bp='';for(let k=0;k<=220;k++){const dd=D0+k/220*(D1-D0),x=xd(dd),y=yv(val(R,dd)*(R.sc?R.pk/R.sc:1));gp+=(k?'L':'M')+f1(x)+' '+f1(y);if(dd<=d)bp+=(bp?'L':'M')+f1(x)+' '+f1(y)}
       s+=`<path d="${gp}" style="fill:none;stroke:${R.c};stroke-width:1.4;opacity:.25"/>`;
       if(bp)s+=`<path d="${bp}" style="fill:none;stroke:${R.c};stroke-width:${R.flat?2:2.8};stroke-linejoin:round"/>`;
       const cy=yv(val(R,d)*(R.sc?R.pk/R.sc:1));s+=`<circle cx="${f1(xd(d))}" cy="${f1(cy)}" r="4.5" style="fill:${R.c};stroke:var(--panel);stroke-width:1.5"/>`;
-      if(R.pk&&d>=1.5)s+=`<text x="${f1(xd(3)+10)}" y="${y0+10}" class="t-xs" style="fill:${R.c}">attack median ${R.pk} ${R.u}</text>`;
-      if(R.pk&&d>=8)s+=`<text x="${X1-2}" y="${y0+26}" class="t-xs t-end">${pers?'stays above normal (schematic)':'between attacks: median '+R.b+' '+R.u}</text>`;
-      if(R.flat&&d>=1)s+=`<text x="${f1(xd(3)+8)}" y="${f1(cy-6)}" class="t-xs" style="fill:var(--good)">flat through the attack</text>`;
+      if(N)s+=`<line x1="${f1(xd(d))}" x2="${f1(xd(d))}" y1="${y0+L.TOP}" y2="${yb}" style="stroke:var(--ink);stroke-width:1.2;opacity:.45"/>`;
+      else{
+        if(R.pk&&d>=1.5)s+=`<text x="${f1(xd(3)+10)}" y="${y0+10}" class="t-xs" style="fill:${R.c}">attack median ${R.pk} ${R.u}</text>`;
+        if(R.pk&&d>=8)s+=`<text x="${X1-2}" y="${y0+26}" class="t-xs t-end">${pers?'stays above normal (schematic)':'between attacks: median '+R.b+' '+R.u}</text>`;
+        if(R.flat&&d>=1)s+=`<text x="${f1(xd(3)+8)}" y="${f1(cy-6)}" class="t-xs" style="fill:var(--good)">flat through the attack</text>`}
     });
-    s+=`<line x1="${f1(xd(d))}" x2="${f1(xd(d))}" y1="20" y2="370" style="stroke:var(--ink);stroke-width:1.2;opacity:.45"/>`;
+    if(!N)s+=`<line x1="${f1(xd(d))}" x2="${f1(xd(d))}" y1="20" y2="370" style="stroke:var(--ink);stroke-width:1.2;opacity:.45"/>`;
     ls.innerHTML=s;
     const num=R=>{const raw=val(R,d);if(pers&&(d<0||d>8))return'above normal';return'≈'+Math.round(R.b+(R.pk-R.b)*(raw-(pers?.09:0))/(1-(pers?.09:0)))+' mg/L'};
     const q=R=>{const v=val(R,d);return v>.15?'raised':pers&&R.p&&(d<0||d>8)?'mildly raised':'normal'};
@@ -215,46 +237,66 @@ inits.dx=()=>{
 
   /* ---------- diagnostic pathway ---------- */
   const ps=$('#dxPathSvg'),pr=$('#dxPathT');
-  const N=[{x:16,y:20,a:'Recurrent self-limited',b:'fever + serositis, 1–3 days'},{x:260,y:20,a:'Exclude mimics',b:'infection, surgery, other fevers'},{x:504,y:20,a:'Acute-phase reactants',b:'in an attack and between'},
-           {x:504,y:250,a:'MEFV testing',b:'exons 2, 3, 5 and 10'},{x:260,y:250,a:'Colchicine trial',b:'6 months if genetics unclear'},{x:16,y:250,a:'Reassess',b:'attacks + SAA/CRP over months'}];
-  const C=[[[216,53],[260,53]],[[460,53],[504,53]],[[604,86],[604,250]],[[504,283],[460,283]],[[260,283],[216,283]]];
+  const PN=[{a:'Recurrent self-limited',b:'fever + serositis, 1–3 days'},{a:'Exclude mimics',b:'infection, surgery, other fevers'},{a:'Acute-phase reactants',b:'in an attack and between'},
+            {a:'MEFV testing',b:'exons 2, 3, 5 and 10'},{a:'Colchicine trial',b:'6 months if genetics unclear'},{a:'Reassess',b:'attacks + SAA/CRP over months'}];
   function drawPath(t){let s=`<defs>${marker('dxPa')}${marker('dxPb','var(--terra)')}</defs>`;
+    /* narrow: the flow runs top to bottom and each side panel becomes a full-width block
+       between two nodes; the boxes keep their places so nothing jumps as they fade in */
+    const N=vb(ps,'720 440','400 1052');
+    const L=N
+      ? {nw:372,nh:66,px:14,
+         pos:[{x:14,y:16},{x:14,y:120},{x:14,y:354},{x:14,y:458},{x:14,y:664},{x:14,y:870}],
+         C:[[[200,82],[200,120]],[[200,316],[200,354]],[[200,420],[200,458]],[[200,626],[200,664]],[[200,832],[200,870]]],
+         stub:[[200,186,194],[200,524,532]], app:[14,194], gen:[14,532], col:[14,738], out:[14,944],
+         genW:372,colW:372,outW:372, warn:'M320 626 L320 660'}
+      : {nw:200,nh:66,px:130,
+         pos:[{x:16,y:20},{x:260,y:20},{x:504,y:20},{x:504,y:250},{x:260,y:250},{x:16,y:250}],
+         C:[[[216,53],[260,53]],[[460,53],[504,53]],[[604,86],[604,250]],[[504,283],[460,283]],[[260,283],[216,283]]],
+         stub:[[360,86,110],[604,316,338]], app:[130,110], gen:[474,338], col:[236,338], out:[16,338],
+         genW:240,colW:206,outW:200, warn:'M474 384 C458 384 440 350 420 318'};
     const lit=i=>t>=DX_PL[i],cur=phaseOf(DX_PATH,t);
-    C.forEach(([[x1,y1],[x2,y2]],k)=>{const on=lit(k+1);const L=Math.hypot(x2-x1,y2-y1);s+=`<path d="M${x1} ${y1} L${f1(x2-(x2-x1)/L*3)} ${f1(y2-(y2-y1)/L*3)}" class="arrow" style="${on?'stroke:var(--terra);stroke-width:2.2':''}" marker-end="url(#${on?'dxPb':'dxPa'})"/>`;
+    L.C.forEach(([[x1,y1],[x2,y2]],k)=>{const on=lit(k+1);const D=Math.hypot(x2-x1,y2-y1);s+=`<path d="M${x1} ${y1} L${f1(x2-(x2-x1)/D*3)} ${f1(y2-(y2-y1)/D*3)}" class="arrow" style="${on?'stroke:var(--terra);stroke-width:2.2':''}" marker-end="url(#${on?'dxPb':'dxPa'})"/>`;
       const a=DX_PL[k]+.06,b=DX_PL[k+1];if(t>a&&t<b){const u=ease(ramp(t,a,b));s+=`<circle cx="${f1(lerp(x1,x2,u))}" cy="${f1(lerp(y1,y2,u))}" r="6" style="fill:var(--terra)"/>`}});
-    N.forEach((n,i)=>{const on=lit(i),c=i===cur;
-      s+=`<rect x="${n.x}" y="${n.y}" width="200" height="66" rx="12" style="fill:${on?'var(--terra-soft)':'var(--panel)'};stroke:${on?'var(--terra)':'var(--line)'};stroke-width:${c?3:1.5}"/>`;
+    PN.forEach((n0,i)=>{const n={...n0,...L.pos[i]},on=lit(i),c=i===cur;
+      s+=`<rect x="${n.x}" y="${n.y}" width="${L.nw}" height="${L.nh}" rx="12" style="fill:${on?'var(--terra-soft)':'var(--panel)'};stroke:${on?'var(--terra)':'var(--line)'};stroke-width:${c?3:1.5}"/>`;
       s+=`<circle cx="${n.x}" cy="${n.y}" r="11" style="fill:${on?'var(--terra)':'var(--panel-2)'};stroke:var(--panel);stroke-width:2"/><text x="${n.x}" y="${n.y+4}" class="t-xs t-mid" style="fill:${on?'var(--panel)':'var(--muted)'};font-weight:700">${i+1}</text>`;
-      s+=`<text x="${n.x+100}" y="${n.y+29}" class="t-lbl t-mid" style="opacity:${on?1:.55}">${n.a}</text><text x="${n.x+100}" y="${n.y+47}" class="t-xs t-mid">${n.b}</text>`});
+      s+=`<text x="${n.x+L.nw/2}" y="${n.y+29}" class="t-lbl t-mid" style="opacity:${on?1:.55}">${n.a}</text><text x="${n.x+L.nw/2}" y="${n.y+47}" class="t-xs t-mid">${n.b}</text>`});
+    const stub=k=>`<line x1="${L.stub[k][0]}" x2="${L.stub[k][0]}" y1="${L.stub[k][1]}" y2="${L.stub[k][2]}" style="stroke:var(--terra);stroke-dasharray:3 3"/>`;
     // appendectomy panel under node 2
     const ap=ramp(t,DX_PL[1]+.02,DX_PL[1]+.12);
-    if(ap>0){s+=`<g style="opacity:${f1(ap)}"><line x1="360" x2="360" y1="86" y2="110" style="stroke:var(--terra);stroke-dasharray:3 3"/><rect x="130" y="110" width="350" height="122" rx="10" style="fill:var(--panel);stroke:var(--line)"/>
-       <text x="142" y="128" class="t-sm" style="fill:var(--terra)">SURGICAL ABDOMEN? 182 FMF PATIENTS</text>`;
-      const bx=246,bw=170,bar=(y,lbl,fmf,genA,genB,fl,gl)=>{let q=`<text x="142" y="${y+9}" class="t-sm">${lbl}</text>`;
+    if(ap>0){const[px,py]=L.app;
+      s+=`<g style="opacity:${f1(ap)}">${stub(0)}<rect x="${px}" y="${py}" width="${N?372:350}" height="122" rx="10" style="fill:var(--panel);stroke:var(--line)"/>
+       <text x="${px+12}" y="${py+18}" class="t-sm" style="fill:var(--terra)">SURGICAL ABDOMEN? 182 FMF PATIENTS</text>`;
+      const bx=px+116,bw=170,bar=(y,lbl,fmf,genA,genB,fl,gl)=>{let q=`<text x="${px+12}" y="${y+9}" class="t-sm">${lbl}</text>`;
         q+=`<rect x="${bx}" y="${y}" width="${f1(bw*fmf*ease(ap))}" height="11" rx="3" style="fill:var(--terra)"/><text x="${f1(bx+bw*fmf*ease(ap)+5)}" y="${y+9}" class="t-xs" style="fill:var(--terra)">FMF ${fl}</text>`;
         q+=`<rect x="${bx}" y="${y+16}" width="${f1(bw*genB*ease(ap))}" height="11" rx="3" style="fill:var(--muted);opacity:.35"/><rect x="${bx}" y="${y+16}" width="${f1(bw*genA*ease(ap))}" height="11" rx="3" style="fill:var(--muted);opacity:.7"/><text x="${f1(bx+bw*genB*ease(ap)+5)}" y="${y+25}" class="t-xs">general ${gl}</text>`;return q};
-      s+=bar(142,'appendectomy',.4,.12,.25,'40%','12–25%');
-      s+=bar(184,'not inflamed',.8,.2,.2,'80%','~20%');
+      s+=bar(py+32,'appendectomy',.4,.12,.25,'40%','12–25%');
+      s+=bar(py+74,'not inflamed',.8,.2,.2,'80%','~20%');
       s+=`</g>`}
     // genotype outcomes under node 4
     const gp=ramp(t,DX_PL[3]+.02,DX_PL[3]+.12);
-    if(gp>0){s+=`<g style="opacity:${f1(gp)}"><line x1="604" x2="604" y1="316" y2="338" style="stroke:var(--terra);stroke-dasharray:3 3"/><rect x="474" y="338" width="240" height="94" rx="10" style="fill:var(--panel);stroke:var(--line)"/>`;
-      [['var(--good)','two pathogenic: fits FMF'],['var(--warn)','one variant / VUS: unclear'],['var(--muted)','none: FMF still possible']].forEach(([c,l],k)=>{s+=`<circle cx="490" cy="${358+k*26}" r="5" style="fill:${c}"/><text x="502" y="${362+k*26}" class="t-xs">${l}</text>`});
+    if(gp>0){const[px,py]=L.gen;
+      s+=`<g style="opacity:${f1(gp)}">${stub(1)}<rect x="${px}" y="${py}" width="${L.genW}" height="94" rx="10" style="fill:var(--panel);stroke:var(--line)"/>`;
+      [['var(--good)','two pathogenic: fits FMF'],['var(--warn)','one variant / VUS: unclear'],['var(--muted)','none: FMF still possible']].forEach(([c,l],k)=>{s+=`<circle cx="${px+16}" cy="${py+20+k*26}" r="5" style="fill:${c}"/><text x="${px+28}" y="${py+24+k*26}" class="t-xs">${l}</text>`});
       s+=`</g>`;
-      if(t>DX_PL[4]-.04)s+=`<path d="M474 384 C458 384 440 350 420 318" class="arrow" style="stroke:var(--warn);stroke-dasharray:4 3;opacity:${f1(ramp(t,DX_PL[4]-.04,DX_PL[4]))}"/>`}
+      if(t>DX_PL[4]-.04)s+=`<path d="${L.warn}" class="arrow" style="stroke:var(--warn);stroke-dasharray:4 3;opacity:${f1(ramp(t,DX_PL[4]-.04,DX_PL[4]))}"${N?' marker-end="url(#dxPa)"':''}/>`}
     // colchicine trial box under node 5
     const cp=ramp(t,DX_PL[4]+.02,DX_PL[4]+.12);
-    if(cp>0)s+=`<g style="opacity:${f1(cp)}"><rect x="236" y="338" width="206" height="94" rx="10" style="fill:var(--crocus-soft);stroke:var(--crocus)"/><text x="248" y="358" class="t-sm" style="fill:var(--crocus)">A RESPONSE COUNTS AS</text>
-      <text x="248" y="380" class="t-xs" style="fill:var(--ink)">Tel Hashomer: a major criterion</text><text x="248" y="400" class="t-xs" style="fill:var(--ink)">Livneh: a minor criterion</text><text x="248" y="420" class="t-xs">trial length: about 6 months</text></g>`;
+    if(cp>0){const[px,py]=L.col;
+      s+=`<g style="opacity:${f1(cp)}"><rect x="${px}" y="${py}" width="${L.colW}" height="94" rx="10" style="fill:var(--crocus-soft);stroke:var(--crocus)"/><text x="${px+12}" y="${py+20}" class="t-sm" style="fill:var(--crocus)">A RESPONSE COUNTS AS</text>
+      <text x="${px+12}" y="${py+42}" class="t-xs" style="fill:var(--ink)">Tel Hashomer: a major criterion</text><text x="${px+12}" y="${py+62}" class="t-xs" style="fill:var(--ink)">Livneh: a minor criterion</text><text x="${px+12}" y="${py+82}" class="t-xs">trial length: about 6 months</text></g>`}
     // outcomes under node 6
     const op=ramp(t,DX_PL[5]+.02,DX_PL[5]+.12);
-    if(op>0){s+=`<g style="opacity:${f1(op)}"><rect x="16" y="338" width="200" height="94" rx="10" style="fill:var(--panel);stroke:var(--line)"/><text x="28" y="356" class="t-sm">ON COLCHICINE</text>`;
-      [['complete','60–70%',.65,'var(--good)'],['partial','20–30%',.25,'var(--warn)'],['no response','~5%',.05,'var(--bad)']].forEach(([l,v,w,c],k)=>{const y=368+k*20;s+=`<text x="28" y="${y+8}" class="t-xs">${l}</text><rect x="104" y="${y}" width="${f1(70*w*ease(op))}" height="9" rx="3" style="fill:${c}"/><text x="${f1(108+70*w*ease(op))}" y="${y+8}" class="t-xs">${v}</text>`});
+    if(op>0){const[px,py]=L.out;
+      s+=`<g style="opacity:${f1(op)}"><rect x="${px}" y="${py}" width="${L.outW}" height="94" rx="10" style="fill:var(--panel);stroke:var(--line)"/><text x="${px+12}" y="${py+18}" class="t-sm">ON COLCHICINE</text>`;
+      [['complete','60–70%',.65,'var(--good)'],['partial','20–30%',.25,'var(--warn)'],['no response','~5%',.05,'var(--bad)']].forEach(([l,v,w,c],k)=>{const y=py+30+k*20;s+=`<text x="${px+12}" y="${y+8}" class="t-xs">${l}</text><rect x="${px+88}" y="${y}" width="${f1(70*w*ease(op))}" height="9" rx="3" style="fill:${c}"/><text x="${f1(px+92+70*w*ease(op))}" y="${y+8}" class="t-xs">${v}</text>`});
       s+=`</g>`}
     ps.innerHTML=s;setPath(cur);$('#dxPathNote').innerHTML=noteHTML(DX_PATH[cur])}
   const stopP=playWire(pr,$('#dxPathPlay'),drawPath,16000,'Replay','dx');
   const setPath=stepWire($('#dxPathSteps'),DX_PATH,pr,drawPath,stopP);
   drawPath(+pr.value);
+  /* this module has three drawings but one module id, so re-lay-out all of them together */
+  redraws.dx=()=>{stopL();stopP();drawLab(+lr.value);drawPath(+pr.value);update()};
 
   $('#dxCards').innerHTML=`
    <div class="card"><h4>Why the gene test can mislead</h4><p>About 10–20% of people with FMF carry no <i>MEFV</i> variant, usually with a milder picture. Single variants are common: in a Turkish referral cohort, 415 of 1,291 patients (32%) were heterozygous. Healthy carriers also run slightly higher CRP and SAA than non-carriers. [[BenZvi2015,Tanatar2020,Lachmann2006]]</p></div>
