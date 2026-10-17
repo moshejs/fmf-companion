@@ -27,7 +27,7 @@
       <div class="scroll"><svg id="whSvg" viewBox="0 0 720 420" style="min-width:560px" role="img" aria-label="100 people, carriers lighting up, then the predicted and observed frequency of FMF"></svg></div>
       <div class="ctrls"><button class="btn primary" id="whPlay">Play</button><label class="stage-cap tl" for="whT">Timeline <input type="range" id="whT" min="0" max="1" step="0.002" value="0.05"></label></div>
       <div class="readout" id="whRead"></div>
-      <p class="stage-cap">Each figure is 1 person in 100. Carrier rates come from different studies with different variant panels, so they are not strictly comparable. The predicted figure is a simple estimate that assumes random partnering.</p>
+      <p class="stage-cap">Each figure is 1 person in 100. Carrier rates come from different studies that tested different variant panels by different methods, so they are not one comparable series. The predicted figure is a simple estimate: it assumes random partnering, counts only the variants that study tested, and ignores reduced penetrance, so it is not a disease rate.</p>
     </div>
     <aside class="note" id="whNote" aria-live="polite"></aside>
   </div>
@@ -40,7 +40,7 @@
       <div class="scroll"><svg id="whSel" viewBox="0 0 720 400" style="min-width:560px" role="img" aria-label="Allele frequency rising under positive selection from about 200 BCE to 2000 CE, with plague pandemics marked"></svg></div>
       <div class="ctrls"><button class="btn primary" id="whSelPlay">Play</button><label class="stage-cap tl" for="whSelT">Years <input type="range" id="whSelT" min="0" max="1" step="0.001" value="0.02"></label></div>
       <div class="readout" id="whSelRead"></div>
-      <p class="stage-cap">Schematic model, not a reconstruction: constant selection at the coefficients estimated by Park et al. 2020 (s ≈ 0.077 per generation for M694V and 0.068 for V726A, 25-year generations), each variant starting as one rare copy at its estimated age. The starting frequency is illustrative. Real selection was probably uneven.</p>
+      <p class="stage-cap">Schematic model, not a reconstruction: constant selection at the coefficients estimated by Park et al. 2020 (s ≈ 0.077 per generation for M694V and 0.068 for V726A, 25-year generations), each variant starting as one rare copy at its HMM age estimate. The same paper's Gamma method puts the most recent common ancestor further back, about 3,541 years for M694V and 3,372 for V726A, so the start of each curve is the younger of two published estimates. The starting frequency is illustrative. Real selection was probably uneven.</p>
     </div>
     <aside class="note" id="whSelNote" aria-live="polite"></aside>
   </div>

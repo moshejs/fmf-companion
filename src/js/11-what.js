@@ -1,19 +1,19 @@
 /* =============== 1.1 what FMF is =============== */
 const WH_POPS=[
  {id:'iraqi',n:'Iraqi Jews',c:29,
-  txt:'Iraqi Jews: 29% carriers in one Israeli screen (Kogan 2001); 1 in 3.5 on a four-variant panel (Gershoni-Baruch 2001). V726A is the main variant here (12.8% carry it). [[Kogan2001,GershoniBaruch2001]]',
+  txt:'Iraqi Jews: 29% carriers in an Israeli screen that tested three variants (Kogan 2001); 1 in 3.5 on a four-variant panel (Gershoni-Baruch 2001). V726A is the main variant here (12.8% carry it). [[Kogan2001,GershoniBaruch2001]]',
   obs:[{l:'2 variants, well',v:25,c:'phenotype III, 1 in 25 [[Kogan2001]]'},{l:'FMF, endemic',r:[500,1000],c:'FMF in endemic countries, 1:500 to 1:1,000 (regional, not specific to this group) [[Tufan2020]]'}]},
  {id:'moroc',n:'Moroccan / North African Jews',c:21,
-  txt:'Moroccan Jews: 21% (Kogan 2001) and 1 in 4.7 (Gershoni-Baruch 2001). M694V dominates (11.1% carry it) and V726A is absent. One review gives 1 in 3.5. [[Kogan2001,GershoniBaruch2001,Lancieri2023]]',
+  txt:'Moroccan Jews: 21% on the same three-variant panel (Kogan 2001) and 1 in 4.7 on a four-variant panel (Gershoni-Baruch 2001). M694V dominates (11.1% carry it) and V726A is absent. One review gives 1 in 3.5. [[Kogan2001,GershoniBaruch2001,Lancieri2023]]',
   obs:[{l:'FMF, endemic',r:[500,1000],c:'FMF in endemic countries, 1:500 to 1:1,000 (regional figure) [[Tufan2020]]'}]},
  {id:'ashk',n:'Ashkenazi Jews',c:21,
-  txt:'Ashkenazi Jews: about 21% of ~200 anonymous samples carried a variant, mostly E148Q, with evidence of reduced penetrance; other screens give 14% and 1 in 4.5. FMF is much rarer clinically than in North African and Iraqi Jews. [[Aksentijevich1999,Kogan2001,GershoniBaruch2001]]',
+  txt:'Ashkenazi Jews: about 21% of ~200 anonymous samples carried a variant, mostly E148Q, with evidence of reduced penetrance; other screens give 14% on a three-variant panel and 1 in 4.5 on a four-variant panel. FMF is much rarer clinically than in North African and Iraqi Jews. [[Aksentijevich1999,Kogan2001,GershoniBaruch2001]]',
   obs:[{l:'2 variants, well',v:300,c:'phenotype III, 1 in 300 [[Kogan2001]]'}],none:'FMF: much rarer, no figure'},
  {id:'arab',n:'Muslim Arabs in Israel',c:23,
   txt:'Muslim Arabs in Israel: 1 in 4.3 carriers on a four-variant panel; V726A 7.3%, M694V 0.6%. [[GershoniBaruch2001]]',
   obs:[{l:'FMF, endemic',r:[500,1000],c:'FMF in endemic countries, 1:500 to 1:1,000 (regional figure) [[Tufan2020]]'}]},
  {id:'armen',n:'Armenians',c:20,
-  txt:'Armenians: about 1 in 5 in a recent review. An older pre-molecular segregation study estimated about 1 in 7. [[Lancieri2023,Rogers1989]]',
+  txt:'Armenians: about 1 in 5 in a recent review. An older pre-molecular segregation study of 64 Armenian-American families estimated a gene frequency of 0.073, about 1 carrier in 7. [[Lancieri2023,Rogers1989]]',
   obs:[{l:'FMF, endemic',r:[500,1000],c:'FMF in endemic countries, 1:500 to 1:1,000 (regional figure) [[Tufan2020]]'}]},
  {id:'turk',n:'Turks',c:20,
   txt:'Healthy Turks: 20% carry one of five common variants: E148Q 12%, M680I 5%, M694V 3%, V726A 2%. E148Q is common in healthy people but only 3.6% of patient alleles, a sign of low penetrance. [[Yilmaz2001]]',
@@ -41,7 +41,7 @@ const WH_STEPS=[
 ];
 const WH_SEL=[
  {from:0,at:.04,k:'About 2,100–2,200 years ago',t:'A new variant appears',
-  txt:'<span class="ev est">Established</span> The variants are ancient. Carrier chromosomes from populations "separated for centuries" share the same surrounding DNA. Dating 4,626 haplotypes from 2,313 Turkish people put M694V at about 2,108 years (95% CI 1,798–2,501) and V726A at about 2,192 years (1,826–2,754). [[IntFMF1997,Park2020]]',
+  txt:'<span class="ev est">Established</span> The variants are ancient. Carrier chromosomes from populations "separated for centuries" share the same surrounding DNA. Dating 4,626 haplotypes from 2,313 Turkish people put M694V at about 2,108 years by a hidden Markov model (95% CI 1,798–2,501) and V726A at about 2,192 years (1,826–2,754). The same paper\'s Gamma method dated the most recent common ancestor further back, about 3,541 years for M694V and 3,372 years for V726A, so "how old" depends on the method. [[IntFMF1997,Park2020]]',
   pt:'Each common FMF variant started once, in one person, more than two thousand years ago.',
   hook:'Shared haplotypes mean <b>founder</b> variants. Five founders (M694V, V726A, M694I, M680I, E148Q) explain about 74% of FMF chromosomes in typical patients. [[Touitou2001]]'},
  {from:.15,at:.26,k:'0–540 CE',t:'A slow, invisible rise',
@@ -53,11 +53,11 @@ const WH_SEL=[
   pt:'The plague germ has a trick for switching pyrin off. FMF-type pyrin partly resists the trick.',
   hook:'YopM suppresses pyrin. FMF pyrin escapes YopM, giving more IL-1β against <i>Y. pestis</i>.'},
  {from:.70,at:.73,k:'1347 CE',t:'The Black Death',
-  txt:'<span class="ev early">Early evidence</span> The second pandemic began with the Black Death in 1347 CE. In mice, a knock-in M680I pyrin improved survival after <i>Y. pestis</i> infection, and the protection was lost without the IL-1 receptor. With YopM-deficient bacteria the difference between variant and normal cells disappeared. [[Park2020]]',
+  txt:'<span class="ev early">Early evidence</span> The second pandemic began with the Black Death in 1347 CE. Mice carrying the knock-in M680I pyrin on both copies survived <i>Y. pestis</i> infection better than mice with the normal human B30.2 domain, and the protection was lost without the IL-1 receptor. The survival experiment was done in homozygotes, not carriers. With YopM-deficient bacteria the difference between variant and normal cells disappeared. [[Park2020]]',
   pt:'Animal and cell experiments fit the idea, but nobody can rerun history to prove it.',
   hook:'Heterozygote advantage: one copy may help against an infection, two copies cause disease.'},
  {from:.88,at:1,k:'Today',t:'Carriers are common',
-  txt:'Heterozygote frequency across Jewish, Arab, Armenian and Turkish populations is roughly 10%. Healthy carriers have slightly higher basal and peak CRP and SAA than non-carriers, a "pro-inflammatory" state proposed to aid host defence. [[Park2020,Lachmann2006]]',
+  txt:'Heterozygote frequency across Jewish, Arab, Armenian and Turkish populations is roughly 10% as Park et al. summarize it, while the pooled meta-analysis gives a mean of 18.6%; the figure depends on which variants were tested. Healthy carriers have slightly higher basal and peak CRP and SAA than non-carriers, a "pro-inflammatory" state proposed to aid host defence. [[Park2020,Papadopoulos2008,Lachmann2006]]',
   pt:'Today many people carry one copy. It may have been a small advantage in the past.',
   hook:'Evidence labels: plague selection is <b>early evidence</b> (consistent with, not proven). Tuberculosis resistance is a <b>hypothesis</b>.'}
 ];
@@ -129,7 +129,7 @@ inits.what=()=>{
     const p=phaseOf(WH_STEPS,t);setSt(p);$('#whNote').innerHTML=noteHTML(WH_STEPS[p]);
   }
   function readout(){const pred=1/Math.pow(pop.c/200,2);
-    $('#whRead').innerHTML=`<span>${pop.txt}</span><span>Simple estimate of two-variant births: (${f1(pop.c)}% ÷ 2)² ≈ <b>1 in ${oneIn(pred)}</b>.</span>`+(pop.obs.length?`<span>Observed: ${pop.obs.map(o=>o.c).join('; ')}.</span>`:'')}
+    $('#whRead').innerHTML=`<span>${pop.txt}</span><span>Simple estimate of two-variant births, assuming random partnering and ignoring penetrance: (${f1(pop.c)}% ÷ 2)² ≈ <b>1 in ${oneIn(pred)}</b>.</span>`+(pop.obs.length?`<span>Observed: ${pop.obs.map(o=>o.c).join('; ')}.</span>`:'')}
   const stop=playWire(rg,$('#whPlay'),draw,16000,'Replay','what');
   const setSt=stepWire($('#whSteps'),WH_STEPS,rg,draw,stop);
   $('#whPops').innerHTML=WH_POPS.map((p,i)=>`<button class="btn" data-pop="${i}" aria-pressed="${i===0}">${p.n}</button>`).join('');
@@ -180,7 +180,7 @@ inits.what=()=>{
   drawSel(+rs.value);
   $('#whSelCards').innerHTML=`
    <div class="card"><h4>What supports it <span class="ev early">Early evidence</span></h4><p>Three frequent variants shared across several Mediterranean populations "strongly suggests a heterozygote advantage". [[Aksentijevich1999]] Park 2020 added the selection signal, the YopM mechanism and the mouse survival data. [[Park2020]]</p></div>
-   <div class="card"><h4>Counterpoint</h4><p>An Israeli study found no perceptible health advantage for Ashkenazi carriers today. [[Kogan2001]] A benefit against plague would not necessarily show up in a modern population.</p></div>
+   <div class="card"><h4>Counterpoint</h4><p>An Israeli study found no perceptible health advantage for Ashkenazi carriers today. [[Kogan2001]] A benefit against plague would not necessarily show up in a modern population. Drift in isolated populations remains the competing explanation: the pooled meta-analysis found the strongest isolation and drift in Jewish populations, the candidate group for <i>MEFV</i> founder effects. [[Papadopoulos2008]]</p></div>
    <div class="card"><h4>An older idea: tuberculosis <span class="ev hyp">Hypothesis</span></h4><p>A 2003 letter asked whether carriers had lower tuberculosis mortality. It was never tested directly. [[Cattan2003]]</p></div>
    <div class="card"><h4>Carriers run slightly hot</h4><p>Healthy heterozygotes have higher basal and peak CRP and SAA than people without variants. [[Lachmann2006]] That fits a primed, but not disease-causing, innate immune system.</p></div>`;
 
