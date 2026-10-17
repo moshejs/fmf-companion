@@ -35,52 +35,79 @@ const LD_STEPS=[
 ];
 inits.ladder=()=>{
   const svg=$('#ldSvg'),rg=$('#ldT');
-  const RY=i=>392-i*62, X0=72, X1=404;
+  const wrapT=(txt,n)=>{const ws=String(txt).split(' '),o=[];let l='';ws.forEach(w=>{if(l&&(l+' '+w).length>n){o.push(l);l=w}else l=l?l+' '+w:w});if(l)o.push(l);return o};
+  /* each rung shows what it means: colchicine tablets whose count rises with the dose,
+     an injection at the IL-1 rung, a dashed vial where the evidence thins out, and a
+     colchicine thread that keeps running up alongside the biologic rungs */
+  const LD_GLY=[{p:1},{p:2},{p:4},{p:4,atk:1},{syr:1},{vial:1}];
+  const pill=(x,y,r)=>`<circle cx="${f1(x)}" cy="${f1(y)}" r="${f1(r)}" style="fill:var(--crocus);stroke:var(--crocus);stroke-width:1.2"/><line x1="${f1(x-r*.5)}" x2="${f1(x+r*.5)}" y1="${f1(y)}" y2="${f1(y)}" style="stroke:var(--panel);stroke-width:1.1;opacity:.75"/>`;
+  const syringe=(x,y)=>`<g transform="translate(${f1(x)} ${f1(y)})"><line x1="0" x2="8" y1="0" y2="0" style="stroke:var(--sea);stroke-width:1.6"/><rect x="-24" y="-6.5" width="24" height="13" rx="2.5" style="fill:var(--sea-soft);stroke:var(--sea);stroke-width:1.6"/><rect x="-22.5" y="-4.5" width="11" height="9" rx="1.5" style="fill:var(--sea)"/><line x1="-30" x2="-24" y1="0" y2="0" style="stroke:var(--sea);stroke-width:1.6"/><line x1="-30" x2="-30" y1="-5" y2="5" style="stroke:var(--sea);stroke-width:2.2"/></g>`;
+  const vial=(x,y)=>`<g transform="translate(${f1(x)} ${f1(y)})"><rect x="-17" y="-4" width="16" height="15" rx="2.5" style="fill:none;stroke:var(--warn);stroke-width:1.5;stroke-dasharray:3 3"/><rect x="-13.5" y="-10" width="9" height="6" rx="1.5" style="fill:none;stroke:var(--warn);stroke-width:1.4"/></g>`;
+  const atk=(x,y)=>`<path d="M${f1(x-5)} ${f1(y+5)}L${f1(x)} ${f1(y-5)}L${f1(x+5)} ${f1(y+5)}z" style="fill:var(--terra)"/>`;
   function draw(t){
+    const N=vb(svg,'720 430','400 772');
+    const L=N
+      ? {X0:24,X1:358,BX:38,BW:306,TX:52,RY0:360,P:58,BH:48,TY:-6,SY:14,GR:336,GP:13,TR:4.5,GY:-11,THX:288,CLX:372,
+         PX:14,PY:410,PW:372,QX:14,QY:626,QW:372}
+      : {X0:72,X1:404,BX:88,BW:310,TX:102,RY0:392,P:62,BH:40,TY:-3,SY:13,GR:392,GP:14,TR:5,GY:0,THX:336,CLX:420,
+         PX:450,PY:40,PW:258,QX:450,QY:256,QW:258};
+    const RY=i=>L.RY0-i*L.P;
     let s=`<defs>${marker('ldA','var(--sea)')}</defs>`;
-    s+=`<rect x="0" y="0" width="720" height="430" style="fill:var(--field)"/>`;
+    s+=`<rect x="0" y="0" width="100%" height="100%" style="fill:var(--field)"/>`;
     const lit=LD_RUNGS.map((r,i)=>ease(ramp(t,LD_STEPS[i].from+.005,LD_STEPS[i].from+.085)));
     // rails
-    const topY=RY(5)-26,botY=RY(0)+28;
-    [X0,X1].forEach(x=>{s+=`<line x1="${x}" x2="${x}" y1="${botY}" y2="${topY}" style="stroke:var(--line);stroke-width:5;stroke-linecap:round"/>`;
+    const topY=RY(5)-L.BH/2-6,botY=RY(0)+L.BH/2+8;
+    [L.X0,L.X1].forEach(x=>{s+=`<line x1="${x}" x2="${x}" y1="${botY}" y2="${topY}" style="stroke:var(--line);stroke-width:5;stroke-linecap:round"/>`;
       const h=(botY-topY)*clamp(lit.reduce((a,b)=>a+b,0)/6);
       s+=`<line x1="${x}" x2="${x}" y1="${botY}" y2="${f1(botY-h)}" style="stroke:var(--sea);stroke-width:5;stroke-linecap:round"/>`});
-    s+=`<text x="${X0}" y="${topY-10}" class="t-sm" style="fill:var(--sea)">ESCALATION ↑</text>`;
+    s+=`<text x="${L.X0}" y="${topY-10}" class="t-sm" style="fill:var(--sea)">ESCALATION ↑</text>`;
     // rungs
-    LD_RUNGS.forEach((r,i)=>{const cy=RY(i),o=lit[i];
+    LD_RUNGS.forEach((r,i)=>{const cy=RY(i),o=lit[i],g=LD_GLY[i],gy=cy+L.GY;
       s+=`<g class="clk" data-rung="${i}">`;
-      s+=`<rect x="88" y="${cy-20}" width="310" height="40" rx="11" style="fill:${o>.5?'var(--sea-soft)':'var(--panel-2)'};stroke:${o>.5?'var(--sea)':'var(--line)'};stroke-width:${f1(1+1.4*o)}"/>`;
-      s+=`<text x="102" y="${cy-3}" class="t-lbl" style="fill:${o>.5?'var(--sea)':'var(--muted)'}">${r.t}</text>`;
-      s+=`<text x="102" y="${cy+13}" class="t-xs">${r.s}</text>`;
-      s+=`<circle cx="${X0}" cy="${cy}" r="13" style="fill:${o>.5?'var(--sea)':'var(--panel)'};stroke:${o>.5?'var(--sea)':'var(--line)'};stroke-width:2"/>`;
-      s+=`<text x="${X0}" y="${cy+4}" class="t-xs t-mid" style="fill:${o>.5?'var(--on-sea)':'var(--muted)'};font-weight:700">${i+1}</text>`;
+      s+=`<rect x="${L.BX}" y="${f1(cy-L.BH/2)}" width="${L.BW}" height="${L.BH}" rx="11" style="fill:${o>.5?'var(--sea-soft)':'var(--panel-2)'};stroke:${o>.5?'var(--sea)':'var(--line)'};stroke-width:${f1(1+1.4*o)}"/>`;
+      s+=`<text x="${L.TX}" y="${f1(cy+L.TY)}" class="t-lbl" style="fill:${o>.5?'var(--sea)':'var(--muted)'}">${r.t}</text>`;
+      s+=`<text x="${L.TX}" y="${f1(cy+L.SY)}" class="t-xs">${r.s}</text>`;
+      s+=`<g style="opacity:${f1(.3+.7*o)}">`;
+      if(g.p)for(let k=0;k<g.p;k++)s+=pill(L.GR-k*L.GP,gy,L.TR);
+      if(g.atk)s+=atk(L.GR-1.5*L.GP,gy+L.TR+9);
+      if(g.syr)s+=syringe(L.GR-8,gy);
+      if(g.vial)s+=vial(L.GR+1,gy);
+      s+='</g>';
+      s+=`<circle cx="${L.X0}" cy="${cy}" r="13" style="fill:${o>.5?'var(--sea)':'var(--panel)'};stroke:${o>.5?'var(--sea)':'var(--line)'};stroke-width:2"/>`;
+      s+=`<text x="${L.X0}" y="${cy+4}" class="t-xs t-mid" style="fill:${o>.5?'var(--on-sea)':'var(--muted)'};font-weight:700">${i+1}</text>`;
       s+='</g>'});
+    // the colchicine thread: the tablets do not stop when the injection starts
+    s+=`<g style="opacity:${f1(.25+.75*lit[4])}">`;
+    s+=`<line x1="${L.THX}" x2="${L.THX}" y1="${f1(RY(3)-L.BH/2)}" y2="${f1(topY-4)}" style="stroke:var(--crocus);stroke-width:3;stroke-linecap:round;opacity:.6"/>`;
+    [4,5].forEach(i=>{s+=pill(L.THX,RY(i),L.TR-.5)});
+    s+=`<text x="${L.GR+5}" y="${f1(topY-10)}" class="t-xs t-end" style="fill:var(--crocus)">colchicine continues ↑</text>`;
+    s+='</g>';
     // climber
-    const pos=clamp((t-.04)/.86)*5, cyC=392-pos*62;
-    s+=`<g transform="translate(${X1+16} ${f1(cyC)})"><circle r="9" style="fill:var(--terra);opacity:.25"/><circle r="5" style="fill:var(--terra)"/></g>`;
-    s+=`<text x="${X1+30}" y="${f1(cyC+4)}" class="t-xs" style="fill:var(--terra)">you are here</text>`;
+    const pos=clamp((t-.04)/.86)*5, cyC=RY(0)-pos*L.P;
+    s+=`<g transform="translate(${L.CLX} ${f1(cyC)})"><circle r="9" style="fill:var(--terra);opacity:.25"/><circle r="5" style="fill:var(--terra)"/></g>`;
+    s+=N?`<text transform="rotate(90 ${L.CLX+16} ${f1(cyC)})" x="${L.CLX+16}" y="${f1(cyC)}" class="t-xs t-mid" style="fill:var(--terra)">you are here</text>`
+        :`<text x="${L.CLX+14}" y="${f1(cyC+4)}" class="t-xs" style="fill:var(--terra)">you are here</text>`;
     // side lane: during an attack
     const o2=ease(ramp(t,.26,.44));
-    s+=`<g style="opacity:${f1(.15+.85*o2)}"><rect x="450" y="40" width="258" height="196" rx="12" style="fill:var(--panel);stroke:var(--terra);stroke-width:1.6"/>`;
-    s+=`<text x="464" y="62" class="t-sm" style="fill:var(--terra)">DURING AN ATTACK · WHAT 2016 AND 2024 SAY</text>`;
+    s+=`<g style="opacity:${f1(.15+.85*o2)}"><rect x="${L.PX}" y="${L.PY}" width="${L.PW}" height="196" rx="12" style="fill:var(--panel);stroke:var(--terra);stroke-width:1.6"/>`;
+    s+=`<text x="${L.PX+14}" y="${L.PY+22}" class="t-sm" style="fill:var(--terra)">${N?'DURING AN ATTACK · WHAT 2016 AND 2024 SAY':'DURING AN ATTACK · 2016 AND 2024'}</text>`;
     const lines=['continue the usual colchicine dose','NSAIDs for symptoms','always consider other causes,','for example appendicitis'];
-    lines.forEach((L,i)=>{const oo=ease(ramp(t,.28+i*.03,.36+i*.03));
-      s+=`<text x="476" y="${88+i*20}" class="t-xs" style="opacity:${f1(oo)};fill:var(--ink)">${L}</text>`;
-      if(i<3)s+=`<circle cx="466" cy="${84+i*20}" r="2.6" style="fill:var(--terra);opacity:${f1(oo)}"/>`});
-    s+=`<line x1="464" x2="694" y1="178" y2="178" class="grid"/>`;
-    s+=`<text x="464" y="196" class="t-xs">2016 only: a prodrome dose rise is</text>`;
-    s+=`<text x="464" y="209" class="t-xs">reported but unproven. In stressful</text>`;
-    s+=`<text x="464" y="222" class="t-xs">periods an increase may be considered.</text>`;
+    lines.forEach((Ln,i)=>{const oo=ease(ramp(t,.28+i*.03,.36+i*.03));
+      s+=`<text x="${L.PX+26}" y="${L.PY+48+i*20}" class="t-xs" style="opacity:${f1(oo)};fill:var(--ink)">${Ln}</text>`;
+      if(i<3)s+=`<circle cx="${L.PX+16}" cy="${L.PY+44+i*20}" r="2.6" style="fill:var(--terra);opacity:${f1(oo)}"/>`});
+    s+=`<line x1="${L.PX+14}" x2="${L.PX+L.PW-14}" y1="${L.PY+138}" y2="${L.PY+138}" class="grid"/>`;
+    ['2016 only: a prodrome dose rise is','reported but unproven. In stressful','periods an increase may be considered.']
+      .forEach((Ln,i)=>{s+=`<text x="${L.PX+14}" y="${L.PY+156+i*13}" class="t-xs">${Ln}</text>`});
     s+='</g>';
     // target box
     const o3=ease(ramp(t,.55,.72));
-    s+=`<g style="opacity:${f1(.12+.88*o3)}"><rect x="450" y="256" width="258" height="136" rx="12" style="fill:var(--sea-soft);stroke:var(--sea);stroke-width:1.6"/>`;
-    s+=`<text x="464" y="278" class="t-sm" style="fill:var(--sea)">THE TWO TARGETS</text>`;
-    s+=`<text x="464" y="302" class="t-lbl">1 · no or minimal attacks</text>`;
-    s+=`<text x="464" y="326" class="t-lbl">2 · inflammation controlled</text>`;
-    s+=`<text x="464" y="343" class="t-xs">between attacks, by SAA or CRP</text>`;
-    s+=`<text x="464" y="368" class="t-xs">2024 update: both targets, to</text>`;
-    s+=`<text x="464" y="381" class="t-xs">prevent damage over a lifetime</text>`;
+    s+=`<g style="opacity:${f1(.12+.88*o3)}"><rect x="${L.QX}" y="${L.QY}" width="${L.QW}" height="136" rx="12" style="fill:var(--sea-soft);stroke:var(--sea);stroke-width:1.6"/>`;
+    s+=`<text x="${L.QX+14}" y="${L.QY+22}" class="t-sm" style="fill:var(--sea)">THE TWO TARGETS</text>`;
+    s+=`<text x="${L.QX+14}" y="${L.QY+46}" class="t-lbl">1 · no or minimal attacks</text>`;
+    s+=`<text x="${L.QX+14}" y="${L.QY+70}" class="t-lbl">2 · inflammation controlled</text>`;
+    s+=`<text x="${L.QX+14}" y="${L.QY+87}" class="t-xs">between attacks, by SAA or CRP</text>`;
+    s+=`<text x="${L.QX+14}" y="${L.QY+112}" class="t-xs">2024 update: both targets, to</text>`;
+    s+=`<text x="${L.QX+14}" y="${L.QY+125}" class="t-xs">prevent damage over a lifetime</text>`;
     s+='</g>';
     svg.innerHTML=s;
     const p=phaseOf(LD_STEPS,t);setSt(p);
@@ -105,8 +132,58 @@ inits.ladder=()=>{
    {l:'Anakinra RCT',s2:'n=25, attacks/month',a:1.7,p:3.5,ad:'1.7',pd:'3.5'},
    {l:'Rilonacept',s2:'n=14, median/month',a:0.77,p:2.00,ad:'0.77',pd:'2.00'}
   ];
+  const LD_CAVA='63 FMF patients, randomised at a flare · endpoint: flare resolution, no new flare to week 16';
+  const LD_CAVB='last two bars have no placebo comparator: 300 mg escalation, and extended every-8-week dosing';
+  const LD_COCH='Cochrane re-analysis, moderate certainty: no clear difference in the number of patients having attacks for anakinra (RR 0.76, 0.54–1.07) or rilonacept (RR 0.87, 0.59–1.26). Only canakinumab reached RR 0.41 (0.26–0.65).';
+  const LD_TOCI=[['phase II (n=25): missed its primary','ink'],['endpoint, but SAA normalised','ink'],['phase III: missed too (RR 0.691,',''],['P=0.577); no efficacy shown','']];
+  /* narrow: the grouped vertical bars become horizontal bars, one trial per block,
+     each trial's name on its own line above its bars, so nothing is squeezed */
+  function drawBN(t){
+    const BX0=14,BX1=316,pw=BX1-BX0;let s='';
+    s+=`<text x="14" y="24" class="t-sm" style="fill:var(--sea)">CANAKINUMAB IN CLUSTER</text>`;
+    s+=`<text x="14" y="38" class="t-xs">complete response at week 16 vs placebo</text>`;
+    const pairsOf=g=>g.p==null?[[g.a,'var(--sea)','']]:[[g.p,'var(--muted)','placebo'],[g.a,'var(--sea)','drug']];
+    const aTop=52, aH=LD_PCT.reduce((a,g)=>a+(g.p==null?44:62),0), aBot=aTop+aH-10;
+    [0,25,50,75,100].forEach(v=>{const x=lerp(BX0,BX1,v/100);
+      s+=`<line x1="${f1(x)}" x2="${f1(x)}" y1="${aTop}" y2="${aBot}" class="grid"/><text x="${f1(x)}" y="${aBot+16}" class="t-xs t-mid">${v}%</text>`});
+    let y=aTop;
+    LD_PCT.forEach((g,i)=>{const k=ease(ramp(t,i*.1,i*.1+.42)),prs=pairsOf(g);
+      s+=`<text x="14" y="${y+10}" class="t-xs" style="fill:var(--ink)">${g.l} · ${g.s2}</text>`;
+      prs.forEach((pr,j)=>{const by=y+16+j*18,w=pw*pr[0]/100*k;
+        s+=`<rect x="${BX0}" y="${by}" width="${f1(w)}" height="14" rx="3" style="fill:${pr[1]}"/>`;
+        s+=`<text x="${f1(BX0+w+6)}" y="${by+11}" class="t-xs" style="fill:${pr[1]};font-weight:700;opacity:${f1(ramp(k,.6,1))}">${pr[0]}%${pr[2]?' '+pr[2]:''}</text>`});
+      y+=prs.length>1?62:44});
+    y=aBot+34;
+    wrapT(LD_CAVA,58).concat(wrapT(LD_CAVB,58)).forEach(l=>{s+=`<text x="14" y="${y}" class="t-xs">${l}</text>`;y+=14});
+    // panel B
+    y+=12;
+    s+=`<text x="14" y="${y}" class="t-sm" style="fill:var(--terra)">ATTACKS PER MONTH · lower is better</text>`;y+=14;
+    s+=`<text x="14" y="${y}" class="t-xs">as each trial reported it</text>`;y+=14;
+    const bTop=y, bBot=bTop+LD_ATT.length*62-10;
+    [0,1,2,3,4].forEach(v=>{const x=lerp(BX0,BX1,v/4);
+      s+=`<line x1="${f1(x)}" x2="${f1(x)}" y1="${bTop}" y2="${bBot}" class="grid"/><text x="${f1(x)}" y="${bBot+16}" class="t-xs t-mid">${v}</text>`});
+    LD_ATT.forEach((g,i)=>{const k=ease(ramp(t,.4+i*.12,.86+i*.12)),yy=bTop+i*62;
+      s+=`<text x="14" y="${yy+10}" class="t-xs" style="fill:var(--ink)">${g.l} · ${g.s2}</text>`;
+      [[g.p,'var(--muted)',g.pd,'placebo'],[g.a,'var(--sea)',g.ad,'drug']].forEach((pr,j)=>{const by=yy+16+j*18,w=pw*pr[0]/4*k;
+        s+=`<rect x="${BX0}" y="${by}" width="${f1(w)}" height="14" rx="3" style="fill:${pr[1]}"/>`;
+        s+=`<text x="${f1(BX0+w+6)}" y="${by+11}" class="t-xs" style="fill:${pr[1]};font-weight:700;opacity:${f1(ramp(k,.6,1))}">${pr[2]} ${pr[3]}</text>`});});
+    // tocilizumab box
+    y=bBot+34;
+    const o=ease(ramp(t,.75,1));
+    s+=`<g style="opacity:${f1(.15+.85*o)}"><rect x="14" y="${y}" width="372" height="92" rx="11" style="fill:var(--panel);stroke:var(--warn);stroke-width:1.6"/>`;
+    s+=`<text x="28" y="${y+22}" class="t-sm" style="fill:var(--warn)">TOCILIZUMAB · IL-6 RECEPTOR</text>`;
+    LD_TOCI.forEach((l,i)=>{s+=`<text x="28" y="${y+42+i*13+(i>1?5:0)}" class="t-xs"${l[1]?' style="fill:var(--ink)"':''}>${l[0]}</text>`});
+    s+='</g>';
+    // Cochrane caveat, on the face of the chart
+    y+=108;
+    s+=`<line x1="14" x2="386" y1="${y}" y2="${y}" class="grid"/>`;y+=18;
+    wrapT(LD_COCH,58).forEach(l=>{s+=`<text x="14" y="${y}" class="t-xs" style="fill:var(--warn)">${l}</text>`;y+=14});
+    return s;
+  }
   function drawB(t){
-    let s=`<rect x="0" y="0" width="720" height="456" style="fill:var(--field)"/>`;
+    const N=vb(bs,'720 456','400 800');
+    let s=`<rect x="0" y="0" width="100%" height="100%" style="fill:var(--field)"/>`;
+    if(N){bs.innerHTML=s+drawBN(t);return}
     // panel A
     const AX0=118,AX1=700,AY=206,ATOP=56,pc=v=>AY-(AY-ATOP)*v/100;
     s+=`<text x="14" y="34" class="t-sm" style="fill:var(--sea)">CANAKINUMAB IN CLUSTER · complete response at week 16 vs placebo</text>`;

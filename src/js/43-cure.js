@@ -81,10 +81,59 @@ const CU_LVL={est:'<span class="ev est">Established</span>',early:'<span class="
 inits.cure=()=>{
   const svg=$('#cuSvg'),rg=$('#cuT');let route='none';
   const CXs=CU_ST.map((_,i)=>66+i*118), BW=104, BY=86, BH=92, FY=216;
+  const wrapC=(txt,n)=>{const ws=String(txt).split(' '),o=[];let l='';ws.forEach(w=>{if(l&&(l+' '+w).length>n){o.push(l);l=w}else l=l?l+' '+w:w});if(l)o.push(l);return o};
+  /* narrow: the eight stages run top to bottom as a chain, the particles fall down
+     the spine, and the barrier lies across it */
+  function drawN(t){
+    const R=CU_ROUTES[route],b=R.b;
+    const SX=44, BX=68, NBW=316, NBH=52, P=66, Y0=62, GAP=34;
+    const topOf=i=>Y0+i*P+(b>=0&&i>=b?GAP:0);
+    const chainBot=topOf(7)+NBH+12, F0=46, F1=chainBot;
+    const yb=b>=0?topOf(b)-20:1e9;
+    let s=`<defs>${marker('cuA','var(--muted)')}${marker('cuB','var(--terra)')}</defs>`;
+    s+=`<rect x="0" y="0" width="100%" height="100%" style="fill:var(--field)"/>`;
+    s+=`<text x="14" y="26" class="t-sm" style="fill:var(--sea)">WHERE COULD WE INTERVENE?</text>`;
+    s+=`<text x="14" y="40" class="t-xs">${R.n==='No intervention'?'no barrier in place':'barrier: '+R.n}</text>`;
+    // the spine the signal runs down
+    s+=`<line x1="${SX}" x2="${SX}" y1="${F0}" y2="${f1(F1)}" style="stroke:var(--line);stroke-width:3"/>`;
+    CU_ST.forEach((st,i)=>{const dim=b>=0&&i>=b,o=dim?(R.p?.5:.28):1,reached=t>=CU_STEPS[i].from,y=topOf(i);
+      s+=`<g style="opacity:${f1(o)}">`;
+      s+=`<line x1="${SX}" x2="${BX-6}" y1="${f1(y+NBH/2)}" y2="${f1(y+NBH/2)}" style="stroke:var(--line);stroke-width:1.2"/>`;
+      s+=`<rect x="${BX}" y="${f1(y)}" width="${NBW}" height="${NBH}" rx="12" style="fill:${reached&&!dim?'var(--panel)':'var(--panel-2)'};stroke:${reached&&!dim?'var(--sea)':'var(--line)'};stroke-width:${reached&&!dim?2:1.3}"/>`;
+      s+=`<circle cx="${SX}" cy="${f1(y+NBH/2)}" r="10" style="fill:${reached&&!dim?'var(--sea)':'var(--panel)'};stroke:${reached&&!dim?'var(--sea)':'var(--line)'};stroke-width:1.6"/>`;
+      s+=`<text x="${SX}" y="${f1(y+NBH/2+3.5)}" class="t-xs t-mid" style="fill:${reached&&!dim?'var(--on-sea)':'var(--muted)'};font-weight:700">${i+1}</text>`;
+      s+=`<text x="${BX+14}" y="${f1(y+20)}" class="t-lbl">${st.l[0]}</text>`;
+      s+=`<text x="${BX+14}" y="${f1(y+36)}" class="t-xs">${st.l.slice(1).join(' · ')}</text>`;
+      s+='</g>';
+      if(i<7&&!(b>=0&&i+1>=b))s+=`<path d="M${SX} ${f1(topOf(i)+NBH+1)} V${f1(topOf(i+1)-5)}" class="arrow" marker-end="url(#cuA)"/>`});
+    // particles falling down the spine
+    const nP=20,piled=[];
+    for(let i=0;i<nP;i++){const u=((t*1.35+i/nP)%1);const y=lerp(F0,F1,u);
+      if(y>yb){piled.push(i);continue}
+      s+=`<circle cx="${SX}" cy="${f1(y)}" r="4.4" style="fill:var(--terra);opacity:.9"/>`}
+    if(b>=0){
+      piled.forEach((i,j)=>{const col=j%4,row=Math.floor(j/4);
+        s+=`<circle cx="${f1(SX-16.5+col*11)}" cy="${f1(yb-8-row*11)}" r="4.4" style="fill:var(--terra);opacity:${f1(.9-row*.12)}"/>`});
+      s+=`<line x1="14" x2="386" y1="${f1(yb)}" y2="${f1(yb)}" style="stroke:var(--bad);stroke-width:${R.p?4:6};${R.p?'stroke-dasharray:7 6;':''}stroke-linecap:round"/>`;
+      s+=`<text x="386" y="${f1(yb-8)}" class="t-sm t-end" style="fill:var(--bad)">${R.p?'partial barrier':'barrier'}</text>`}
+    let y=chainBot+22;
+    s+=`<text x="14" y="${f1(y)}" class="t-xs">signal flow ↓</text>`;y+=16;
+    wrapC(b>=0?'stages past the barrier are dimmed'+(R.p?', and the barrier is partial, so some signal gets through':''):'no barrier: the pathway runs end to end',56)
+      .forEach(l=>{s+=`<text x="14" y="${f1(y)}" class="t-xs">${l}</text>`;y+=13});
+    if(R.lvl){const col=R.lvl==='est'?'var(--good)':R.lvl==='early'?'var(--warn)':'var(--crocus)';
+      const lbl=R.lvl==='est'?'ESTABLISHED':R.lvl==='early'?'EARLY EVIDENCE':'HYPOTHESIS';
+      y+=10;
+      s+=`<rect x="14" y="${f1(y)}" width="170" height="24" rx="7" style="fill:var(--panel);stroke:${col};stroke-width:1.6"/>`;
+      s+=`<text x="99" y="${f1(y+16)}" class="t-xs t-mid" style="fill:${col};font-weight:700">${lbl}</text>`;y+=40;
+      wrapC(R.fix,56).forEach(l=>{s+=`<text x="14" y="${f1(y)}" class="t-xs" style="fill:var(--ink)">${l}</text>`;y+=13})}
+    return{s:s,h:y+12};
+  }
   function draw(t){
     const R=CU_ROUTES[route],b=R.b;
+    const N=vb(svg,'960 340','400 700');
+    if(N){const o=drawN(t);svg.setAttribute('viewBox','0 0 400 '+Math.round(o.h));svg.innerHTML=o.s;afterDraw(t,R,b);return}
     let s=`<defs>${marker('cuA','var(--muted)')}${marker('cuB','var(--terra)')}</defs>`;
-    s+=`<rect x="0" y="0" width="960" height="340" style="fill:var(--field)"/>`;
+    s+=`<rect x="0" y="0" width="100%" height="100%" style="fill:var(--field)"/>`;
     s+=`<text x="14" y="30" class="t-sm" style="fill:var(--sea)">WHERE COULD WE INTERVENE?</text>`;
     s+=`<text x="946" y="30" class="t-sm t-end">${R.n==='No intervention'?'no barrier in place':'barrier: '+R.n}</text>`;
     // flow line
@@ -120,6 +169,9 @@ inits.cure=()=>{
       s+=`<text x="99" y="324" class="t-xs t-mid" style="fill:${col};font-weight:700">${lbl}</text>`;
       s+=`<text x="196" y="324" class="t-xs" style="fill:var(--ink)">${R.fix}</text>`}
     svg.innerHTML=s;
+    afterDraw(t,R,b);
+  }
+  function afterDraw(t,R,b){
     const p=phaseOf(CU_STEPS,t);setSt(p);
     let extra='';
     if(R.lvl)extra=`<div class="kv"><div><dt>Route · ${R.n}</dt><dd><div class="evrow">${CU_LVL[R.lvl]}</div></dd></div>`+
@@ -141,40 +193,50 @@ inits.cure=()=>{
   function drawM(t){
     const target=+pr.value, cond=ease(ramp(t,.04,.26)), eng=ease(ramp(t,.26,.5)), sw=ease(ramp(t,.4,.92));
     const pct=target*sw, months=t*18;
-    let s=`<rect x="0" y="0" width="720" height="390" style="fill:var(--field)"/>`;
+    /* narrow: the niche and the bloodstream stack above the chimerism curve */
+    const NA=vb(ms,'720 390','400 648');
+    const M=NA
+      ? {NX:14,NY:52,NW:372,NH:168, SX:152,SY:86,SDX:48,SDY:40, CDL:28,CDY:208,CDT:'conditioning clears host cells',
+         EGX:372,EGA:'t-end', BX:14,BY:246,BW:372,BH:136, NUX:38,NUY:290,NUDX:44,NUDY:62,
+         LGY:400,LG1:14,LG2:160, TTX:14,TTY:424,HYX:386,
+         GX0:46,GX1:386,GY:540,GT:444, CPX:14,CPY:590}
+      : {NX:18,NY:56,NW:286,NH:246, SX:58,SY:96,SDX:44,SDY:44, CDL:32,CDY:286,CDT:'conditioning clears host stem cells',
+         EGX:196,EGA:'t-mid', BX:330,BY:56,BW:372,BH:152, NUX:362,NUY:100,NUDX:44,NUDY:66,
+         LGY:226,LG1:344,LG2:470, TTX:344,TTY:248,HYX:694,
+         GX0:344,GX1:694,GY:358,GT:266, CPX:20,CPY:324};
+    let s=`<rect x="0" y="0" width="100%" height="100%" style="fill:var(--field)"/>`;
     // marrow niche
-    s+=`<rect x="18" y="56" width="286" height="246" rx="18" style="fill:var(--cyto);stroke:var(--memb);stroke-width:3"/>`;
-    s+=`<text x="32" y="46" class="t-sm" style="fill:var(--memb)">BONE-MARROW NICHE</text>`;
+    s+=`<rect x="${M.NX}" y="${M.NY}" width="${M.NW}" height="${M.NH}" rx="18" style="fill:var(--cyto);stroke:var(--memb);stroke-width:3"/>`;
+    s+=`<text x="${M.NX+14}" y="${M.NY-10}" class="t-sm" style="fill:var(--memb)">BONE-MARROW NICHE</text>`;
     // host stem cells fading
-    for(let i=0;i<9;i++){const x=58+(i%3)*44,y=96+Math.floor(i/3)*44,o=1-cond;
+    for(let i=0;i<9;i++){const x=M.SX+(i%3)*M.SDX,y=M.SY+Math.floor(i/3)*M.SDY,o=1-cond;
       s+=`<circle cx="${x}" cy="${y}" r="${f1(11*(1-.5*cond))}" style="fill:var(--terra-soft);stroke:var(--terra);stroke-width:2;opacity:${f1(.15+.85*o)}"/>`}
     // conditioning label
-    s+=`<text x="32" y="286" class="t-xs" style="fill:var(--bad);opacity:${f1(bump(t,.02,.34))}">conditioning clears host stem cells</text>`;
+    s+=`<text x="${M.CDL}" y="${M.CDY}" class="t-xs" style="fill:var(--bad);opacity:${f1(bump(t,.02,.34))}">${M.CDT}</text>`;
     // donor / corrected cells engrafting
-    for(let i=0;i<9;i++){const x=58+(i%3)*44,y=96+Math.floor(i/3)*44;
+    for(let i=0;i<9;i++){const x=M.SX+(i%3)*M.SDX,y=M.SY+Math.floor(i/3)*M.SDY;
       const o=eng*(i/9<target/100?1:.18);
       s+=`<circle cx="${f1(x+6)}" cy="${f1(y+6-30*(1-eng))}" r="11" style="fill:var(--sea-soft);stroke:var(--sea);stroke-width:2;opacity:${f1(o)}"/>`}
-    s+=`<text x="196" y="286" class="t-xs t-mid" style="fill:var(--sea);opacity:${f1(eng)}">corrected cells engraft</text>`;
+    s+=`<text x="${M.EGX}" y="${M.CDY}" class="t-xs ${M.EGA}" style="fill:var(--sea);opacity:${f1(eng)}">corrected cells engraft</text>`;
     // bloodstream
-    s+=`<rect x="330" y="56" width="372" height="152" rx="18" style="fill:var(--panel);stroke:var(--line)"/>`;
-    s+=`<text x="344" y="46" class="t-sm" style="fill:var(--sea)">CIRCULATING NEUTROPHILS</text>`;
+    s+=`<rect x="${M.BX}" y="${M.BY}" width="${M.BW}" height="${M.BH}" rx="18" style="fill:var(--panel);stroke:var(--line)"/>`;
+    s+=`<text x="${M.BX+14}" y="${M.BY-10}" class="t-sm" style="fill:var(--sea)">CIRCULATING NEUTROPHILS</text>`;
     const nN=16,corr=Math.round(nN*pct/100);
-    for(let i=0;i<nN;i++){const x=362+(i%8)*44,y=100+Math.floor(i/8)*66;
+    for(let i=0;i<nN;i++){const x=M.NUX+(i%8)*M.NUDX,y=M.NUY+Math.floor(i/8)*M.NUDY;
       const ok=i<corr;
       s+=neutro(x+MJ[i].dx*3,y+MJ[i].dy*3,13,1);
       s+=`<circle cx="${f1(x+MJ[i].dx*3)}" cy="${f1(y+MJ[i].dy*3)}" r="16" style="fill:none;stroke:${ok?'var(--sea)':'var(--terra)'};stroke-width:2.4"/>`}
-    s+=`<text x="344" y="226" class="t-xs" style="fill:var(--terra)">○ variant pyrin</text>`;
-    s+=`<text x="470" y="226" class="t-xs" style="fill:var(--sea)">○ corrected or donor-derived</text>`;
+    s+=`<text x="${M.LG1}" y="${M.LGY}" class="t-xs" style="fill:var(--terra)">○ variant pyrin</text>`;
+    s+=`<text x="${M.LG2}" y="${M.LGY}" class="t-xs" style="fill:var(--sea)">○ corrected or donor-derived</text>`;
     // chimerism curve
-    const GX0=344,GX1=694,GY=358,GT=266;
-    s+=`<text x="344" y="248" class="t-sm">CORRECTED MYELOID CELLS OVER TIME</text>`;
-    s+=`<text x="694" y="248" class="t-xs t-end" style="fill:var(--crocus);font-weight:700">HYPOTHETICAL CURVE</text>`;
-    s+=`<text x="20" y="324" class="t-xs" style="fill:var(--crocus)">Hypothetical throughout. No FMF transplant survival</text>`;
-    s+=`<text x="20" y="340" class="t-xs" style="fill:var(--crocus)">or chimerism data exist: the shape is set by the slider,</text>`;
-    s+=`<text x="20" y="356" class="t-xs" style="fill:var(--crocus)">not measured in any patient.</text>`;
+    const GX0=M.GX0,GX1=M.GX1,GY=M.GY,GT=M.GT;
+    s+=`<text x="${M.TTX}" y="${M.TTY}" class="t-sm">CORRECTED MYELOID CELLS OVER TIME</text>`;
+    s+=`<text x="${M.HYX}" y="${M.TTY}" class="t-xs t-end" style="fill:var(--crocus);font-weight:700">HYPOTHETICAL CURVE</text>`;
+    ['Hypothetical throughout. No FMF transplant survival','or chimerism data exist: the shape is set by the slider,','not measured in any patient.']
+      .forEach((l,i)=>{s+=`<text x="${M.CPX}" y="${M.CPY+i*16}" class="t-xs" style="fill:var(--crocus)">${l}</text>`});
     [0,50,100].forEach(v=>{const y=lerp(GY,GT,v/100);s+=`<line x1="${GX0}" x2="${GX1}" y1="${f1(y)}" y2="${f1(y)}" class="grid"/><text x="${GX0-6}" y="${f1(y+3)}" class="t-xs t-end">${v}%</text>`});
-    let d='';const N=60;
-    for(let i=0;i<=N;i++){const u=i/N,tt=u*t;const v=target*ease(ramp(tt,.4,.92));
+    let d='';const NP=60;
+    for(let i=0;i<=NP;i++){const u=i/NP,tt=u*t;const v=target*ease(ramp(tt,.4,.92));
       d+=(i?'L':'M')+f1(lerp(GX0,GX1,u*t))+' '+f1(lerp(GY,GT,v/100))}
     s+=`<path d="${d}" style="fill:none;stroke:var(--sea);stroke-width:2.6"/>`;
     s+=`<line x1="${GX0}" x2="${GX1}" y1="${GY}" y2="${GY}" class="axis"/>`;

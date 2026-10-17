@@ -40,31 +40,41 @@ const LV_EV=[
 inits.living=()=>{
   const svg=$('#lvSvg'),rg=$('#lvT');const on={preg:false,surg:false,vacc:false,exam:false,trav:false};
   const vis=()=>LV_EV.filter(e=>e.key===0||on[e.key]);
-  const CX=232,CY=232,R=148;
   const ang=m=>-Math.PI/2+m/12*Math.PI*2;
   function draw(t){
     const mNow=t*12,E=vis();
-    let s=`<rect x="0" y="0" width="720" height="440" style="fill:var(--field)"/>`;
+    /* narrow: the ring keeps its size, the event labels move into a list underneath,
+       and the event the year has just reached is highlighted in both */
+    const N=vb(svg,'720 440','400 '+(384+E.length*27+(E.length<7?36:22)));
+    const CX=N?200:232, CY=N?196:232, R=N?136:148;
+    const LX=N?16:432, LY=N?384:62, LST=N?27:31, LTX=N?52:456, LRX=N?386:712, LHD=N?366:38, LHX=LX;
+    let s=`<rect x="0" y="0" width="100%" height="100%" style="fill:var(--field)"/>`;
     // pregnancy span arc
     if(on.preg){const a0=ang(2),a1=ang(Math.min(mNow,11));let d='';
       for(let i=0;i<=60;i++){const a=lerp(a0,a1,i/60);d+=(i?'L':'M')+f1(CX+Math.cos(a)*(R+13))+' '+f1(CY+Math.sin(a)*(R+13))}
       if(a1>a0)s+=`<path d="${d}" style="fill:none;stroke:var(--crocus);stroke-width:7;opacity:.5;stroke-linecap:round"/>`;
-      const am=ang(lerp(2,Math.min(mNow,11),.5));
-      s+=`<text x="${f1(CX+Math.cos(am)*(R+28))}" y="${f1(CY+Math.sin(am)*(R+28))}" class="t-xs t-mid" style="fill:var(--crocus)">${mNow>2?'pregnancy':''}</text>`}
+      if(N){if(mNow>2){s+=`<line x1="160" x2="176" y1="13" y2="13" style="stroke:var(--crocus);stroke-width:5;opacity:.5;stroke-linecap:round"/>`;
+        s+=`<text x="182" y="17" class="t-xs" style="fill:var(--crocus)">pregnancy</text>`}}
+      else{const am=ang(lerp(2,Math.min(mNow,11),.5)),ar=R+28;
+        s+=`<text x="${f1(CX+Math.cos(am)*ar)}" y="${f1(CY+Math.sin(am)*ar)}" class="t-xs t-mid" style="fill:var(--crocus)">${mNow>2?'pregnancy':''}</text>`}}
     // base ring + progress
     s+=`<circle cx="${CX}" cy="${CY}" r="${R}" style="fill:none;stroke:var(--line);stroke-width:9"/>`;
-    let pd='';const N=Math.max(1,Math.round(t*180));
-    for(let i=0;i<=N;i++){const a=ang(t*12*i/N);pd+=(i?'L':'M')+f1(CX+Math.cos(a)*R)+' '+f1(CY+Math.sin(a)*R)}
+    let pd='';const NS=Math.max(1,Math.round(t*180));
+    for(let i=0;i<=NS;i++){const a=ang(t*12*i/NS);pd+=(i?'L':'M')+f1(CX+Math.cos(a)*R)+' '+f1(CY+Math.sin(a)*R)}
     s+=`<path d="${pd}" style="fill:none;stroke:var(--sea);stroke-width:9;stroke-linecap:round"/>`;
     // month ticks and numbers inside
     for(let m=0;m<12;m++){const a=ang(m);
       s+=`<line x1="${f1(CX+Math.cos(a)*(R-6))}" x2="${f1(CX+Math.cos(a)*(R+6))}" y1="${f1(CY+Math.sin(a)*(R-6))}" y2="${f1(CY+Math.sin(a)*(R+6))}" style="stroke:var(--panel);stroke-width:2"/>`;
       const ai=ang(m+.5);
       s+=`<text x="${f1(CX+Math.cos(ai)*(R-24))}" y="${f1(CY+Math.sin(ai)*(R-20))}" class="t-xs t-mid" style="fill:${mNow>=m?'var(--ink)':'var(--muted)'}">${m+1}</text>`}
-    // event dots
-    E.forEach(e=>{const a=ang(e.m),x=CX+Math.cos(a)*R,y=CY+Math.sin(a)*R,hit=mNow>=e.m;
-      s+=`<circle cx="${f1(x)}" cy="${f1(y)}" r="${hit?9:6}" style="fill:${hit?e.c:'var(--panel)'};stroke:${e.c};stroke-width:2"/>`;
-      if(hit)s+=`<circle cx="${f1(x)}" cy="${f1(y)}" r="${f1(9+9*bump(mNow,e.m,e.m+.6))}" style="fill:none;stroke:${e.c};stroke-width:1.5;opacity:${f1(.8*bump(mNow,e.m,e.m+.6))}"/>`});
+    // event dots. in narrow each carries its number from the list below
+    let curI=-1;E.forEach((e,i)=>{if(mNow>=e.m)curI=i});
+    E.forEach((e,i)=>{const a=ang(e.m),x=CX+Math.cos(a)*R,y=CY+Math.sin(a)*R,hit=mNow>=e.m,now=i===curI;
+      if(N&&now)s+=`<circle cx="${f1(x)}" cy="${f1(y)}" r="17" style="fill:${e.c};opacity:.18"/>`;
+      s+=`<circle cx="${f1(x)}" cy="${f1(y)}" r="${hit?(N&&now?11:9):6}" style="fill:${hit?e.c:'var(--panel)'};stroke:${e.c};stroke-width:${N&&now?3:2}"/>`;
+      if(hit)s+=`<circle cx="${f1(x)}" cy="${f1(y)}" r="${f1(9+9*bump(mNow,e.m,e.m+.6))}" style="fill:none;stroke:${e.c};stroke-width:1.5;opacity:${f1(.8*bump(mNow,e.m,e.m+.6))}"/>`;
+      if(N){const xo=CX+Math.cos(a)*(R+19),yo=CY+Math.sin(a)*(R+19);
+        s+=`<text x="${f1(xo)}" y="${f1(yo+3.5)}" class="t-xs t-mid" style="fill:${hit?e.c:'var(--muted)'};font-weight:700">${i+1}</text>`}});
     // moving hand
     const a=ang(mNow);
     s+=`<line x1="${CX}" x2="${f1(CX+Math.cos(a)*(R-34))}" y1="${CY}" y2="${f1(CY+Math.sin(a)*(R-34))}" style="stroke:var(--terra);stroke-width:2.4"/>`;
@@ -73,13 +83,15 @@ inits.living=()=>{
     s+=`<text x="${CX}" y="${CY-8}" class="t-sm t-mid">MONTH</text>`;
     s+=`<text x="${CX}" y="${CY+22}" class="t-big t-mid" style="font-size:28px">${(mNow+.0001).toFixed(1)}</text>`;
     s+=`<text x="${CX}" y="${CY+42}" class="t-xs t-mid">${E.filter(e=>mNow>=e.m).length} of ${E.length} events reached</text>`;
-    // right-hand list
-    s+=`<text x="432" y="38" class="t-sm" style="fill:var(--sea)">THIS YEAR, IN ORDER</text>`;
-    E.forEach((e,i)=>{const y=62+i*31,hit=mNow>=e.m;
-      s+=`<circle cx="442" cy="${y-4}" r="5" style="fill:${hit?e.c:'var(--panel)'};stroke:${e.c};stroke-width:1.8"/>`;
-      s+=`<text x="456" y="${y}" class="t-lbl" style="fill:${hit?'var(--ink)':'var(--muted)'};font-size:12.5px">${e.t}</text>`;
-      s+=`<text x="712" y="${y}" class="t-xs t-end">m${e.m.toFixed(1)}</text>`});
-    if(E.length<7)s+=`<text x="456" y="${62+E.length*31+16}" class="t-xs">use the toggles to add more</text>`;
+    // the event list: beside the ring when wide, under it when narrow
+    s+=`<text x="${LHX}" y="${LHD}" class="t-sm" style="fill:var(--sea)">THIS YEAR, IN ORDER</text>`;
+    E.forEach((e,i)=>{const y=LY+i*LST,hit=mNow>=e.m,now=i===curI;
+      if(N&&now)s+=`<rect x="${LX-6}" y="${y-18}" width="${LRX-LX+12}" height="24" rx="7" style="fill:${e.c};opacity:.14"/>`;
+      if(N)s+=`<text x="${LX+10}" y="${y}" class="t-xs t-end" style="fill:${hit?e.c:'var(--muted)'};font-weight:700">${i+1}</text>`;
+      s+=`<circle cx="${N?LX+24:LX+10}" cy="${y-4}" r="${now&&N?6:5}" style="fill:${hit?e.c:'var(--panel)'};stroke:${e.c};stroke-width:1.8"/>`;
+      s+=`<text x="${LTX}" y="${y}" class="t-lbl" style="fill:${hit?'var(--ink)':'var(--muted)'};font-size:12.5px">${e.t}</text>`;
+      s+=`<text x="${LRX}" y="${y}" class="t-xs t-end">m${e.m.toFixed(1)}</text>`});
+    if(E.length<7)s+=`<text x="${LTX}" y="${LY+E.length*LST+16}" class="t-xs">use the toggles to add more</text>`;
     svg.innerHTML=s;
     const p=phaseOf(LV_STEPS,t);setSt(p);
     const past=E.filter(e=>mNow>=e.m);const last=past[past.length-1];
@@ -106,8 +118,42 @@ inits.living=()=>{
    {h:'LARGEST QUESTIONNAIRE STUDY · 882 patients',y:282},
    {l:'psychological stress',v:75.2,y:302}
   ];
+  const LV_TRIGN=['REPORTED TRIGGERS · SEROSITIS · 275 patients','MUSCULOSKELETAL ATTACKS · same study','LARGEST QUESTIONNAIRE STUDY · 882 patients'];
+  /* narrow: bars run the full width with their label on the line above, so a long
+     label like "menstruation (of women)" no longer needs a left gutter */
+  function drawTN(t){
+    const BX0=14,BX1=300;let s='',y=30,bi=0,hi=0;
+    const tops=[];
+    LV_TRIG.forEach(r=>{if(r.h){y+=bi?30:22;tops.push(y)}else{y+=44;bi++}});
+    const barTop=tops[0]-12, barBot=y-2;
+    [0,25,50,75,100].forEach(v=>{const x=lerp(BX0,BX1,v/100);
+      s+=`<line x1="${f1(x)}" x2="${f1(x)}" y1="${barTop}" y2="${barBot}" class="grid"/><text x="${f1(x)}" y="${barBot+16}" class="t-xs t-mid">${v}%</text>`});
+    y=30;bi=0;
+    LV_TRIG.forEach(r=>{
+      if(r.h){y+=bi?30:22;s+=`<text x="14" y="${y}" class="t-sm" style="fill:var(--terra)">${LV_TRIGN[hi++]}</text>`;return}
+      const k=ease(ramp(t,bi*.08,bi*.08+.4)),w=(BX1-BX0)*r.v/100*k;bi++;
+      s+=`<text x="14" y="${y+16}" class="t-xs" style="fill:var(--ink)">${r.l}</text>`;
+      s+=`<rect x="${BX0}" y="${y+22}" width="${f1(w)}" height="18" rx="4" style="fill:var(--terra)"/>`;
+      s+=`<text x="${f1(BX0+w+7)}" y="${y+35}" class="t-xs" style="fill:var(--terra);font-weight:700;opacity:${f1(ramp(k,.6,1))}">${f1(r.v)}%</text>`;
+      y+=44});
+    // case-crossover block
+    y=barBot+42;
+    const o=ease(ramp(t,.6,.95));
+    s+=`<g style="opacity:${f1(.12+.88*o)}"><text x="14" y="${y}" class="t-sm" style="fill:var(--sea)">CASE-CROSSOVER · 104 patients, each vs themselves</text>`;y+=10;
+    const chips=[[['each extra stressful event: odds of an attack','2 days later up ~70%'],'var(--sea)','var(--sea-soft)'],
+                 [['strenuous exercise: no rise in odds'],'var(--good)','var(--good-soft)'],
+                 [['high-fat meals: no rise in odds'],'var(--good)','var(--good-soft)']];
+    chips.forEach(c=>{const h=c[0].length*14+10;
+      s+=`<rect x="14" y="${y}" width="372" height="${h}" rx="6" style="fill:${c[2]};stroke:${c[1]}"/>`;
+      c[0].forEach((l,j)=>{s+=`<text x="24" y="${y+15+j*14}" class="t-xs" style="fill:${c[1]}">${l}</text>`});
+      y+=h+8});
+    s+='</g>';
+    return s;
+  }
   function drawT(t){
-    const BX0=218,BX1=662;let s=`<rect x="0" y="0" width="720" height="420" style="fill:var(--field)"/>`;
+    const N=vb(ts,'720 420','400 592');
+    const BX0=218,BX1=662;let s=`<rect x="0" y="0" width="100%" height="100%" style="fill:var(--field)"/>`;
+    if(N){ts.innerHTML=s+drawTN(t);return}
     [0,25,50,75,100].forEach(v=>{const x=lerp(BX0,BX1,v/100);
       s+=`<line x1="${f1(x)}" x2="${f1(x)}" y1="56" y2="316" class="grid"/><text x="${f1(x)}" y="332" class="t-xs t-mid">${v}%</text>`});
     let bi=0;
@@ -133,29 +179,44 @@ inits.living=()=>{
 
   /* ---- quality of life ---- */
   const qs=$('#lvQol'),qr=$('#lvQ');
+  /* a room of twenty figures per row: the published percentage is the shaded share
+     of the row, and the figure itself is still printed beside it */
   const LV_Q=[
-   {l:'work absenteeism',s2:'111 adults',a:9.3,p:0.7},
-   {l:'presenteeism',s2:'output lost at work',a:35.2,p:9.6},
-   {l:'depression',s2:'diagnosed, n=7,670',a:6.22,p:4.58},
-   {l:'anxiety',s2:'same database',a:4.93,p:3.14}
+   {l:'WORK TIME MISSED · absenteeism · 111 adults',a:9.3,p:0.7},
+   {l:'OUTPUT LOST WHILE AT WORK · presenteeism · same study',a:35.2,p:9.6},
+   {l:'DEPRESSION DIAGNOSED · 7,670 patients vs matched controls',n:'DEPRESSION DIAGNOSED · 7,670 vs matched controls',a:6.22,p:4.58},
+   {l:'ANXIETY DIAGNOSED · same database',a:4.93,p:3.14}
   ];
+  const person=(x,y,fill,stroke)=>`<g transform="translate(${f1(x)} ${f1(y)})"><circle cx="0" cy="-17" r="3.6" style="fill:${fill};stroke:${stroke};stroke-width:1.1"/><path d="M-4.6 0V-8q0 -5 4.6 -5q4.6 0 4.6 5V0z" style="fill:${fill};stroke:${stroke};stroke-width:1.1;stroke-linejoin:round"/></g>`;
+  const LV_SCH=['school: 129 adolescents with FMF had lower grade-point averages and lower','school-functioning scores than controls (P=0.001). No percentage is reported.'];
+  const LV_SCHN=['school: 129 adolescents with FMF had lower grade-point','averages and school-functioning scores than controls','(P=0.001). No percentage is reported.'];
   function drawQ(t){
-    const X0=118,X1=700,Y=244,TOP=56,sc=v=>Y-(Y-TOP)*v/40;
-    let s=`<rect x="0" y="0" width="720" height="330" style="fill:var(--field)"/>`;
-    s+=`<text x="14" y="32" class="t-sm" style="fill:var(--terra)">WORK, MOOD · FMF vs controls (percent)</text>`;
-    [0,10,20,30,40].forEach(v=>{s+=`<line x1="${X0}" x2="${X1}" y1="${f1(sc(v))}" y2="${f1(sc(v))}" class="grid"/><text x="${X0-8}" y="${f1(sc(v)+3)}" class="t-xs t-end">${v}%</text>`});
-    s+=`<line x1="${X0}" x2="${X1}" y1="${Y}" y2="${Y}" class="axis"/>`;
-    const gw=(X1-X0)/LV_Q.length;
-    LV_Q.forEach((g,i)=>{const cx=X0+gw*(i+.5),k=ease(ramp(t,i*.12,i*.12+.46)),bw=32;
-      [[g.p,'var(--muted)'],[g.a,'var(--terra)']].forEach((pr,j)=>{const x=cx-(2*bw+10)/2+j*(bw+10),h=(Y-TOP)*pr[0]/40*k;
-        s+=`<rect x="${f1(x)}" y="${f1(Y-h)}" width="${bw}" height="${f1(h)}" rx="3" style="fill:${pr[1]}"/>`;
-        s+=`<text x="${f1(x+bw/2)}" y="${f1(Y-h-6)}" class="t-xs t-mid" style="fill:${pr[1]};font-weight:700;opacity:${f1(ramp(k,.6,1))}">${pr[0]}</text>`});
-      s+=`<text x="${f1(cx)}" y="${Y+18}" class="t-xs t-mid" style="fill:var(--ink)">${g.l}</text>`;
-      s+=`<text x="${f1(cx)}" y="${Y+31}" class="t-xs t-mid">${g.s2}</text>`});
+    const N=vb(qs,'720 440','400 492');
+    const L=N?{FX:14,PT:15,Y0:60,BP:92,R1:38,R2:72,VX:316,NM:0,SY:424,SH:60,SL:LV_SCHN}
+             :{FX:176,PT:19,Y0:46,BP:88,R1:36,R2:70,VX:556,NM:168,SY:396,SH:44,SL:LV_SCH};
+    const wtot=19*L.PT+9.2;
+    let s=`<rect x="0" y="0" width="100%" height="100%" style="fill:var(--field)"/>`;
+    s+=`<text x="14" y="22" class="t-sm" style="fill:var(--terra)">WORK AND MOOD · FMF vs matched controls</text>`;
+    s+=N?`<text x="14" y="36" class="t-xs">each row of 20 figures = 100%, shaded by the percentage</text>`
+        :`<text x="706" y="22" class="t-xs t-end">each row of 20 figures = 100%; the shaded share is the published percentage</text>`;
+    LV_Q.forEach((g,i)=>{const y0=L.Y0+i*L.BP,k=ease(ramp(t,i*.12,i*.12+.46));
+      s+=`<text x="14" y="${y0}" class="t-sm" style="fill:var(--ink)">${N&&g.n?g.n:g.l}</text>`;
+      [[g.a,'var(--terra)','FMF',L.R1,0],[g.p,'var(--muted)','controls',L.R2,1]].forEach(pr=>{
+        const yb=y0+pr[3],id=`lvq${i}${pr[4]}`;
+        s+=`<line x1="${f1(L.FX-7)}" x2="${f1(L.FX+wtot+3)}" y1="${f1(yb+3)}" y2="${f1(yb+3)}" style="stroke:var(--line);stroke-width:1.2"/>`;
+        let base='',full='';
+        for(let j=0;j<20;j++){const x=L.FX+j*L.PT;
+          base+=person(x,yb,'var(--panel-2)','var(--line)');full+=person(x,yb,pr[1],pr[1])}
+        s+=base;
+        s+=`<clipPath id="${id}"><rect x="${f1(L.FX-5)}" y="${f1(yb-24)}" width="${f1(wtot*pr[0]/100*k)}" height="28"/></clipPath>`;
+        s+=`<g clip-path="url(#${id})">${full}</g>`;
+        if(L.NM)s+=`<text x="${L.NM}" y="${f1(yb)}" class="t-xs t-end" style="fill:${pr[1]}">${pr[2]}</text>`;
+        s+=`<text x="${L.VX}" y="${f1(N?yb-2:yb)}" class="t-lbl" style="fill:${pr[1]};opacity:${f1(ramp(k,.5,1))}">${pr[0]}%</text>`;
+        if(!L.NM)s+=`<text x="${L.VX}" y="${f1(yb+11)}" class="t-xs" style="fill:${pr[1]}">${pr[2]}</text>`})});
     const o=ease(ramp(t,.6,1));
-    s+=`<g style="opacity:${f1(.12+.88*o)}"><rect x="14" y="282" width="690" height="42" rx="8" style="fill:var(--panel);stroke:var(--line)"/>`;
-    s+=`<text x="28" y="300" class="t-xs" style="fill:var(--ink)">school: 129 adolescents with FMF had lower grade-point averages and lower</text>`;
-    s+=`<text x="28" y="315" class="t-xs" style="fill:var(--ink)">school-functioning scores than controls (P=0.001). No percentage is reported.</text></g>`;
+    s+=`<g style="opacity:${f1(.12+.88*o)}"><rect x="14" y="${L.SY}" width="${N?372:692}" height="${L.SH}" rx="8" style="fill:var(--panel);stroke:var(--line)"/>`;
+    L.SL.forEach((l,i)=>{s+=`<text x="28" y="${L.SY+18+i*15}" class="t-xs" style="fill:var(--ink)">${l}</text>`});
+    s+='</g>';
     qs.innerHTML=s;
   }
   playWire(qr,$('#lvQPlay'),drawQ,8000,'Replay','living');drawQ(+qr.value);

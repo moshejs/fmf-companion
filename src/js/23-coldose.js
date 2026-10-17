@@ -63,10 +63,15 @@ inits.coldose=()=>{
       const k=h>=72?KE/fc:KE,ab=KA*g*DT;g-=ab;c+=ab-k*c*DT;a[i]=c*NORM}return a}
   const cache={};
   function get(key,capped){const id=key+(capped?'c':'');if(cache[id])return cache[id];const D=CD_DRUGS[key];return cache[id]=sim(D.fb,D.fc,capped&&D.cap?D.cap/BASE:1)}
-  const X0=64,X1=700,Y0=322,Y1=46,VM=5;
+  let X0=64,X1=700,Y0=322,Y1=46;const VM=5;
   const xh=h=>X0+(X1-X0)*h/NH,yv=v=>Y0-(Y0-Y1)*Math.min(v,VM+.15)/VM;
   function pth(a,i0,i1){let d='';for(let i=i0;i<=i1;i+=2)d+=(d?'L':'M')+f1(xh(i*DT))+' '+f1(yv(a[i]));if(i1>i0&&(i1-i0)%2)d+='L'+f1(xh(i1*DT))+' '+f1(yv(a[i1]));return d}
   function draw(t){
+    /* narrow: same chart, full 400 wide and taller; axis notes and the day-3
+       annotation stack instead of sitting side by side, so the longest drug
+       names cannot run off the right edge. */
+    const N=vb(svg,'720 372','400 452');
+    X0=N?40:64;X1=N?384:700;Y0=N?372:322;Y1=N?74:46;
     const D=CD_DRUGS[dk],hasCap=capOn&&D.cap!=null,A=get(dk,hasCap),R=get('none',false),U=hasCap?get(dk,false):null;
     const iN=Math.round(t*NI),hN=iN*DT,df=hasCap?D.cap/BASE:1,fEff=D.f*df;
     const col=fEff>2.2?'var(--bad)':fEff>1.6?'var(--warn)':'var(--crocus)';
@@ -74,13 +79,16 @@ inits.coldose=()=>{
     s+=`<rect x="${X0}" y="${Y1}" width="${X1-X0}" height="${f1(yv(2.2)-Y1)}" style="fill:url(#cdTox)"/>`;
     s+=`<rect x="${X0}" y="${f1(yv(1.55))}" width="${X1-X0}" height="${f1(yv(.55)-yv(1.55))}" style="fill:var(--good-soft);opacity:.85"/>`;
     for(let v=0;v<=VM;v++)s+=`<line x1="${X0}" x2="${X1}" y1="${f1(yv(v))}" y2="${f1(yv(v))}" class="grid"/><text x="${X0-6}" y="${f1(yv(v)+3)}" class="t-xs t-end">${v}×</text>`;
-    for(let d=0;d<=10;d++)s+=`<text x="${f1(xh(d*24))}" y="${Y0+16}" class="t-xs t-mid">${d}</text>`;
-    s+=`<text x="${X1}" y="${Y0+34}" class="t-xs t-end">days of once-daily dosing</text><text x="${X0}" y="${Y0+34}" class="t-xs">exposure vs usual average · schematic model, not measured data</text>`;
-    s+=`<text x="${X1-6}" y="${Y1+14}" class="t-sm t-end" style="fill:var(--bad)">toxicity risk rises · no sharp threshold</text>`;
+    for(let d=0;d<=10;d+=(N?2:1))s+=`<text x="${f1(xh(d*24))}" y="${Y0+16}" class="t-xs t-mid">${d}</text>`;
+    if(N)s+=`<text x="${f1((X0+X1)/2)}" y="${Y0+32}" class="t-xs t-mid">days of once-daily dosing</text><text x="${X0}" y="${Y0+50}" class="t-xs">exposure vs usual average</text><text x="${X0}" y="${Y0+63}" class="t-xs">schematic model, not measured data</text>`;
+    else s+=`<text x="${X1}" y="${Y0+34}" class="t-xs t-end">days of once-daily dosing</text><text x="${X0}" y="${Y0+34}" class="t-xs">exposure vs usual average · schematic model, not measured data</text>`;
+    s+=`<text x="${N?X0:X1-6}" y="${N?22:Y1+14}" class="t-sm ${N?'':'t-end'}" style="fill:var(--bad)">toxicity risk rises · no sharp threshold</text>`;
     s+=`<text x="${X0+6}" y="${f1(yv(1.55)+12)}" class="t-xs" style="fill:var(--good)">usual range (schematic)</text>`;
     const x3=xh(72);
     s+=`<line x1="${f1(x3)}" x2="${f1(x3)}" y1="${Y1-14}" y2="${Y0}" style="stroke:var(--ink);stroke-width:1.2;stroke-dasharray:3 4;opacity:.55"/>`;
-    s+=`<text x="${f1(x3+6)}" y="${Y1-6}" class="t-lbl">day 3: ${dk==='none'?'nothing added':'+ '+D.sh}${hasCap?' · label cap '+D.cap+' mg/day':''}</text>`;
+    if(N){s+=`<text x="${f1(x3+6)}" y="${Y1-26}" class="t-lbl">day 3: ${dk==='none'?'nothing added':'+ '+D.sh}</text>`;
+      if(hasCap)s+=`<text x="${f1(x3+6)}" y="${Y1-10}" class="t-xs" style="fill:${col}">label cap ${D.cap} mg/day</text>`}
+    else s+=`<text x="${f1(x3+6)}" y="${Y1-6}" class="t-lbl">day 3: ${dk==='none'?'nothing added':'+ '+D.sh}${hasCap?' · label cap '+D.cap+' mg/day':''}</text>`;
     // dose markers
     for(let d=0;d<10;d++){const h=d*24;if(h>hN+.01)break;const fr=h>=72&&hasCap?df:1;s+=`<rect x="${f1(xh(h)-3)}" y="${f1(Y0-2-16*fr)}" width="6" height="${f1(16*fr)}" rx="2" style="fill:var(--crocus);opacity:.75"/>`}
     // curves
@@ -106,23 +114,30 @@ inits.coldose=()=>{
   const ag=$('#cdAge'),asv=$('#cdAgeSvg');let cur=null,stopT=null;
   function target(a){const child=a<18,e=a<5?[0,.5]:a<=10?[.5,1]:[1,1.5],l=a<4?null:a<6?[.3,1.8]:a<=12?[.9,1.8]:[1.2,2.4];
     return{e0:e[0],e1:e[1],mx:child?2:3,l0:l?l[0]:0,l1:l?l[1]:0,hasL:!!l,child,es:a<5?'≤0.5':a<=10?'0.5–1.0':'1.0–1.5',ls:l?l[0]+'–'+l[1]:''}}
-  const AX0=170,AX1=690,MXS=3.5,xm=m=>AX0+(AX1-AX0)*m/MXS;
-  function drawAge(v,T,a){let s='';
-    for(let m=0;m<=MXS+.01;m+=.5)s+=`<line x1="${f1(xm(m))}" x2="${f1(xm(m))}" y1="24" y2="188" class="grid"/><text x="${f1(xm(m))}" y="204" class="t-xs t-mid">${m}</text>`;
-    s+=`<text x="${AX1}" y="220" class="t-xs t-end">mg per day</text>`;
-    s+=`<text x="10" y="58" class="t-lbl">EULAR 2016</text><text x="10" y="73" class="t-xs">same ceilings in 2024</text>`;
-    s+=`<text x="10" y="88" class="t-xs" style="fill:var(--muted)">the sources give no age</text><text x="10" y="99" class="t-xs" style="fill:var(--muted)">cut-off: 18 is this app's</text><text x="10" y="110" class="t-xs" style="fill:var(--muted)">assumption</text>`;
-    s+=`<rect x="${f1(xm(v.e1))}" y="48" width="${f1(Math.max(0,xm(v.mx)-xm(v.e1)))}" height="20" rx="4" style="fill:var(--crocus-soft);stroke:var(--crocus);stroke-opacity:.3"/>`;
-    for(let m=v.e1+.25;m<v.mx-.05;m+=.25)s+=`<line x1="${f1(xm(m))}" x2="${f1(xm(m))}" y1="52" y2="64" style="stroke:var(--crocus);opacity:.4"/>`;
-    s+=`<rect x="${f1(xm(v.e0))}" y="44" width="${f1(Math.max(5,xm(v.e1)-xm(v.e0)))}" height="28" rx="5" style="fill:var(--crocus)"/>`;
-    s+=`<line x1="${f1(xm(v.mx))}" x2="${f1(xm(v.mx))}" y1="42" y2="78" style="stroke:var(--bad);stroke-width:3"/>`;
-    s+=`<text x="${f1(xm(v.e0))}" y="34" class="t-sm" style="fill:var(--crocus)">start ${T.es} mg/day</text>`;
-    s+=`<text x="${f1(xm(v.mx)+7)}" y="63" class="t-sm" style="fill:var(--bad)">max ${T.mx}</text>`;
-    if(T.child)s+=`<line x1="${f1(xm(2.5))}" x2="${f1(xm(2.5))}" y1="46" y2="76" style="stroke:var(--muted);stroke-width:1.5;stroke-dasharray:3 3"/><text x="${f1(xm(2.5))}" y="92" class="t-xs t-mid">2007 paediatric consensus: 2.5</text>`;
-    s+=`<text x="10" y="132" class="t-lbl">US label (FMF)</text><text x="10" y="147" class="t-xs">COLCRYS</text>`;
-    if(T.hasL){s+=`<rect x="${f1(xm(v.l0))}" y="122" width="${f1(Math.max(4,xm(v.l1)-xm(v.l0)))}" height="26" rx="5" style="fill:var(--sea);opacity:.85"/><text x="${f1(xm(v.l0))}" y="114" class="t-sm" style="fill:var(--sea)">label range ${T.ls} mg/day</text>`}
-    else s+=`<text x="${AX0}" y="139" class="t-sm">The label ranges in our source start at age 4.</text>`;
-    s+=`<text x="10" y="178" class="t-lbl">Steps</text><text x="${AX0}" y="178" class="t-xs">EULAR 2016: 0.5 mg/day · German consensus: 0.25 or 0.5 mg · label: 0.3 mg/day</text>`;
+  let AX0=170,AX1=690;const MXS=3.5,xm=m=>AX0+(AX1-AX0)*m/MXS;
+  function drawAge(v,T,a){
+    /* narrow: the two bars and the step note stack down the page, each with its
+       own heading above it, so the mg/day figures keep their full size. */
+    const N=vb(asv,'720 226','400 392');
+    AX0=N?24:170;AX1=N?376:690;
+    const LX=N?16:10,EB=N?80:44,LB=N?200:122,CY=N?352:88;
+    let s='';
+    for(let m=0;m<=MXS+.01;m+=.5)s+=`<line x1="${f1(xm(m))}" x2="${f1(xm(m))}" y1="${N?56:24}" y2="${N?232:188}" class="grid"/><text x="${f1(xm(m))}" y="${N?248:204}" class="t-xs t-mid">${m}</text>`;
+    s+=`<text x="${AX1}" y="${N?264:220}" class="t-xs t-end">mg per day</text>`;
+    s+=`<text x="${LX}" y="${N?30:58}" class="t-lbl">EULAR 2016</text><text x="${LX}" y="${N?44:73}" class="t-xs">same ceilings in 2024</text>`;
+    s+=`<text x="${LX}" y="${CY}" class="t-xs" style="fill:var(--muted)">the sources give no age</text><text x="${LX}" y="${CY+11}" class="t-xs" style="fill:var(--muted)">cut-off: 18 is this app's</text><text x="${LX}" y="${CY+22}" class="t-xs" style="fill:var(--muted)">assumption</text>`;
+    s+=`<rect x="${f1(xm(v.e1))}" y="${EB+4}" width="${f1(Math.max(0,xm(v.mx)-xm(v.e1)))}" height="20" rx="4" style="fill:var(--crocus-soft);stroke:var(--crocus);stroke-opacity:.3"/>`;
+    for(let m=v.e1+.25;m<v.mx-.05;m+=.25)s+=`<line x1="${f1(xm(m))}" x2="${f1(xm(m))}" y1="${EB+8}" y2="${EB+20}" style="stroke:var(--crocus);opacity:.4"/>`;
+    s+=`<rect x="${f1(xm(v.e0))}" y="${EB}" width="${f1(Math.max(5,xm(v.e1)-xm(v.e0)))}" height="28" rx="5" style="fill:var(--crocus)"/>`;
+    s+=`<line x1="${f1(xm(v.mx))}" x2="${f1(xm(v.mx))}" y1="${EB-2}" y2="${EB+34}" style="stroke:var(--bad);stroke-width:3"/>`;
+    s+=`<text x="${f1(xm(v.e0))}" y="${EB-10}" class="t-sm" style="fill:var(--crocus)">start ${T.es} mg/day</text>`;
+    s+=`<text x="${f1(xm(v.mx)+7)}" y="${EB+19}" class="t-sm" style="fill:var(--bad)">max ${T.mx}</text>`;
+    if(T.child)s+=`<line x1="${f1(xm(2.5))}" x2="${f1(xm(2.5))}" y1="${EB+2}" y2="${EB+32}" style="stroke:var(--muted);stroke-width:1.5;stroke-dasharray:3 3"/><text x="${f1(xm(2.5))}" y="${EB+48}" class="t-xs t-mid">2007 paediatric consensus: 2.5</text>`;
+    s+=`<text x="${LX}" y="${N?156:132}" class="t-lbl">US label (FMF)</text><text x="${LX}" y="${N?170:147}" class="t-xs">COLCRYS</text>`;
+    if(T.hasL){s+=`<rect x="${f1(xm(v.l0))}" y="${LB}" width="${f1(Math.max(4,xm(v.l1)-xm(v.l0)))}" height="26" rx="5" style="fill:var(--sea);opacity:.85"/><text x="${f1(xm(v.l0))}" y="${LB-8}" class="t-sm" style="fill:var(--sea)">label range ${T.ls} mg/day</text>`}
+    else s+=`<text x="${N?LX:AX0}" y="${LB+17}" class="t-sm">The label ranges in our source start at age 4.</text>`;
+    if(N)s+=`<text x="${LX}" y="290" class="t-lbl">Steps</text><text x="${LX}" y="306" class="t-xs">EULAR 2016: 0.5 mg/day</text><text x="${LX}" y="318" class="t-xs">German consensus: 0.25 or 0.5 mg</text><text x="${LX}" y="330" class="t-xs">label: 0.3 mg/day</text>`;
+    else s+=`<text x="10" y="178" class="t-lbl">Steps</text><text x="${AX0}" y="178" class="t-xs">EULAR 2016: 0.5 mg/day · German consensus: 0.25 or 0.5 mg · label: 0.3 mg/day</text>`;
     asv.innerHTML=s;
     $('#cdAgeOut').textContent=a+' y';
     $('#cdAgeRead').innerHTML=`<span>age <b>${a} y</b> (${T.child?'child':'adult'})</span><span>EULAR start <b>${T.es} mg/day</b></span><span>EULAR max <b>${T.mx} mg/day</b></span><span>US label <b>${T.hasL?T.ls+' mg/day':'no range under 4'}</b></span>`;
@@ -136,9 +151,13 @@ inits.coldose=()=>{
   /* ---------- 3. organ map ---------- */
   const osv=$('#cdOrgSvg');let org='gut';
   function drawOrg(){
+    /* narrow: the body stays central in a full-width 400 stage and the two label
+       columns move outward with it; every organ group keeps its own hit area. */
+    const N=vb(osv,'360 430','400 440');
+    const DX=N?20:0,LLX=N?96:58,RLX=N?304:300;
     const on=k=>k===org;
     const st=k=>on(k)?'fill:var(--bad-soft);stroke:var(--bad);stroke-width:2.4':'fill:var(--panel);stroke:var(--muted);stroke-width:1.2';
-    let s='';
+    let s=`<g transform="translate(${DX} 0)">`;
     // body
     s+=`<g style="fill:var(--panel-2);stroke:var(--line);stroke-width:1.5"><circle cx="180" cy="46" r="30"/><rect x="166" y="72" width="28" height="18"/><rect x="118" y="86" width="124" height="190" rx="32"/><rect x="86" y="96" width="30" height="176" rx="14"/><rect x="244" y="96" width="30" height="176" rx="14"/><rect x="126" y="262" width="50" height="160" rx="18"/><rect x="184" y="262" width="50" height="160" rx="18"/></g>`;
     const G=(k,inner,cx,cy,r)=>`<g class="clk" data-org="${k}" role="button" tabindex="0" aria-label="${CD_ORG[k].n}">${on(k)?`<circle class="cd-pulse" cx="${cx}" cy="${cy}" r="${r}" style="fill:var(--bad)"/>`:''}${inner}</g>`;
@@ -156,9 +175,10 @@ inits.coldose=()=>{
     // gut
     let gi='';[[166,214],[184,212],[202,216],[160,232],[178,234],[196,232],[170,250],[190,250]].forEach(([x,y])=>gi+=`<circle cx="${x}" cy="${y}" r="9" style="${st('gut')}"/>`);
     s+=G('gut',gi,181,232,34);
-    // labels with leaders
-    const L=(k,x,y,tx,ty,anchor)=>`<line x1="${x}" y1="${y}" x2="${tx+(anchor==='end'?4:-4)}" y2="${ty-4}" style="stroke:var(--muted);stroke-width:1"/><text x="${tx}" y="${ty}" class="t-sm ${anchor==='end'?'t-end':''}" style="fill:${on(k)?'var(--bad)':'var(--muted)'};font-weight:${on(k)?700:500}">${k}</text>`;
-    s+=L('muscle',96,130,58,118,'end')+L('liver',132,154,58,160,'end')+L('gut',156,240,58,246,'end')+L('nerves',262,128,300,118,'')+L('kidney',226,198,300,200,'')+L('marrow',216,340,300,334,'');
+    s+=`</g>`;
+    // labels with leaders (organ end of the leader follows the body's shift)
+    const L=(k,x,y,tx,ty,anchor)=>`<line x1="${x+DX}" y1="${y}" x2="${tx+(anchor==='end'?4:-4)}" y2="${ty-4}" style="stroke:var(--muted);stroke-width:1"/><text x="${tx}" y="${ty}" class="t-sm ${anchor==='end'?'t-end':''}" style="fill:${on(k)?'var(--bad)':'var(--muted)'};font-weight:${on(k)?700:500}">${k}</text>`;
+    s+=L('muscle',96,130,LLX,118,'end')+L('liver',132,154,LLX,160,'end')+L('gut',156,240,LLX,246,'end')+L('nerves',262,128,RLX,118,'')+L('kidney',226,198,RLX,200,'')+L('marrow',216,340,RLX,334,'');
     osv.innerHTML=s;
     const O=CD_ORG[org];
     $('#cdOrgNote').innerHTML=`<div class="kicker">Toxicity map</div><h4>${O.n}</h4><dl class="kv"><div><dt>What is reported</dt><dd>${O.rep}</dd></div><div><dt>What is monitored</dt><dd>${O.mon}</dd></div></dl>`;
@@ -172,7 +192,7 @@ inits.coldose=()=>{
 
   /* ---------- 4. kidney gauge ---------- */
   const cr=$('#cdCr'),rsv=$('#cdRenSvg'),dial=$('#cdDial');let dOn=false,ptr=null,stopR=null;
-  const GX0=16,GX1=444,gx=c=>GX0+(GX1-GX0)*clamp(c/120);
+  let GX0=16,GX1=444;const gx=c=>GX0+(GX1-GX0)*clamp(c/120);
   function cat(c){if(dOn)return{k:'dialysis',n:'On dialysis',col:'var(--bad)'};if(c<30)return{k:'severe',n:'Severe (<30)',col:'var(--bad)'};if(c<50)return{k:'moderate',n:'Moderate (30–50)',col:'var(--warn)'};if(c<=80)return{k:'mild',n:'Mild (50–80)',col:'var(--gold)'};return{k:'normal',n:'Above 80',col:'var(--good)'}}
   const REN={
    normal:`Above 80 mL/min the label's kidney-impairment advice does not apply. [[FDA-Colcrys]]`,
@@ -181,14 +201,15 @@ inits.coldose=()=>{
    severe:`Label (FMF): with CrCl below 30 mL/min, start at 0.3 mg/day and increase only with close monitoring. One review cites a 50% reduction below 50 mL/min; another reports a half-life 2–3 times longer in severe kidney failure. [[FDA-Colcrys,Leung2015,BenChetrit2018Textbook]]`,
    dialysis:`Label (FMF): start at 0.3 mg/day and increase only with close monitoring. Dialysis does not remove colchicine. In FMF patients on dialysis, clearance was 75% lower (0.17 vs 0.73 L/h/kg) and half-life longer (18.8 vs 4.4 h) than with normal kidneys, in that study's design. [[FDA-Colcrys]]`};
   function drawRen(p,c){const C=cat(c);let s='';
-    [[0,30,'var(--bad-soft)','severe'],[30,50,'var(--warn-soft)','moderate'],[50,80,'var(--gold-soft)','mild'],[80,120,'var(--good-soft)','no adjustment']].forEach(([a,b,f,l])=>{s+=`<rect x="${f1(gx(a))}" y="60" width="${f1(gx(b)-gx(a))}" height="34" style="fill:${f}"/><text x="${f1((gx(a)+gx(b))/2)}" y="81" class="t-xs t-mid">${l}</text>`});
+    const NR=vb(rsv,'460 200','400 240');GX0=NR?12:16;GX1=NR?388:444;
+    [[0,30,'var(--bad-soft)','severe'],[30,50,'var(--warn-soft)',NR?'mod.':'moderate'],[50,80,'var(--gold-soft)','mild'],[80,120,'var(--good-soft)',NR?'none':'no adjustment']].forEach(([a,b,f,l])=>{s+=`<rect x="${f1(gx(a))}" y="60" width="${f1(gx(b)-gx(a))}" height="34" style="fill:${f}"/><text x="${f1((gx(a)+gx(b))/2)}" y="81" class="t-xs t-mid">${l}</text>`});
     s+=`<rect x="${GX0}" y="60" width="${GX1-GX0}" height="34" rx="3" style="fill:none;stroke:var(--line)"/>`;
     [0,30,50,80,120].forEach(v=>s+=`<text x="${f1(gx(v))}" y="112" class="t-xs t-mid">${v}</text>`);
     s+=`<text x="${GX1}" y="128" class="t-xs t-end">mL/min</text>`;
     const px=gx(p);s+=`<path d="M${f1(px)} 56 l-8 -14 h16z" style="fill:${C.col}"/><line x1="${f1(px)}" x2="${f1(px)}" y1="56" y2="98" style="stroke:var(--ink);stroke-width:2"/>`;
     s+=`<text x="${GX0}" y="28" class="t-big">${dOn?'On dialysis':'CrCl '+Math.round(c)+' mL/min'}</text><text x="${GX1}" y="30" class="t-sm t-end" style="fill:${C.col}">${dOn?'clearance −75%':C.n}</text>`;
-    if(dOn){const bx=GX0,by=150,w=GX1-GX0;s+=`<text x="${bx}" y="${by}" class="t-xs">COLCHICINE CLEARANCE IN FMF (label study, L/h/kg)</text><rect x="${bx}" y="${by+8}" width="${f1(w*.73/.8)}" height="12" rx="3" style="fill:var(--good)"/><text x="${f1(bx+w*.73/.8-4)}" y="${by+18}" class="t-xs t-end" style="fill:var(--panel)">normal kidneys 0.73</text><rect x="${bx}" y="${by+26}" width="${f1(w*.17/.8)}" height="12" rx="3" style="fill:var(--bad)"/><text x="${f1(bx+w*.17/.8+6)}" y="${by+36}" class="t-xs" style="fill:var(--bad)">dialysis 0.17 (−75%)</text>`}
-    else s+=`<text x="${GX0}" y="160" class="t-xs">Drag the slider or press "On dialysis".</text>`;
+    if(dOn){const bx=GX0,by=NR?168:150,w=GX1-GX0;s+=`<text x="${bx}" y="${by}" class="t-xs">COLCHICINE CLEARANCE IN FMF (label study, L/h/kg)</text><rect x="${bx}" y="${by+8}" width="${f1(w*.73/.8)}" height="12" rx="3" style="fill:var(--good)"/><text x="${f1(bx+w*.73/.8-4)}" y="${by+18}" class="t-xs t-end" style="fill:var(--panel)">normal kidneys 0.73</text><rect x="${bx}" y="${by+26}" width="${f1(w*.17/.8)}" height="12" rx="3" style="fill:var(--bad)"/><text x="${f1(bx+w*.17/.8+6)}" y="${by+36}" class="t-xs" style="fill:var(--bad)">dialysis 0.17 (−75%)</text>`}
+    else s+=`<text x="${GX0}" y="${NR?178:160}" class="t-xs">Drag the slider or press "On dialysis".</text>`;
     rsv.innerHTML=s;
     $('#cdCrOut').textContent=dOn?'dialysis':Math.round(c);
     $('#cdRenNote').innerHTML=`<div class="kicker">Kidney function</div><h4>${C.n}</h4><p>${REN[C.k]}</p><p>EULAR 2016 advises that in reduced kidney function the toxicity risk is high, so signs of toxicity and CK should be watched closely and the dose reduced; the guideline notes there is no specific GFR cut-off behind that advice. The label contraindicates combining colchicine with P-gp or strong CYP3A4 inhibitors in kidney or liver impairment. In amyloid kidney disease, colchicine helped mainly when creatinine started below 1.5 mg/dL. [[Ozen2016,Ozen2017,FDA-Colcrys,Livneh1994]]</p>`;
@@ -198,4 +219,9 @@ inits.coldose=()=>{
   cr.addEventListener('input',()=>{if(dOn){dOn=false;dial.setAttribute('aria-pressed','false')}setRen(true)});
   dial.onclick=()=>{dOn=!dOn;dial.setAttribute('aria-pressed',dOn);setRen()};
   setRen(true);
+
+  /* playWire only registers the exposure chart for the narrow/wide redraw, so
+     chain the two widgets that have no player of their own. */
+  const prevRedraw=redraws.coldose;
+  redraws.coldose=()=>{prevRedraw&&prevRedraw();setAge(+ag.value,true);drawOrg()};
 };
