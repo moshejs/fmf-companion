@@ -6,7 +6,6 @@
   "Validated 2026-10-17 against Europe PMC, Crossref, DOAJ and the ClinicalTrials.gov v2 API,",
   "which answer when publisher pages refuse automated requests."
  ],
-
  "Nakagawa2021": {
   "text": "Mori T, Saburi M, Hagihara M, Mori M, Yamazaki R, Kato J. Long-term remission of cryopyrin-associated periodic syndrome after allogeneic haematopoietic stem cell transplantation. Ann Rheum Dis. 2021;80(4):542-543. PMID 33158880. doi:10.1136/annrheumdis-2020-218695",
   "link": "https://pubmed.ncbi.nlm.nih.gov/33158880/",
@@ -60,17 +59,52 @@
   "verified": true,
   "note": "Published as a case-based review, not a retrospective case series."
  },
-
- "Cattan2003": { "text": "Cattan D. Familial Mediterranean fever: is low mortality from tuberculosis a specific advantage for MEFV mutation carriers? Clin Exp Rheumatol. 2003;21(4 Suppl 30):S53-4 (letter, with author reply at S54). PMID 14727462.", "link": "https://pubmed.ncbi.nlm.nih.gov/14727462/", "verified": true },
- "Delplanque2024": { "text": "Delplanque M, Benech N, Rolhion N, Oeuvray C, Straube M, Galbert C, Brot L, Henry T, Jamilloux Y, Savey L, Grateau G, Sokol H, Georgin-Lavialle S. Gut microbiota in familial Mediterranean fever. Rheumatology (Oxford). 2024;63(4):1039-1048. doi:10.1093/rheumatology/kead322", "link": "https://doi.org/10.1093/rheumatology/kead322", "verified": true },
- "DFV890": { "text": "Gatlik E, Mehes B, Voltz E, Sommer U, Tritto E, Lestini G, Liu X, Pal P, Velinova M, Denney WS, Fu Y, Opipari A, Dean D, Junge G. First-in-human safety, tolerability and pharmacokinetics of DFV890, an oral NLRP3 inhibitor. Clin Transl Sci. 2024;17(5):e13789. PMID 38761014. PMCID PMC11101992. Open access.", "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11101992/", "verified": true },
- "Gok2017": { "text": "Gok K, Cengiz G, Erol K, Ozgocmen S. Tofacitinib suppresses disease activity and febrile attacks in a patient with coexisting rheumatoid arthritis and familial Mediterranean fever. Acta Reumatol Port. 2017;42(1):88-90. PMID 28371574.", "link": "https://pubmed.ncbi.nlm.nih.gov/28371574/", "verified": true },
- "Haznedaroglu2005": { "text": "Haznedaroglu S, Ozturk MA, Sancak B, Goker B, Onat AM, Bukan N, Ertenli I, Kiraz S, Calguneri M. Serum interleukin 17 and interleukin 18 levels in familial Mediterranean fever. Clin Exp Rheumatol. 2005;23(4 Suppl 38):S77-80. PMID 16273770.", "link": "https://pubmed.ncbi.nlm.nih.gov/16273770/", "verified": true },
- "NOMID-UCBT2023": { "text": "Zhao C, Liu C, Li X. Umbilical cord blood transplantation for neonatal-onset multisystem inflammatory disease (NOMID). Front Immunol. 2023;14:1291345. PMID 38250066. PMCID PMC10799342. Open access.", "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10799342/", "verified": true },
- "Ozen2020": { "text": "Ozen S, Ben-Chetrit E, Foeldvari I, Amarilyo G, Ozdogan H, Vanderschueren S, Marzan K, Kahlenberg JM, Dekker E, De Benedetti F, Kone-Paut I. Long-term efficacy and safety of canakinumab in patients with colchicine-resistant familial Mediterranean fever: results from the randomised phase III CLUSTER trial. Ann Rheum Dis. 2020;79(10):1362-1369. PMID 32571870. PMCID PMC7509527. Open access. doi:10.1136/annrheumdis-2020-217419", "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7509527/", "verified": true },
- "Rathkey2018": { "text": "Rathkey JK, Zhao J, Liu Z, Chen Y, Yang J, Kondolf HC, Benson BL, Chirieleison SM, Huang AY, Dubyak GR, Xiao TS, Li X, Abbott DW. Chemical disruption of the pyroptotic pore-forming protein gasdermin D inhibits inflammatory cell death and sepsis. Sci Immunol. 2018;3(26):eaat2738. PMID 30143556. PMCID PMC6462819.", "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6462819/", "verified": true },
- "TurkishPilot": { "text": "Yasar Bilge NS, Perez Brocal V, Kasifoglu T, Bilge U, Kasifoglu N, Moya A, Dinleyici EC. Intestinal microbiota composition of patients with familial Mediterranean fever: a pilot study. Turk J Med Sci. 2026;56(3):801-807. PMID 42499440. PMCID PMC13398580. Open access.", "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13398580/", "verified": true },
-
+ "Cattan2003": {
+  "text": "Cattan D. Familial Mediterranean fever: is low mortality from tuberculosis a specific advantage for MEFV mutation carriers? Clin Exp Rheumatol. 2003;21(4 Suppl 30):S53-4 (letter, with author reply at S54). PMID 14727462.",
+  "link": "https://pubmed.ncbi.nlm.nih.gov/14727462/",
+  "verified": true
+ },
+ "Delplanque2024": {
+  "text": "Delplanque M, Benech N, Rolhion N, Oeuvray C, Straube M, Galbert C, Brot L, Henry T, Jamilloux Y, Savey L, Grateau G, Sokol H, Georgin-Lavialle S. Gut microbiota in familial Mediterranean fever. Rheumatology (Oxford). 2024;63(4):1039-1048. doi:10.1093/rheumatology/kead322",
+  "link": "https://doi.org/10.1093/rheumatology/kead322",
+  "verified": true
+ },
+ "DFV890": {
+  "text": "Gatlik E, Mehes B, Voltz E, Sommer U, Tritto E, Lestini G, Liu X, Pal P, Velinova M, Denney WS, Fu Y, Opipari A, Dean D, Junge G. First-in-human safety, tolerability and pharmacokinetics of DFV890, an oral NLRP3 inhibitor. Clin Transl Sci. 2024;17(5):e13789. PMID 38761014. PMCID PMC11101992. Open access.",
+  "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11101992/",
+  "verified": true,
+  "note": "The companion phase 2 study in familial cold autoinflammatory syndrome (NCT04868968) is recorded as completed with an actual enrolment of 4 participants."
+ },
+ "Gok2017": {
+  "text": "Gok K, Cengiz G, Erol K, Ozgocmen S. Tofacitinib suppresses disease activity and febrile attacks in a patient with coexisting rheumatoid arthritis and familial Mediterranean fever. Acta Reumatol Port. 2017;42(1):88-90. PMID 28371574.",
+  "link": "https://pubmed.ncbi.nlm.nih.gov/28371574/",
+  "verified": true
+ },
+ "Haznedaroglu2005": {
+  "text": "Haznedaroglu S, Ozturk MA, Sancak B, Goker B, Onat AM, Bukan N, Ertenli I, Kiraz S, Calguneri M. Serum interleukin 17 and interleukin 18 levels in familial Mediterranean fever. Clin Exp Rheumatol. 2005;23(4 Suppl 38):S77-80. PMID 16273770.",
+  "link": "https://pubmed.ncbi.nlm.nih.gov/16273770/",
+  "verified": true
+ },
+ "NOMID-UCBT2023": {
+  "text": "Zhao C, Liu C, Li X. Umbilical cord blood transplantation for neonatal-onset multisystem inflammatory disease (NOMID). Front Immunol. 2023;14:1291345. PMID 38250066. PMCID PMC10799342. Open access.",
+  "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10799342/",
+  "verified": true
+ },
+ "Ozen2020": {
+  "text": "Ozen S, Ben-Chetrit E, Foeldvari I, Amarilyo G, Ozdogan H, Vanderschueren S, Marzan K, Kahlenberg JM, Dekker E, De Benedetti F, Kone-Paut I. Long-term efficacy and safety of canakinumab in patients with colchicine-resistant familial Mediterranean fever: results from the randomised phase III CLUSTER trial. Ann Rheum Dis. 2020;79(10):1362-1369. PMID 32571870. PMCID PMC7509527. Open access. doi:10.1136/annrheumdis-2020-217419",
+  "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7509527/",
+  "verified": true
+ },
+ "Rathkey2018": {
+  "text": "Rathkey JK, Zhao J, Liu Z, Chen Y, Yang J, Kondolf HC, Benson BL, Chirieleison SM, Huang AY, Dubyak GR, Xiao TS, Li X, Abbott DW. Chemical disruption of the pyroptotic pore-forming protein gasdermin D inhibits inflammatory cell death and sepsis. Sci Immunol. 2018;3(26):eaat2738. PMID 30143556. PMCID PMC6462819.",
+  "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6462819/",
+  "verified": true
+ },
+ "TurkishPilot": {
+  "text": "Yasar Bilge NS, Perez Brocal V, Kasifoglu T, Bilge U, Kasifoglu N, Moya A, Dinleyici EC. Intestinal microbiota composition of patients with familial Mediterranean fever: a pilot study. Turk J Med Sci. 2026;56(3):801-807. PMID 42499440. PMCID PMC13398580. Open access.",
+  "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13398580/",
+  "verified": true
+ },
  "VX765": {
   "text": "Belnacasan (VX-765), caspase-1 inhibitor. ClinicalTrials.gov NCT01501383 (treatment-resistant partial epilepsy, Vertex, phase 2, n=55): status TERMINATED, reason given in the registry verbatim as \"Terminated by Sponsor\". NCT00205465 (psoriasis, Vertex, phase 2, n=64): status COMPLETED. The registry gives no toxicity reason; claims that the programme stopped for liver toxicity have no primary support.",
   "link": "https://clinicaltrials.gov/study/NCT01501383",
@@ -82,5 +116,14 @@
  },
  "KocThesis2016": {
   "note": "Institutional record is access-restricted. Turkey's national thesis centre (tez.yok.gov.tr) is the alternative place to look."
+ },
+ "Kishida2018": {
+  "text": "Koga T, Sato S, Miyamoto J, Hagimori N, Kawazoe Y, Arinaga K, Fukushima C, Yamamoto H, Kawakami A. Comparison of the efficacy and safety of tocilizumab for colchicine-resistant or colchicine-intolerant familial Mediterranean fever: study protocol for a randomised controlled trial. Trials. 2018;19:715. PMID 30594222. PMCID PMC6311086.",
+  "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6311086/",
+  "verified": true,
+  "note": "Earlier entry attributed this to another group. The identifier was right; the authors were not."
+ },
+ "NCT04868968": {
+  "note": "Recorded in the registry as COMPLETED, with an actual enrolment of 4 participants."
  }
 }

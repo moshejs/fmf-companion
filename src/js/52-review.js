@@ -19,7 +19,7 @@ const FC=[
  [1,"Where does erysipelas-like erythema appear?","Lower leg, ankle or top of the foot: a tender red plaque that mimics cellulitis and clears in 1–3 days."],
  [1,"What is protracted febrile myalgia?","A rare manifestation with severe muscle pain, fever and very high ESR lasting weeks; it responds to corticosteroids."],
  [1,"What fraction of patients start before age 20?","About 80–90%; more than half in the first decade."],
- [1,"What is phenotype II?","AA amyloidosis as the first or only sign of FMF, without prior attacks. Rare (≤0.3% in the Turkish registry)."],
+ [1,"What is phenotype II?","AA amyloidosis as the first or only sign of FMF, without prior attacks. Rare, and estimates differ: at most 0.3% of the Turkish registry, about 0.6% in a later review whose authors doubt it is a separate entity."],
  [1,"Best-documented attack trigger?","Emotional stress (case-crossover study: each stressful event raised attack odds ~70% two days later). Exercise and fatty meals did not."],
  [1,"Heterozygote advantage hypothesis for FMF?","Carriers may have resisted plague: Yersinia pestis YopM suppresses wild-type pyrin less well when pyrin carries FMF variants. Evidence of positive selection, not proof."],
  [2,"Where does colchicine come from?","The autumn crocus (Colchicum autumnale)."],

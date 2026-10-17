@@ -1,9 +1,9 @@
 /* =============== 2.3 dosing, safety, interactions =============== */
 const CD_STEPS=[
  {from:0,at:.12,k:'Days 0–3',t:'Building to a steady level',
-  txt:`After a 0.6 mg tablet, plasma colchicine peaks in 1–2 hours (mean Cmax 2.5 ng/mL); about 45% of the dose is absorbed. With repeated dosing the half-life is 26.6–31.2 hours, so each dose adds to what is left of the last until levels settle into a daily rise and fall. Colchicine leaves the body through two exits: P-glycoprotein (P-gp) pumps in gut, liver and kidney, and the CYP3A4 enzyme in gut and liver. [[FDA-Colcrys,Slobodnick2018,Leung2015]]`,
-  pt:`Each day's tablet adds to what is left from yesterday until the level settles into a steady daily wave.`,
-  hook:`Two exits: <b>P-gp</b> pumps and <b>CYP3A4</b>. Block either one and colchicine builds up.`},
+  txt:`After a 0.6 mg tablet, plasma colchicine peaks in 1–2 hours (mean Cmax 2.5 ng/mL); mean oral bioavailability is about 45%. The published half-lives do not agree: the US label reports 26.6–31.2 hours on repeated 0.6 mg twice-daily dosing, one intravenous study found a terminal half-life of 57.8 hours, and older oral studies and reviews report about 7–16 hours. The sources do not reconcile that spread, so half-life is best read as a range, not one settled number. Either way each dose adds to what is left of the last until levels settle into a daily rise and fall. Colchicine leaves the body through two exits: P-glycoprotein (P-gp) pumps in gut, liver and kidney, and the CYP3A4 enzyme in gut and liver. [[FDA-Colcrys,Ferron1996,BenChetrit2018Textbook,Slobodnick2018,Leung2015]]`,
+  pt:`Each day's tablet adds to what is left from yesterday until the level settles into a steady daily wave. How long one dose lasts is disputed: published half-lives run from a few hours to over two days.`,
+  hook:`Two exits: <b>P-gp</b> pumps and <b>CYP3A4</b>. Block either one and colchicine builds up. Half-life: a <b>disputed range</b>, not one number.`},
  {from:.29,at:.31,k:'Day 3',t:'An interacting drug is added',
   txt:`Strong CYP3A4 inhibitors and P-gp inhibitors close those exits. Life-threatening and fatal interactions have been reported, and the label contraindicates these combinations in people with kidney or liver impairment. The heights here come from the label's single-dose interaction studies, scaled schematically to daily dosing. [[FDA-Colcrys,Terkeltaub2011]]`,
   pt:`Some medicines block the body's way of clearing colchicine, so the same daily tablet leaves more drug behind.`,
@@ -35,9 +35,9 @@ const CD_DRUGS={
  azi:{n:'Azithromycin',sh:'azithromycin',f:1.57,pct:'+57%',cap:null,capTxt:'none listed in our sources',
   txt:`Raised colchicine AUC by 57%, far less than clarithromycin, which is why reviews suggest it as the safer macrolide. It is not in the label cap lists we cite, so the cap button has no effect here. [[FDA-Colcrys,Terkeltaub2011,BenChetrit2018Textbook]]`},
  grape:{n:'Grapefruit juice',sh:'grapefruit juice',f:1,pct:'no mean change in the label study',cap:1.2,capTxt:'1.2 mg/day (label: avoid)',
-  txt:`The label lists grapefruit juice as a moderate CYP3A4 inhibitor and tells patients to avoid it, yet its own study (240 mL twice daily for 4 days) found no meaningful change in mean colchicine levels. The curve therefore does not move; the effect may still vary with product and person. [[FDA-Colcrys,Leung2015]]`},
+  txt:`The label contradicts itself here. It lists grapefruit juice in its table of moderate CYP3A4 inhibitors and tells patients to avoid it, yet its own interaction study (240 mL twice daily for 4 days) found mean Cmax and AUC each changed by under 3%, which is no meaningful change. Both statements sit in the same document and neither source resolves the conflict. The curve therefore does not move; the effect may still vary with product and person. [[FDA-Colcrys,Leung2015]]`},
  renal:{n:'Severe kidney impairment',sh:'severe kidney impairment',f:4.3,renal:true,pct:'clearance −75% on dialysis',cap:.3,capTxt:'start at 0.3 mg/day',
-  txt:`Shown as if it began on day 3 only for comparison. In FMF patients on dialysis, colchicine clearance was 75% lower (0.17 vs 0.73 L/h/kg) and dialysis does not remove the drug. For CrCl below 30 mL/min or dialysis the label (FMF) starts at 0.3 mg/day and increases only with close monitoring. [[FDA-Colcrys]]`}
+  txt:`Shown as if it began on day 3 only for comparison. This height is not from an AUC study: it is derived from the reported clearance figure, so it is the roughest curve here. In FMF patients on dialysis, colchicine clearance was 75% lower (0.17 vs 0.73 L/h/kg) and dialysis does not remove the drug. For CrCl below 30 mL/min or dialysis the label (FMF) starts at 0.3 mg/day and increases only with close monitoring. [[FDA-Colcrys]]`}
 };
 const CD_ORG={
  gut:{n:'Gut',rep:`Cramping, nausea, diarrhoea, abdominal pain and vomiting are the most common effects. The label reports them in up to 20% of patients starting FMF treatment, usually within 24 hours, and says severe gut effects can herald more serious toxicity. Long-term use lowers intestinal lactase, sucrase and maltase and can impair vitamin B12 absorption. [[FDA-Colcrys,Ozen2017,BenChetrit2018Textbook]]`,
@@ -49,8 +49,8 @@ const CD_ORG={
  marrow:{n:'Bone marrow',rep:`Myelosuppression, leukopenia, granulocytopenia, thrombocytopenia, pancytopenia and aplastic anaemia have been reported at therapeutic doses, but leukopenia is very rare at standard FMF doses. In the clarithromycin study, pancytopenia predicted death. [[FDA-Colcrys,BenChetrit2018Textbook,Hung2005]]`,
   mon:`A blood count is in the EULAR 2016 monitoring set. The German consensus advises further work-up and a lower dose if counts become abnormal. [[Ozen2016,Ehlers2023]]`},
  liver:{n:'Liver',rep:`The liver metabolizes colchicine (CYP3A4 makes 2- and 3-demethylcolchicine) and pumps it into bile through P-gp. In chronic liver disease clearance may be much lower and the half-life longer, with wide variation between people. [[FDA-Colcrys,Slobodnick2018]]`,
-  mon:`EULAR 2016: check liver enzymes regularly; if they exceed twice the upper limit of normal, reduce colchicine and investigate. The label (FMF) advises close monitoring in mild to moderate liver impairment and considering a dose reduction in severe disease. [[Ozen2016,Ozen2017,FDA-Colcrys]]`},
- kidney:{n:'Kidney',rep:`40–65% of an oral dose leaves unchanged in urine, and dialysis does not remove colchicine. Reduced kidney function is the usual setting for myopathy and for fatal interactions. [[FDA-Colcrys,Kuncl1987,Hung2005]]`,
+  mon:`EULAR 2016 advises checking liver enzymes regularly, and reducing colchicine and investigating the cause if they exceed twice the upper limit of normal. The label (FMF) advises close monitoring in mild to moderate liver impairment and considering a dose reduction in severe disease. [[Ozen2016,Ozen2017,FDA-Colcrys]]`},
+ kidney:{n:'Kidney',rep:`How much leaves by the kidney is disputed: the US label reports 40–65% of an oral dose recovered unchanged in urine, while a review puts renal elimination at 10–20% and treats the biliary and faecal route as the main one. The sources do not explain the gap. Both agree dialysis does not remove colchicine. Reduced kidney function is the usual setting for myopathy and for fatal interactions. [[FDA-Colcrys,BenChetrit2018Textbook,Kuncl1987,Hung2005]]`,
   mon:`Kidney function is in the EULAR 2016 set; with reduced function the guideline advises close watch, CK checks and a lower dose. Urinalysis at every visit looks for proteinuria, the first sign of amyloidosis (a disease complication, not a drug effect). [[Ozen2016,Ozen2017]]`}
 };
 inits.coldose=()=>{
@@ -75,7 +75,7 @@ inits.coldose=()=>{
     s+=`<rect x="${X0}" y="${f1(yv(1.55))}" width="${X1-X0}" height="${f1(yv(.55)-yv(1.55))}" style="fill:var(--good-soft);opacity:.85"/>`;
     for(let v=0;v<=VM;v++)s+=`<line x1="${X0}" x2="${X1}" y1="${f1(yv(v))}" y2="${f1(yv(v))}" class="grid"/><text x="${X0-6}" y="${f1(yv(v)+3)}" class="t-xs t-end">${v}×</text>`;
     for(let d=0;d<=10;d++)s+=`<text x="${f1(xh(d*24))}" y="${Y0+16}" class="t-xs t-mid">${d}</text>`;
-    s+=`<text x="${X1}" y="${Y0+34}" class="t-xs t-end">days of once-daily dosing</text><text x="${X0}" y="${Y0+34}" class="t-xs">exposure vs usual average</text>`;
+    s+=`<text x="${X1}" y="${Y0+34}" class="t-xs t-end">days of once-daily dosing</text><text x="${X0}" y="${Y0+34}" class="t-xs">exposure vs usual average · schematic model, not measured data</text>`;
     s+=`<text x="${X1-6}" y="${Y1+14}" class="t-sm t-end" style="fill:var(--bad)">toxicity risk rises · no sharp threshold</text>`;
     s+=`<text x="${X0+6}" y="${f1(yv(1.55)+12)}" class="t-xs" style="fill:var(--good)">usual range (schematic)</text>`;
     const x3=xh(72);
@@ -111,6 +111,7 @@ inits.coldose=()=>{
     for(let m=0;m<=MXS+.01;m+=.5)s+=`<line x1="${f1(xm(m))}" x2="${f1(xm(m))}" y1="24" y2="188" class="grid"/><text x="${f1(xm(m))}" y="204" class="t-xs t-mid">${m}</text>`;
     s+=`<text x="${AX1}" y="220" class="t-xs t-end">mg per day</text>`;
     s+=`<text x="10" y="58" class="t-lbl">EULAR 2016</text><text x="10" y="73" class="t-xs">same ceilings in 2024</text>`;
+    s+=`<text x="10" y="88" class="t-xs" style="fill:var(--muted)">the sources give no age</text><text x="10" y="99" class="t-xs" style="fill:var(--muted)">cut-off: 18 is this app's</text><text x="10" y="110" class="t-xs" style="fill:var(--muted)">assumption</text>`;
     s+=`<rect x="${f1(xm(v.e1))}" y="48" width="${f1(Math.max(0,xm(v.mx)-xm(v.e1)))}" height="20" rx="4" style="fill:var(--crocus-soft);stroke:var(--crocus);stroke-opacity:.3"/>`;
     for(let m=v.e1+.25;m<v.mx-.05;m+=.25)s+=`<line x1="${f1(xm(m))}" x2="${f1(xm(m))}" y1="52" y2="64" style="stroke:var(--crocus);opacity:.4"/>`;
     s+=`<rect x="${f1(xm(v.e0))}" y="44" width="${f1(Math.max(5,xm(v.e1)-xm(v.e0)))}" height="28" rx="5" style="fill:var(--crocus)"/>`;
@@ -190,7 +191,7 @@ inits.coldose=()=>{
     else s+=`<text x="${GX0}" y="160" class="t-xs">Drag the slider or press "On dialysis".</text>`;
     rsv.innerHTML=s;
     $('#cdCrOut').textContent=dOn?'dialysis':Math.round(c);
-    $('#cdRenNote').innerHTML=`<div class="kicker">Kidney function</div><h4>${C.n}</h4><p>${REN[C.k]}</p><p>EULAR 2016: in reduced kidney function, watch closely for toxicity, monitor CK and reduce the dose. Combining colchicine with P-gp or strong CYP3A4 inhibitors is contraindicated in kidney or liver impairment. In amyloid kidney disease, colchicine helped mainly when creatinine started below 1.5 mg/dL. [[Ozen2016,Ozen2017,FDA-Colcrys,Livneh1994]]</p>`;
+    $('#cdRenNote').innerHTML=`<div class="kicker">Kidney function</div><h4>${C.n}</h4><p>${REN[C.k]}</p><p>EULAR 2016 advises that in reduced kidney function the toxicity risk is high, so signs of toxicity and CK should be watched closely and the dose reduced; the guideline notes there is no specific GFR cut-off behind that advice. The label contraindicates combining colchicine with P-gp or strong CYP3A4 inhibitors in kidney or liver impairment. In amyloid kidney disease, colchicine helped mainly when creatinine started below 1.5 mg/dL. [[Ozen2016,Ozen2017,FDA-Colcrys,Livneh1994]]</p>`;
   }
   function setRen(inst){const c=+cr.value,to=dOn?0:c;if(stopR)stopR();if(ptr==null||inst){ptr=to;drawRen(ptr,c);return}
     const fr=ptr;stopR=animate(380,p=>{ptr=lerp(fr,to,ease(p));drawRen(ptr,c)},()=>{stopR=null})}

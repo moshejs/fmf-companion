@@ -438,7 +438,8 @@
   "areas": [
    "F"
   ],
-  "unverified": false
+  "unverified": false,
+  "note": "The companion phase 2 study in familial cold autoinflammatory syndrome (NCT04868968) is recorded as completed with an actual enrolment of 4 participants."
  },
  {
   "key": "DiavCitrin2010",
@@ -1103,12 +1104,13 @@
  },
  {
   "key": "Kishida2018",
-  "text": "Kishida D, Nakamura A, Yazaki M, et al. Comparison of the efficacy and safety of tocilizumab for colchicine-resistant or colchicine-intolerant familial Mediterranean fever: study protocol for an investigator-initiated, multicenter, randomized, double-blind, placebo-controlled trial. Trials. 2018;19(1):558. doi:10.1186/s13063-018-3105-6. PMCID PMC6311086.",
-  "link": "https://doi.org/10.1186/s13063-018-3105-6",
+  "text": "Koga T, Sato S, Miyamoto J, Hagimori N, Kawazoe Y, Arinaga K, Fukushima C, Yamamoto H, Kawakami A. Comparison of the efficacy and safety of tocilizumab for colchicine-resistant or colchicine-intolerant familial Mediterranean fever: study protocol for a randomised controlled trial. Trials. 2018;19:715. PMID 30594222. PMCID PMC6311086.",
+  "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6311086/",
   "areas": [
    "F"
   ],
-  "unverified": false
+  "unverified": false,
+  "note": "Earlier entry attributed this to another group. The identifier was right; the authors were not."
  },
  {
   "key": "Klimecki1994",
@@ -1624,7 +1626,8 @@
   "areas": [
    "F"
   ],
-  "unverified": false
+  "unverified": false,
+  "note": "Recorded in the registry as COMPLETED, with an actual enrolment of 4 participants."
  },
  {
   "key": "NCT05092776",

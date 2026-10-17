@@ -27,7 +27,7 @@ const AM_STEPS=[
  {from:.76,at:.92,k:'Kidney failure',t:'Filtering falls',
   txt:`About half of FMF patients with proteinuria eventually need dialysis, and about 10% of AA amyloidosis patients already have kidney failure at presentation. In amyloid nephropathy colchicine helped mainly when creatinine started below 1.5 mg/dL and at doses above 1.5 mg/day. [[Ozen2016,Mirioglu2024,Livneh1994]]`,
   pt:`Over years the clogged filters stop working, which can lead to dialysis or a transplant.`,
-  hook:`Amyloidosis is the leading cause of death in FMF cohorts.`}
+  hook:`In a Turkish cohort of 587 patients, amyloidosis was the <b>leading cause of death</b> and the only significant predictor of mortality.`}
 ];
 const AM_ORGS=[
  {k:'thyroid',n:'Thyroid',f:'can be involved',w:.3},
@@ -43,8 +43,8 @@ const AM_RISK=[
  {n:'Country of residence',s:'Touitou 2007 · 2,482 patients',or:3.2,lo:1.8,hi:5.9},
  {n:'M694V homozygous',s:'Kasifoglu 2014 · amyloidosis',or:6,lo:4.29,hi:8.7,ap:true},
  {n:'M694V homozygous',s:'Vitale 2025 · proteinuria',or:2.27},
- {n:'SAA1 α/α genotype',s:'Cazeneuve 2000 · kidney amyloid',or:6.9,lo:2.5,hi:19},
- {n:'Male sex',s:'Cazeneuve 2000',or:4.0,lo:1.5,hi:10.8},
+ {n:'SAA1 α/α genotype',s:'Cazeneuve 2000 · mainly Armenian cohort',or:6.9,lo:2.5,hi:19},
+ {n:'Male sex',s:'Cazeneuve 2000 · 2.37 in another cohort',or:4.0,lo:1.5,hi:10.8},
  {n:'Leucocytosis between flares',s:'Vitale 2025',or:7.47},
  {n:'Raised ESR between flares',s:'Vitale 2025',or:3.6}
 ];
@@ -198,7 +198,7 @@ inits.amyloid=()=>{
     s+=`<rect x="394" y="272" width="26" height="18" rx="3" style="fill:var(--am-salmon)"/><text x="428" y="285" class="t-xs">bright field: salmon-pink deposits</text>`;
     s+=`<rect x="394" y="300" width="26" height="18" rx="3" style="fill:var(--am-black)"/><rect x="401" y="304" width="12" height="10" rx="2" style="fill:var(--am-green)"/><text x="428" y="313" class="t-xs">crossed: apple-green on black</text>`;
     ms.innerHTML=s;
-    $('#amMicNote').innerHTML=`<div class="kicker">${k<.12?'Bright field':k<.85?'Polarizers crossing':'Crossed polarizers'}</div><h4>${k<.85?'Congo red stains amyloid salmon-pink':'Apple-green birefringence'}</h4><p>Amyloid is identified by Congo red staining, which gives apple-green birefringence under polarized light. Ordered fibrils bend polarized light; ordinary tissue does not, so it goes dark as the polarizers cross. Immunohistochemistry with an anti-SAA antibody confirms the AA type, and electron microscopy shows unbranched fibrils 8–12 nm wide. [[Mirioglu2024]]</p><dl class="kv">${samp==='kidney'?`<div><dt>Kidney biopsy</dt><dd>The usual definitive test, and needed to confirm amyloidosis in an FMF patient with proteinuria. Rectal biopsy has long been used in FMF too. [[Mirioglu2024,Ozen2016,Melikoglu2000]]</dd></div>`:`<div><dt>Abdominal fat aspirate</dt><dd>A less invasive option: fat aspirate and salivary gland biopsy have reported sensitivities of 77–89%. In one study (120 patients, 38 with AA), sensitivity was 80% on routine reading and 93% when three smears were examined thoroughly, with 100% specificity. SAP scintigraphy is up to 90% sensitive but not widely available. [[Mirioglu2024,vanGameren2006]]</dd></div>`}</dl><div class="hook"><b>Exam hook</b>Congo red → <b>salmon-pink</b> in bright field → <b>apple-green birefringence</b> under crossed polarizers.</div>`;
+    $('#amMicNote').innerHTML=`<div class="kicker">${k<.12?'Bright field':k<.85?'Polarizers crossing':'Crossed polarizers'}</div><h4>${k<.85?'Congo red stains amyloid salmon-pink':'Apple-green birefringence'}</h4><p>Amyloid is identified by Congo red staining, which gives apple-green birefringence under polarized light. Ordered fibrils bend polarized light; ordinary tissue does not, so it goes dark as the polarizers cross. Immunohistochemistry with an anti-SAA antibody confirms the AA type, and electron microscopy shows unbranched fibrils 8–12 nm wide. [[Mirioglu2024]]</p><dl class="kv">${samp==='kidney'?`<div><dt>Kidney biopsy</dt><dd>The usual definitive test, and needed to confirm amyloidosis in an FMF patient with proteinuria. Rectal biopsy has long been used in FMF too. [[Mirioglu2024,Ozen2016,Melikoglu2000]]</dd></div>`:`<div><dt>Abdominal fat aspirate</dt><dd>A less invasive option: fat aspirate and salivary gland biopsy have reported sensitivities of 77–89%. In one study (120 patients, 38 with AA), sensitivity was 80% on routine reading and 93% when three smears were examined thoroughly, with 100% specificity in controls. SAP scintigraphy is up to 90% sensitive but not widely available. Those figures come from mixed amyloidosis series; one FMF-specific review describes the fat-aspirate yield in FMF as not high, and gives renal biopsy about 88% and rectal biopsy about 75%. [[Mirioglu2024,vanGameren2006,Sari2014]]</dd></div>`}</dl><div class="hook"><b>Exam hook</b>Congo red → <b>salmon-pink</b> in bright field → <b>apple-green birefringence</b> under crossed polarizers.</div>`;
   }
   playWire(mr,$('#amMPlay'),drawM,6000,'Replay','amyloid');
   $$('[data-amx]').forEach(b=>b.onclick=()=>{samp=b.dataset.amx;$$('[data-amx]').forEach(x=>x.setAttribute('aria-pressed',x===b));drawM(+mr.value)});
@@ -207,7 +207,7 @@ inits.amyloid=()=>{
   /* ---------- risk factors ---------- */
   const rs=$('#amRisk');let ci=true,rp=1,stopRk=null;
   const LX0=300,LX1=690,lx=v=>LX0+(LX1-LX0)*Math.log(v)/Math.log(20);
-  function drawR(p){rp=p;let s=`<text x="10" y="18" class="t-sm">RISK FACTORS FOR AMYLOIDOSIS IN FMF</text>`;
+  function drawR(p){rp=p;let s=`<text x="10" y="18" class="t-sm">RISK FACTORS FOR AMYLOIDOSIS IN FMF</text><text x="${LX1}" y="18" class="t-xs t-end" style="fill:var(--muted)">separate studies · not comparable with each other</text>`;
     [1,2,5,10,20].forEach(v=>s+=`<line x1="${f1(lx(v))}" x2="${f1(lx(v))}" y1="30" y2="310" class="${v===1?'axis':'grid'}"/><text x="${f1(lx(v))}" y="326" class="t-xs t-mid">${v}</text>`);
     s+=`<text x="${LX1}" y="342" class="t-xs t-end">odds ratio, log scale (1 = no difference)</text>`;
     AM_RISK.forEach((R,i)=>{const y=52+i*40,q=ease(clamp(p*1.7-i*.11)),xe=LX0+(lx(R.or)-LX0)*q;
@@ -227,7 +227,7 @@ inits.amyloid=()=>{
   const ps=$('#amPrev'),pr=$('#amPT');
   const PTS=[[1967,26.6,'26.6% · Sohar 1967, Israel',140,62,''],[2005,12.9,'12.9% · Turkey 2005',462,166,'t-end'],[2007,11.4,'11.4% · MetaFMF 2007',480,200,'t-end'],[2014,8.6,'8.6% · Turkey 2014',548,224,'t-mid'],[2025,10.2,'10.2% · AIDA 2025',644,178,'t-mid']];
   const px=y=>70+620*(y-1960)/70,py=v=>270-230*v/30;
-  function drawP(t){const Y=1960+70*t;let s=`<text x="70" y="24" class="t-sm">AMYLOIDOSIS IN FMF COHORTS (% of patients)</text>`;
+  function drawP(t){const Y=1960+70*t;let s=`<text x="70" y="24" class="t-sm">AMYLOIDOSIS IN FMF COHORTS (% of patients)</text><text x="70" y="308" class="t-xs" style="fill:var(--muted)">Separate cohorts, countries, ages and definitions: not one population followed over time.</text>`;
     [0,10,20,30].forEach(v=>s+=`<line x1="70" x2="690" y1="${f1(py(v))}" y2="${f1(py(v))}" class="grid"/><text x="62" y="${f1(py(v)+3)}" class="t-xs t-end">${v}%</text>`);
     for(let y=1960;y<=2030;y+=10)s+=`<text x="${f1(px(y))}" y="288" class="t-xs t-mid">${y}</text>`;
     s+=`<line x1="${f1(px(1972))}" x2="${f1(px(1972))}" y1="40" y2="270" style="stroke:var(--crocus);stroke-width:1.5;stroke-dasharray:4 4;opacity:${f1(ramp(Y,1972,1974))}"/><text x="${f1(px(1972)+4)}" y="262" class="t-xs" style="fill:var(--crocus);opacity:${f1(ramp(Y,1972,1974))}">colchicine (1972)</text>`;
