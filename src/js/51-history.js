@@ -10,7 +10,7 @@ const HI_EV=[
  {y:1948,l:0,h:'Reimann: "periodic disease"',t:'1948 · Periodic disease',
   txt:`Hobart Reimann, then at the American University of Beirut, grouped recurrent fevers, peritonitis, cyclic neutropenia and intermittent arthralgia as "periodic disease" and stressed their regular periodicity. FMF attacks are in fact irregular. [[Reimann1948,Adwan2015,BenChetrit2019]]`},
  {y:1951.5,l:0,h:'Cattan & Mamou: the kidney link',t:'1951–52 · The kidney link',
-  txt:`The French physicians Cattan and Mamou noted the association with kidney disease. Amyloidosis was reported about 7 years later by Tuqan in Beirut. [[Adwan2015]]`},
+  txt:`The French physicians Cattan and Mamou noted the association with kidney disease. Amyloidosis was reported about 7 years later by Tuqan in Beirut. Both reports are known here through a later historical review rather than the originals, so the dates and details are not independently verified. [[Adwan2015]]`},
  {y:1958,l:0,h:'Heller, Sohar & Sherf name it FMF',t:'1958 · "Familial Mediterranean fever"',
   txt:`At Tel Hashomer in Israel, Heller, Sohar and Sherf named the disease familial Mediterranean fever and stressed its genetic nature. Some sources date the name to an earlier Hebrew-language paper (unverified). [[Heller1958,Adwan2015]]`,
   hook:'The name holds two facts: it runs in <b>families</b>, and it clusters around the <b>Mediterranean</b>.'},
@@ -40,9 +40,9 @@ const HI_EV=[
   txt:`Xu and colleagues in Feng Shao\'s lab in Beijing showed that pyrin assembles a caspase-1 inflammasome when bacterial toxins inactivate Rho GTPases, for example <i>C. difficile</i> toxin TcdB. Pyrin guards a cell switch rather than detecting the microbe itself. [[Xu2014]] <a href="#mech" data-go="mech">See it animated</a>`,
   hook:'Pyrin is a <b>guard</b> of RhoA activity, not a direct microbe sensor (Xu 2014).'},
  {y:2016,l:3,h:'Park: RhoA–PKN–14-3-3 keeps pyrin off',t:'2016 · The off switch',
-  txt:`Park, Wood, Kastner and Chae showed that active RhoA keeps pyrin switched off. RhoA-activated kinases PKN1/PKN2 phosphorylate pyrin, which then binds inhibitory 14-3-3 proteins. FMF-mutant pyrin binds them less well, and defective prenylation in mevalonate kinase deficiency inactivates RhoA, linking FMF and HIDS. [[Park2016]]`},
+  txt:`Park, Wood, Kastner and Chae showed that active RhoA keeps pyrin switched off. RhoA-activated kinases PKN1/PKN2 phosphorylate pyrin, which then binds inhibitory 14-3-3 proteins. Defective prenylation in mevalonate kinase deficiency inactivates RhoA, which links FMF and HIDS. Whether the FMF variants themselves weaken that brake is still open: Park reported much less PKN and 14-3-3 binding to mutant pyrin, while Masters and colleagues found FMF B30.2 variants left pyrin phosphorylation and 14-3-3 binding roughly unchanged. [[Park2016,Masters2016]]`},
  {y:2016.5,l:4,h:'EULAR recommendations for FMF',t:'2016 · EULAR recommendations',
-  txt:`The 2016 EULAR recommendations made lifelong colchicine the anchor of care and described colchicine resistance as one or more attacks a month despite the maximum tolerated dose for at least 6 months. [[Ozen2016]]`},
+  txt:`The 2016 EULAR recommendations made lifelong colchicine the anchor of care and suggested that one or more attacks a month despite the maximum tolerated dose for at least 6 months may indicate colchicine resistance. They are superseded by the EULAR/PReS 2024 update, which keeps colchicine first line. [[Ozen2016,Ozen2025]]`},
  {y:2018,l:1,h:'CLUSTER: canakinumab trial',t:'2018 · CLUSTER',
   txt:`In the phase III CLUSTER trial in colchicine-resistant FMF, 61% on canakinumab had a complete response at week 16 versus 6% on placebo. [[DeBenedetti2018]] <a href="#ladder" data-go="ladder">The treatment ladder</a>`},
  {y:2019,l:4,h:'Eurofever/PRINTO classification criteria',t:'2019 · Eurofever/PRINTO',
@@ -82,7 +82,7 @@ inits.history=()=>{
         else s+=`<circle cx="${f1(x)}" cy="${y}" r="5" style="fill:${c}"/>`}
       s+=`<circle cx="${f1(x)}" cy="${y}" r="10" class="clk" data-hy="${e.y}" style="fill:transparent"/>`});
     // outcome band
-    s+=`<text x="10" y="358" class="t-sm">Outlook</text><rect x="150" y="340" width="550" height="28" rx="6" style="fill:var(--panel-2)"/>`;
+    s+=`<text x="10" y="352" class="t-sm">Outlook</text><text x="10" y="366" class="t-xs">qualitative</text><rect x="150" y="340" width="550" height="28" rx="6" style="fill:var(--panel-2)"/>`;
     s+=`<rect x="150" y="340" width="${f1(Math.max(0,xp-150))}" height="28" rx="6" style="fill:url(#hiGrad);opacity:.85"/>`;
     s+=`<clipPath id="hiClip"><rect x="150" y="340" width="${f1(Math.max(0,xp-150))}" height="28"/></clipPath><g clip-path="url(#hiClip)"><text x="158" y="358" class="t-xs" style="fill:var(--panel);font-weight:700">amyloidosis a leading cause of death</text><text x="${f1(xOf(1992))}" y="358" class="t-xs" style="fill:var(--panel);font-weight:700">amyloidosis largely preventable</text></g>`;
     if(xp>xOf(1972))s+=`<line x1="${f1(xOf(1972))}" x2="${f1(xOf(1972))}" y1="336" y2="372" style="stroke:var(--ink);stroke-width:1.5"/><text x="${f1(xOf(1972)-4)}" y="386" class="t-xs t-end">1972: colchicine</text>`;

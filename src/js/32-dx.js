@@ -24,12 +24,12 @@ const DX_CRIT={
     if(M>=1&&m>=1)return['na','"Probable" FMF at most',`${M} major + ${m} minor. A "probable" tier for 1 major + 1 minor appears in secondary sources only, not verified in the primary text.`];
     return['no','Tel Hashomer criteria not met',`${M} major + ${m} minor.`]},
   perf:[{l:'Turkish children (Yalçınkaya 2009)',s:.988,p:.546},{l:'Eurofever children with other periodic fevers (Demirkaya 2016)',s:.45,p:.972}],
-  pcite:`[[Yalcinkaya2009,Demirkaya2016]]`},
+  pcite:`[[Yalcinkaya2009,Demirkaya2016]] The Eurofever figures are the ones in the published paper; an earlier conference report of the same registry gave a lower sensitivity for Tel Hashomer.`},
  liv:{name:'Livneh 1997',
   groups:[{k:'M',lg:'Major criteria (typical attacks)',cls:'',items:['Generalized peritonitis','Unilateral pleuritis or pericarditis','Monoarthritis (hip, knee or ankle)','Fever alone']},
           {k:'m',lg:'Minor criteria',cls:'mn',items:['Incomplete attack involving the chest','Incomplete attack involving a joint','Exertional leg pain','Favourable response to colchicine']},
           {k:'s',lg:'Supportive criteria',cls:'sp',items:['Family history of FMF','Appropriate ethnic origin','Age under 20 at onset','Severe attacks needing bed rest','Spontaneous remission','Symptom-free intervals','Transient inflammatory response (WBC, ESR, SAA or fibrinogen)','Episodic proteinuria or haematuria','Unproductive laparotomy or a "white" appendix removed','Parental consanguinity']}],
-  def:`A <b>typical attack</b> is recurrent (at least 3 of the same type), febrile (rectal ≥38 °C) and short (12 h to 3 days). An <b>incomplete attack</b> differs in one or two ways: under 38 °C, lasting over a week or under 6 h, no peritoneal signs, localized abdominal pain, or arthritis in other joints. [[Livneh1997,Lancieri2023]]`,
+  def:`A <b>typical attack</b> is recurrent (at least 3 of the same type), febrile (rectal ≥38 °C) and short (12 h to 3 days). An <b>incomplete attack</b> differs in one or two ways: under 38 °C, a length outside 12 h to 3 days but not under 6 h and not over a week, no peritoneal signs, localized abdominal pain, or arthritis in other joints. [[Livneh1997,Lancieri2023,Sonmez2016]]`,
   judge(c,o){const M=c.M,m=c.m,s=c.s;let ok=M>=1||m>=2,how=M>=1?'at least 1 major':m>=2?'at least 2 minor':'';
     if(!ok&&o.rule==='cons'&&m>=1&&s>=5){ok=true;how='1 minor + at least 5 supportive'}
     const set=o.rule==='cons'?'conservative set':'simple set';
@@ -37,8 +37,8 @@ const DX_CRIT={
   perf:[{l:'Original study: 105 patients vs 106 controls (Livneh 1997)',s:.95,st:'>95%',p:.97,pt:'>97%'},{l:'Eurofever children with other periodic fevers (Demirkaya 2016), specificity only',p:.411}],
   pcite:`[[Livneh1997,Demirkaya2016]]`},
  yo:{name:'Yalçınkaya–Özen',
-  groups:[{k:'M',lg:'Paediatric criteria (each 6–72 h, at least 3 attacks)',cls:'',items:['Fever: axillary temperature above 38 °C','Abdominal pain','Chest pain','Oligoarthritis','Family history of FMF']}],
-  def:`Built for children in 2009 from 170 children with two variants and 141 controls. <b>Two or more</b> of the five criteria classify as FMF. [[Yalcinkaya2009,Lancieri2023]]`,
+  groups:[{k:'M',lg:'Paediatric criteria (the first four each 6–72 h, at least 3 attacks)',cls:'',items:['Fever: axillary temperature above 38 °C','Abdominal pain','Chest pain','Oligoarthritis','Family history of FMF']}],
+  def:`Built for children in 2009 from 170 children with two variants and 141 controls. <b>Two or more</b> of the five criteria classify as FMF. The 2009 paper describes five items; some later reviews print a six-item version that adds exertional leg pain. [[Yalcinkaya2009,Lancieri2023]]`,
   judge(c){const n=c.M;return n>=2?['yes','FMF by the paediatric criteria',`${n} of 5 criteria (needs 2). With 3 or more, specificity rises and sensitivity falls (Kondi 2010).`]:['no','Paediatric criteria not met',`${n} of 5 criteria (needs 2).`]},
   perf:[{l:'Derivation, ≥2 criteria (Yalçınkaya 2009)',s:.865,p:.936},{l:'French mixed cohort, ≥2 criteria (Kondi 2010)',s:1,p:.5},{l:'French mixed cohort, ≥3 criteria (Kondi 2010)',s:.77,p:.95},{l:'Eurofever registry (Demirkaya 2016)',s:.874,p:.407}],
   pcite:`[[Yalcinkaya2009,Kondi2010,Demirkaya2016]]`}
@@ -60,7 +60,7 @@ const DX_LAB=[
  {from:.42,at:.75,k:'Weeks 2–4',t:'Check again when well',
   txt:`About a third of patients had raised SAA between attacks (Berkun 2007), and about two thirds had some ongoing acute-phase response (Korkmaz 2002). Persistent SAA was linked to M694V homozygosity, proteinuria and missed colchicine. Persistently high SAA or CRP suggests undertreatment and raises amyloidosis risk. [[Berkun2007,Korkmaz2002,Ozen2016]]`,
   pt:'A blood test on a good day matters too. Hidden, ongoing inflammation is what slowly damages the kidneys.',
-  hook:`Measure SAA/CRP <b>between</b> attacks as well as during them. Persistent elevation, not the attacks themselves, is what feeds AA amyloidosis.`}
+  hook:`EULAR 2016 advises checking acute-phase markers <b>between</b> attacks as well as during them, since persistent elevation, not the attacks themselves, is what feeds AA amyloidosis. [[Ozen2016,Berkun2007]]`}
 ];
 const DX_PL=[.02,.18,.34,.5,.66,.82];
 const DX_PATH=[
@@ -82,7 +82,7 @@ const DX_PATH=[
   txt:`GeneReviews describes a six-month colchicine trial to establish the diagnosis when molecular testing is inconclusive. Booty 2009 concluded that one variant plus typical symptoms justifies a trial. Response is a major Tel Hashomer criterion and a minor Livneh criterion. [[GeneReviews,Booty2009,Pras1998,Livneh1997]]`,
   pt:'If daily colchicine makes the attacks stop over months, that strongly supports FMF.'},
  {from:DX_PL[5],at:.95,k:'Step 6',t:'Reassess over months',
-  txt:`Colchicine fully prevents attacks in about 60–70% of patients, gives a partial response in 20–30% and fails in about 5%. EULAR 2016 advised reviewing response, toxicity and adherence every 6 months. An atypical course sends the work-up back to the mimics. [[SoonLaxer2017,Ozen2016]]`,
+  txt:`Colchicine fully prevents attacks in about 60–70% of patients, gives a partial response in 20–30% and fails in about 5%. EULAR 2016 advised reviewing response, toxicity and adherence every 6 months; the EULAR/PReS 2024 update, published in 2025, keeps regular review but sets no fixed interval, asking for it more often at diagnosis and when the disease is uncontrolled. An atypical course sends the work-up back to the mimics. [[SoonLaxer2017,Ozen2016,Ozen2025,Cush2025]]`,
   pt:'Doctors keep checking: are the attacks gone, and are the blood tests calm between them?'}
 ];
 inits.dx=()=>{
@@ -154,7 +154,7 @@ inits.dx=()=>{
     critGroups().forEach(gr=>{h+=`<fieldset><legend>${gr.lg}</legend>`;
       gr.items.forEach((it,i)=>{const t=typeof it==='string'?it:it.t,id=typeof it==='string'?gr.k+i:it.id;
         h+=`<label class="dx-ck"><input type="checkbox" data-cr="${id}" data-grp="${gr.k}" ${cst[crit][id]?'checked':''}><span>${t}${it.flag?' <small>(placement disputed)</small>':''}</span></label>`});
-      if(gr.k==='s')h+=`<p class="dx-def">Supportive criteria only count in the conservative set (1 minor + ≥5 supportive). A variant also allows 1 minor + ≥4 of the first 5. [[Livneh1997,Lancieri2023]]</p>`;
+      if(gr.k==='s')h+=`<p class="dx-def">Supportive criteria only count in the conservative set (1 minor + ≥5 supportive), which is the rule scored here. A reproduction of the paper also allows 1 minor + ≥4 of the first 5 supportive criteria. [[Livneh1997,Lancieri2023]]</p>`;
       h+='</fieldset>'});
     $('#dxCritForm').innerHTML=h;critOut()}
   function critOut(){const C=DX_CRIT[crit];const c={M:0,m:0,s:0};
@@ -187,6 +187,7 @@ inits.dx=()=>{
     s+=`<rect x="${f1(xd(0))}" y="20" width="${f1(xd(3)-xd(0))}" height="350" style="fill:var(--terra-soft);opacity:.7"/><text x="${f1(xd(1.5))}" y="14" class="t-xs t-mid" style="fill:var(--terra)">attack (1–3 days)</text>`;
     [-2,0,2,4,7,14,21,28].forEach(k=>{s+=`<line x1="${f1(xd(k))}" x2="${f1(xd(k))}" y1="20" y2="370" class="grid"/><text x="${f1(xd(k))}" y="386" class="t-xs t-mid">${k}</text>`});
     s+=`<text x="${X1}" y="403" class="t-xs t-end">days since the attack began</text>`;
+    s+=`<text x="${X1}" y="14" class="t-xs t-end">curve shapes are schematic: no published day-by-day curve exists</text>`;
     ROWS.forEach((R,i)=>{const y0=26+i*58,yb=y0+50,h=44,yv=v=>yb-h*clamp(v,0,1.05);
       s+=`<text x="10" y="${y0+20}" class="t-lbl" style="fill:${R.flat?'var(--muted)':'var(--ink)'}">${R.n}</text><text x="10" y="${y0+36}" class="t-xs">${R.u}</text>`;
       s+=`<line x1="${X0}" x2="${X1}" y1="${yb}" y2="${yb}" class="axis"/>`;
@@ -259,5 +260,7 @@ inits.dx=()=>{
    <div class="card"><h4>Why the gene test can mislead</h4><p>About 10–20% of people with FMF carry no <i>MEFV</i> variant, usually with a milder picture. Single variants are common: in a Turkish referral cohort, 415 of 1,291 patients (32%) were heterozygous. Healthy carriers also run slightly higher CRP and SAA than non-carriers. [[BenZvi2015,Tanatar2020,Lachmann2006]]</p></div>
    <div class="card"><h4>Criteria travel badly</h4><p>In Eurofever children whose fevers had other causes, the Livneh criteria had a specificity of only 41.1% and the paediatric criteria 40.7%. Criteria built in high-prevalence populations over-call FMF where other periodic fevers are common. [[Demirkaya2016]]</p></div>
    <div class="card"><h4>Colchicine response helps, but is not proof</h4><p>In daily practice a good response and the right ancestry can support FMF in someone with a non-confirmatory genotype, but the Eurofever/PRINTO panel left both out of the criteria. [[Gattorno2019]]</p></div>
+   <div class="card"><h4>One pathogenic variant is not "confirmatory"</h4><p>A single heterozygous pathogenic <i>MEFV</i> variant counts as a <b>non-confirmatory</b> genotype in the 2019 criteria, so it needs <b>2</b> of the 4 clinical items, not 1. The same goes for one pathogenic variant plus a VUS in trans, and for two VUS. Benign and likely-benign variants do not count at all. [[Gattorno2019,Lancieri2023]]</p></div>
+   <div class="card"><h4>Counts, not points</h4><p>Both FMF sets are plain counts: every item scores 1 and there are no weights, so the 4-item and 9-item thresholds are all there is. The TRAPS clinical set in the same paper is point-weighted with a threshold of 5, so the two models should not be mixed up. [[Gattorno2019]]</p></div>
    <div class="card"><h4>Who gets the gene test?</h4><p>The clinical-only Eurofever/PRINTO items can also be used to pick who should be tested. Earlier provisional Eurofever clinical scores (2015) separated FMF from other periodic fevers with an AUC of 0.98. [[Gattorno2019,Federici2015]]</p></div>`;
 };

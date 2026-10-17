@@ -89,7 +89,7 @@ inits.ddx=()=>{
   const KC={f:'var(--terra)',u:'var(--warn)',a:'var(--muted)',c:'var(--sea)',p:'var(--bad)',d:'var(--terra)'};
   function draw(t){const day=t*60;let s='';const hl=clue>=0?DD_CLUE[clue].ids:null;const act=[];
     for(let d=0;d<=60;d+=10){s+=`<line x1="${f1(xd(d))}" x2="${f1(xd(d))}" y1="${Y0-4}" y2="${Y0+RH*10}" class="grid"/><text x="${f1(xd(d))}" y="${Y0+RH*10+16}" class="t-xs t-mid">${d}</text>`}
-    s+=`<text x="${X1}" y="${Y0+RH*10+32}" class="t-xs t-end">days</text><text x="${X0}" y="14" class="t-xs">TYPICAL EPISODE PATTERN · 60-DAY WINDOW</text><text x="684" y="14" class="t-xs t-mid">source</text>`;
+    s+=`<text x="${X1}" y="${Y0+RH*10+32}" class="t-xs t-end">days</text><text x="${X0}" y="14" class="t-xs">TYPICAL EPISODE PATTERN · 60-DAY WINDOW · LENGTHS CITED, SPACING SCHEMATIC</text><text x="684" y="14" class="t-xs t-mid">source</text>`;
     DD_DZ.forEach((D,i)=>{const y0=Y0+i*RH,bt=y0+6,bh=22,dim=hl&&!hl.includes(D.id);let g='';
       if(D.id==='fmf')g+=`<rect x="2" y="${y0+1}" width="716" height="${RH-2}" rx="8" style="fill:var(--terra-soft);opacity:.75"/>`;
       if(hl&&!dim)g+=`<rect x="2" y="${y0+1}" width="716" height="${RH-2}" rx="8" style="fill:var(--sea-soft)"/>`;
