@@ -84,52 +84,69 @@ const GN_AL=[['M694V','P',694],['M680I','P',680],['M694I','P',694],['V726A','P',
 inits.gene=()=>{
   /* ---------- 1. zoom ---------- */
   const svg=$('#gnSvg'),rg=$('#gnT');let sel='M694V';
-  const ax=a=>60+(a-1)*620/780;
   const EX=[[60,14],[120,70],[230,34],[300,14],[350,22],[410,14],[455,14],[495,12],[535,22],[590,90]];
-  const IX=a=>lerp(300,660,(a-670)/100);
-  const PIN={E148Q:{x:ax(148),y0:258,hy:290,lx:ax(148),ly:304,a:'middle',sub:'exon 2'},S242R:{x:ax(242),y0:258,hy:290,lx:ax(242),ly:304,a:'middle',sub:'PAAND'},
-    M680I:{x:IX(680),y0:352,hy:328,lx:IX(680),ly:318,a:'middle'},M694V:{x:IX(694),y0:352,hy:310,lx:IX(694)-8,ly:313,a:'end'},
-    M694I:{x:IX(694),y0:352,hy:334,lx:IX(694)+8,ly:337,a:'start'},V726A:{x:IX(726),y0:352,hy:328,lx:IX(726),ly:318,a:'middle'},
-    R761H:{x:IX(761),y0:352,hy:328,lx:IX(761),ly:318,a:'middle'},K695R:{x:IX(695),y0:364,hy:382,lx:IX(695),ly:400,a:'middle'},
-    A744S:{x:IX(744),y0:364,hy:382,lx:IX(744),ly:400,a:'middle'}};
   const PORD=['E148Q','S242R','M680I','M694V','M694I','K695R','V726A','A744S','R761H'];
   function draw(t){
-    let s=`<rect x="0" y="0" width="720" height="420" style="fill:var(--field)"/>`;
+    /* narrow: same five levels, stacked in a taller 400-wide column. GX/GW squeeze
+       the 60–680 tracks into 18–382; the hot-spot inset keeps its wide geometry
+       (it is 360 units across either way) so the pins never crowd. */
+    const N=vb(svg,'720 420','400 492');
+    const GX=x=>N?18+(x-60)*364/620:x, GW=w=>N?w*364/620:w;
+    const ax=a=>GX(60+(a-1)*620/780);
+    const IX=a=>N?lerp(18,382,(a-670)/100):lerp(300,660,(a-670)/100);
+    const IY=N?410:352;                       /* inset bar top */
+    const BY=N?246:236;                       /* protein bar top */
+    const PY=N?BY-34:226;                     /* "pyrin · 781 aa" baseline */
+    const PIN={E148Q:{x:ax(148),y0:BY+22,hy:N?BY+56:290,lx:ax(148),ly:N?BY+72:304,a:'middle',sub:'exon 2'},
+      S242R:{x:ax(242),y0:BY+22,hy:N?BY+56:290,lx:ax(242),ly:N?BY+72:304,a:'middle',sub:'PAAND'},
+      M680I:{x:IX(680),y0:IY,hy:IY-24,lx:IX(680),ly:IY-34,a:'middle'},
+      M694V:{x:IX(694),y0:IY,hy:IY-58,lx:IX(694),ly:IY-66,a:'middle'},
+      M694I:{x:IX(694),y0:IY,hy:IY-18,lx:IX(694)+8,ly:IY-15,a:'start'},
+      V726A:{x:IX(726),y0:IY,hy:IY-24,lx:IX(726),ly:IY-34,a:'middle'},
+      R761H:{x:IX(761),y0:IY,hy:IY-24,lx:IX(761),ly:IY-34,a:'middle'},
+      K695R:{x:IX(695),y0:IY+12,hy:IY+30,lx:IX(695),ly:IY+48,a:'middle'},
+      A744S:{x:IX(744),y0:IY+12,hy:IY+30,lx:IX(744),ly:IY+48,a:'middle'}};
+    let s=`<rect x="0" y="0" width="100%" height="100%" style="fill:var(--field)"/>`;
     const o1=ramp(t,0,.06),o2=ramp(t,.2,.27),o3=ramp(t,.4,.47),o4=ramp(t,.6,.67),o5=ramp(t,.8,.84);
     /* L1 chromosome */
-    s+=`<g style="opacity:${f1(o1)}"><text x="60" y="22" class="t-lbl">Chromosome 16</text>`;
-    s+=`<rect x="60" y="32" width="232" height="22" rx="11" style="fill:var(--panel-2);stroke:var(--muted);stroke-width:1.2"/><rect x="306" y="32" width="374" height="22" rx="11" style="fill:var(--panel-2);stroke:var(--muted);stroke-width:1.2"/>`;
-    [[92,14],[140,10],[186,18],[236,12],[340,16],[398,22],[470,12],[520,26],[592,14],[640,12]].forEach(([x,w])=>s+=`<rect x="${x}" y="33" width="${w}" height="20" style="fill:var(--muted);opacity:.35"/>`);
-    s+=`<path d="M290 36L299 43L308 36M290 50L299 43L308 50" style="fill:none;stroke:var(--muted);stroke-width:1.2"/>`;
-    s+=`<text x="176" y="70" class="t-xs t-mid">short arm (p)</text><text x="493" y="70" class="t-xs t-mid">long arm (q)</text><text x="299" y="70" class="t-xs t-mid">centromere</text>`;
-    s+=`<rect x="58" y="29" width="20" height="28" rx="4" style="fill:none;stroke:var(--terra);stroke-width:2.2"/></g>`;
+    s+=`<g style="opacity:${f1(o1)}"><text x="${GX(60)}" y="22" class="t-lbl">Chromosome 16</text>`;
+    s+=`<rect x="${f1(GX(60))}" y="32" width="${f1(GW(232))}" height="22" rx="11" style="fill:var(--panel-2);stroke:var(--muted);stroke-width:1.2"/><rect x="${f1(GX(306))}" y="32" width="${f1(GW(374))}" height="22" rx="11" style="fill:var(--panel-2);stroke:var(--muted);stroke-width:1.2"/>`;
+    [[92,14],[140,10],[186,18],[236,12],[340,16],[398,22],[470,12],[520,26],[592,14],[640,12]].forEach(([x,w])=>s+=`<rect x="${f1(GX(x))}" y="33" width="${f1(GW(w))}" height="20" style="fill:var(--muted);opacity:.35"/>`);
+    s+=`<path d="M${f1(GX(290))} 36L${f1(GX(299))} 43L${f1(GX(308))} 36M${f1(GX(290))} 50L${f1(GX(299))} 43L${f1(GX(308))} 50" style="fill:none;stroke:var(--muted);stroke-width:1.2"/>`;
+    s+=`<text x="${f1(GX(N?150:176))}" y="70" class="t-xs t-mid">short arm (p)</text><text x="${f1(GX(493))}" y="70" class="t-xs t-mid">long arm (q)</text><text x="${f1(GX(299))}" y="70" class="t-xs t-mid">centromere</text>`;
+    s+=`<rect x="${f1(GX(58))}" y="29" width="${f1(N?15:20)}" height="28" rx="4" style="fill:none;stroke:var(--terra);stroke-width:2.2"/></g>`;
     /* L2 band */
-    if(o2>0){s+=`<g style="opacity:${f1(o2)}"><path d="M60 57L78 57L680 98L60 98Z" style="fill:var(--terra);opacity:.08"/>`;
-      s+=`<text x="60" y="92" class="t-sm" style="fill:var(--terra)">16p13.3 · tip of the short arm</text>`;
-      s+=`<line x1="60" y1="105" x2="680" y2="105" style="stroke:var(--muted);stroke-width:2"/>`;
-      [[90,30],[150,18],[200,40],[268,22],[420,26],[470,40],[540,20],[590,34],[640,22]].forEach(([x,w])=>s+=`<rect x="${x}" y="100" width="${w}" height="10" rx="2" style="fill:var(--panel-2);stroke:var(--line)"/>`);
-      s+=`<rect x="330" y="97" width="56" height="16" rx="3" style="fill:var(--terra)"/><text x="358" y="128" class="t-sm t-mid" style="fill:var(--terra);font-weight:600">MEFV · about 15 kb</text></g>`}
+    if(o2>0){s+=`<g style="opacity:${f1(o2)}"><path d="M${f1(GX(60))} 57L${f1(GX(78))} 57L${f1(GX(680))} 98L${f1(GX(60))} 98Z" style="fill:var(--terra);opacity:.08"/>`;
+      s+=`<text x="${f1(GX(60))}" y="92" class="t-sm" style="fill:var(--terra)">16p13.3 · tip of the short arm</text>`;
+      s+=`<line x1="${f1(GX(60))}" y1="105" x2="${f1(GX(680))}" y2="105" style="stroke:var(--muted);stroke-width:2"/>`;
+      [[90,30],[150,18],[200,40],[268,22],[420,26],[470,40],[540,20],[590,34],[640,22]].forEach(([x,w])=>s+=`<rect x="${f1(GX(x))}" y="100" width="${f1(GW(w))}" height="10" rx="2" style="fill:var(--panel-2);stroke:var(--line)"/>`);
+      s+=`<rect x="${f1(GX(330))}" y="97" width="${f1(GW(56))}" height="16" rx="3" style="fill:var(--terra)"/><text x="${f1(GX(358))}" y="128" class="t-sm t-mid" style="fill:var(--terra);font-weight:600">MEFV · about 15 kb</text></g>`}
     /* L3 exons */
-    if(o3>0){s+=`<g style="opacity:${f1(o3)}"><path d="M330 113L386 113L680 158L60 158Z" style="fill:var(--terra);opacity:.07"/>`;
-      s+=`<line x1="60" y1="170" x2="680" y2="170" style="stroke:var(--muted);stroke-width:1.5"/>`;
-      EX.forEach(([x,w],i)=>{const hi=i===9,e2=i===1;s+=`<rect x="${x}" y="160" width="${w}" height="20" rx="3" style="fill:${hi?'var(--terra)':'var(--sea)'};opacity:${hi?1:.75}"/><text x="${x+w/2}" y="194" class="t-xs t-mid" ${hi?'style="fill:var(--terra);font-weight:700"':''}>${i+1}</text>`});
-      s+=`<text x="635" y="154" class="t-xs t-mid" style="fill:var(--terra);font-weight:700">exon 10</text><text x="60" y="154" class="t-xs">exons (sizes schematic)</text></g>`}
+    if(o3>0){s+=`<g style="opacity:${f1(o3)}"><path d="M${f1(GX(330))} 113L${f1(GX(386))} 113L${f1(GX(680))} 158L${f1(GX(60))} 158Z" style="fill:var(--terra);opacity:.07"/>`;
+      s+=`<line x1="${f1(GX(60))}" y1="170" x2="${f1(GX(680))}" y2="170" style="stroke:var(--muted);stroke-width:1.5"/>`;
+      EX.forEach(([x,w],i)=>{const hi=i===9;s+=`<rect x="${f1(GX(x))}" y="160" width="${f1(GW(w))}" height="20" rx="3" style="fill:${hi?'var(--terra)':'var(--sea)'};opacity:${hi?1:.75}"/><text x="${f1(GX(x)+GW(w)/2)}" y="194" class="t-xs t-mid" ${hi?'style="fill:var(--terra);font-weight:700"':''}>${i+1}</text>`});
+      s+=`<text x="${f1(GX(635))}" y="154" class="t-xs t-mid" style="fill:var(--terra);font-weight:700">exon 10</text><text x="${f1(GX(60))}" y="154" class="t-xs">exons (sizes schematic)</text></g>`}
     /* L4 protein */
     if(o4>0){s+=`<g style="opacity:${f1(o4)}">`;
-      s+=`<path d="M590 180L520 236M680 180L676 236" style="stroke:var(--terra);stroke-width:1.2;stroke-dasharray:4 3"/>`;
-      s+=`<text x="60" y="226" class="t-sm">pyrin · 781 aa</text>`;
-      s+=`<rect x="60" y="236" width="620" height="22" rx="5" style="fill:var(--panel-2);stroke:var(--line)"/>`;
+      s+=`<path d="M${f1(GX(590))} 180L${f1(ax(580))} ${BY}M${f1(GX(680))} 180L${f1(ax(775))} ${BY}" style="stroke:var(--terra);stroke-width:1.2;stroke-dasharray:4 3"/>`;
+      s+=`<text x="${f1(GX(60))}" y="${PY}" class="t-sm">pyrin · 781 aa</text>`;
+      s+=`<rect x="${f1(GX(60))}" y="${BY}" width="${f1(GW(620))}" height="22" rx="5" style="fill:var(--panel-2);stroke:var(--line)"/>`;
       const D=[[1,92,'PYD','var(--sea)'],[266,280,'','var(--gold)'],[370,412,'B-box','var(--crocus)'],[413,442,'CC','var(--muted)'],[580,775,'B30.2','var(--terra)']];
-      D.forEach(([a,b,l,c])=>{const x=ax(a),w=ax(b)-ax(a);s+=`<rect x="${f1(x)}" y="236" width="${f1(w)}" height="22" rx="4" style="fill:${c};opacity:.85"/>`;if(l)s+=`<text x="${f1(x+w/2)}" y="251" class="t-xs t-mid" style="fill:var(--panel);font-weight:700">${l}</text>`});
-      s+=`<text x="${f1(ax(273))}" y="230" class="t-xs t-mid" style="fill:var(--gold);font-weight:700">bZIP</text>`;
-      [[1,'1'],[200,'200'],[400,'400'],[600,'600'],[781,'781']].forEach(([a,l])=>s+=`<text x="${f1(ax(a))}" y="272" class="t-xs t-mid">${l}</text>`);
+      D.forEach(([a,b,l,c])=>{const x=ax(a),w=ax(b)-ax(a);s+=`<rect x="${f1(x)}" y="${BY}" width="${f1(w)}" height="22" rx="4" style="fill:${c};opacity:.85"/>`;
+        if(l&&(!N||l==='PYD'||l==='B30.2'))s+=`<text x="${f1(x+w/2)}" y="${BY+15}" class="t-xs t-mid" style="fill:var(--panel);font-weight:700">${l}</text>`});
+      /* the small domains have no room for labels inside the narrow bar: list them instead */
+      if(N)s+=`<text x="18" y="${PY+12}" class="t-xs"><tspan style="fill:var(--gold)">bZIP</tspan> 266–280 · <tspan style="fill:var(--crocus)">B-box</tspan> 370–412 · <tspan style="fill:var(--muted)">CC</tspan> 413–442</text>`;
+      else s+=`<text x="${f1(ax(273))}" y="${BY-6}" class="t-xs t-mid" style="fill:var(--gold);font-weight:700">bZIP</text>`;
+      /* narrow: the 600/781 ticks sit where the hot-spot cone and the exon leaders
+         converge, so the ruler stops at 400 (the length is in the label above) */
+      (N?[[1,'1'],[200,'200'],[400,'400']]:[[1,'1'],[200,'200'],[400,'400'],[600,'600'],[781,'781']]).forEach(([a,l])=>s+=`<text x="${f1(ax(a))}" y="${BY+36}" class="t-xs t-mid">${l}</text>`);
       s+='</g>'}
     /* L5 pins */
     if(o5>0){s+=`<g style="opacity:${f1(o5)}">`;
-      s+=`<path d="M${f1(ax(670))} 258L300 352M${f1(ax(770))} 258L660 352" style="stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3"/>`;
-      s+=`<rect x="300" y="352" width="360" height="12" rx="3" style="fill:var(--terra);opacity:.3"/>`;
-      [680,700,720,740,760].forEach(a=>s+=`<line x1="${f1(IX(a))}" x2="${f1(IX(a))}" y1="352" y2="364" style="stroke:var(--panel);stroke-width:1"/>`);
-      s+=`<text x="300" y="416" class="t-xs">B30.2 hot spot, aa 670–770 (magnified)</text>`;
+      s+=`<path d="M${f1(ax(670))} ${BY+22}L${f1(IX(670))} ${IY}M${f1(ax(770))} ${BY+22}L${f1(IX(770))} ${IY}" style="stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3"/>`;
+      s+=`<rect x="${f1(IX(670))}" y="${IY}" width="${f1(IX(770)-IX(670))}" height="12" rx="3" style="fill:var(--terra);opacity:.3"/>`;
+      [680,700,720,740,760].forEach(a=>s+=`<line x1="${f1(IX(a))}" x2="${f1(IX(a))}" y1="${IY}" y2="${IY+12}" style="stroke:var(--panel);stroke-width:1"/>`);
+      s+=`<text x="${f1(IX(670))}" y="${IY+64}" class="t-xs">B30.2 hot spot, aa 670–770 (magnified)</text>`;
       PORD.forEach((id,i)=>{const P=PIN[id],V=GN_VARS.find(v=>v.id===id),o=ramp(t,.8+i*.018,.83+i*.018);if(o<=0)return;
         const on=id===sel,c=GN_CLSC[V.cls],hy=lerp(P.y0,P.hy,ease(o));
         s+=`<g class="clk" data-v="${id}" role="button" aria-label="${id}" style="opacity:${f1(o)}"><line x1="${f1(P.x)}" x2="${f1(P.x)}" y1="${P.y0}" y2="${f1(hy)}" style="stroke:${c};stroke-width:1.6"/>`;
@@ -158,22 +175,26 @@ inits.gene=()=>{
 
   /* ---------- 2. Punnett ---------- */
   const ps=$('#gnPun'),rp=$('#gnPT');let X=GN_CROSS[0];
-  const CX=[290,410],RY=[197,292],HX=190,HY=128;
   const chip=(x,y,a,r=14)=>{const c=a==='V'?'var(--terra)':a==='D'?'var(--bad)':'var(--sea)';return `<circle cx="${f1(x)}" cy="${f1(y)}" r="${r}" style="fill:${c}"/><text x="${f1(x)}" y="${f1(y+4.5)}" class="t-lbl t-mid" style="fill:var(--panel)">${a==='D'?'Δ':a}</text>`};
   const kind=(a,b)=>(a==='D'||b==='D')?'dom':(a==='V'&&b==='V')?'two':(a==='V'||b==='V')?'car':'none';
   const KN={two:['two variants','var(--terra-soft)','var(--terra)'],car:['carrier','var(--gold-soft)','var(--gold)'],none:['no variant','var(--sea-soft)','var(--sea)'],dom:['dominant variant','var(--bad-soft)','var(--bad)']};
   function drawP(t){
-    let s=`<rect x="0" y="0" width="720" height="400" style="fill:var(--field)"/>`;
-    const P1=[[325,52],[375,52]],P2=[[55,245],[105,245]];
-    s+=`<rect x="290" y="34" width="120" height="36" rx="18" style="fill:var(--panel);stroke:var(--line)"/><text x="350" y="24" class="t-sm t-mid">Parent 1: ${X.la}</text>`;
-    s+=`<rect x="20" y="227" width="120" height="36" rx="18" style="fill:var(--panel);stroke:var(--line)"/><text x="80" y="217" class="t-sm t-mid">Parent 2: ${X.lb}</text>`;
+    /* narrow: both parents stack above a square grid, and the odds move underneath */
+    const N=vb(ps,'720 400','400 668');
+    const CX=N?[205,315]:[290,410],RY=N?[265,375]:[197,292],HX=N?118:190,HY=N?188:128;
+    const GX0=N?150:230,GY0=N?210:150,CW=N?110:120,CH=N?110:95;
+    const P1=N?[[175,48],[225,48]]:[[325,52],[375,52]],P2=N?[[175,114],[225,114]]:[[55,245],[105,245]];
+    const B1=N?[140,30]:[290,34],B2=N?[140,96]:[20,227];
+    let s=`<rect x="0" y="0" width="100%" height="100%" style="fill:var(--field)"/>`;
+    s+=`<rect x="${B1[0]}" y="${B1[1]}" width="120" height="36" rx="18" style="fill:var(--panel);stroke:var(--line)"/><text x="${B1[0]+60}" y="${B1[1]-10}" class="t-sm t-mid">Parent 1: ${X.la}</text>`;
+    s+=`<rect x="${B2[0]}" y="${B2[1]}" width="120" height="36" rx="18" style="fill:var(--panel);stroke:var(--line)"/><text x="${B2[0]+60}" y="${B2[1]-10}" class="t-sm t-mid">Parent 2: ${X.lb}</text>`;
     const g=ease(ramp(t,.15,.34));
     /* grid */
     const go=ramp(t,.1,.18);
-    s+=`<g style="opacity:${f1(go)}"><text x="350" y="104" class="t-xs t-mid">gametes from parent 1</text><text x="${HX}" y="160" class="t-xs t-mid">gametes</text><text x="${HX}" y="171" class="t-xs t-mid">parent 2</text>`;
+    s+=`<g style="opacity:${f1(go)}">${N?`<text x="18" y="192" class="t-xs">gametes from parent 1</text><text x="${HX}" y="310" class="t-xs t-mid">gametes</text><text x="${HX}" y="321" class="t-xs t-mid">parent 2</text>`:`<text x="350" y="104" class="t-xs t-mid">gametes from parent 1</text><text x="${HX}" y="160" class="t-xs t-mid">gametes</text><text x="${HX}" y="171" class="t-xs t-mid">parent 2</text>`}`;
     for(let r=0;r<2;r++)for(let c=0;c<2;c++){const k=kind(X.a[c],X.b[r]),fo=ramp(t,.64+(r*2+c)*.03,.72+(r*2+c)*.03);
-      s+=`<rect x="${230+c*120}" y="${150+r*95}" width="120" height="95" style="fill:${fo>0?KN[k][1]:'var(--panel)'};stroke:var(--line);stroke-width:1.5"/>`;
-      if(fo>0)s+=`<rect x="${232+c*120}" y="${152+r*95}" width="116" height="91" style="fill:none;stroke:${KN[k][2]};stroke-width:2;opacity:${f1(fo)}"/><text x="${CX[c]}" y="${RY[r]+34}" class="t-xs t-mid" style="fill:${KN[k][2]};font-weight:700;opacity:${f1(fo)}">${KN[k][0]}</text>`}
+      s+=`<rect x="${GX0+c*CW}" y="${GY0+r*CH}" width="${CW}" height="${CH}" style="fill:${fo>0?KN[k][1]:'var(--panel)'};stroke:var(--line);stroke-width:1.5"/>`;
+      if(fo>0)s+=`<rect x="${GX0+2+c*CW}" y="${GY0+2+r*CH}" width="${CW-4}" height="${CH-4}" style="fill:none;stroke:${KN[k][2]};stroke-width:2;opacity:${f1(fo)}"/><text x="${CX[c]}" y="${RY[r]+(N?36:34)}" class="t-xs t-mid" style="fill:${KN[k][2]};font-weight:700;opacity:${f1(fo)}">${KN[k][0]}</text>`}
     s+='</g>';
     /* parents' alleles moving to gamete headers */
     P1.forEach(([x,y],i)=>{s+=chip(x,y,X.a[i],12);if(g>0){const hx=lerp(x,CX[i],g),hy=lerp(y,HY,g);s+=`<circle cx="${f1(hx)}" cy="${f1(hy)}" r="${f1(16+4*g)}" style="fill:none;stroke:var(--muted);stroke-dasharray:3 3;opacity:${f1(g)}"/>`+chip(hx,hy,X.a[i])}});
@@ -184,14 +205,17 @@ inits.gene=()=>{
     /* odds panel */
     const op=ramp(t,.8,.88);
     if(op>0){const cnt={};for(let r=0;r<2;r++)for(let c=0;c<2;c++){const k=kind(X.a[c],X.b[r]);cnt[k]=(cnt[k]||0)+1}
-      s+=`<g style="opacity:${f1(op)}"><text x="496" y="160" class="t-sm">per child</text>`;
-      ['dom','two','car','none'].filter(k=>cnt[k]).forEach((k,i)=>{const y=196+i*58,pc=cnt[k]*25*ease(ramp(t,.84,.97));
-        s+=`<text x="496" y="${y}" class="t-big" style="fill:${KN[k][2]};font-size:26px">${Math.round(pc)}%</text><text x="496" y="${y+16}" class="t-xs">${KN[k][0]}</text>`;
-        s+=`<rect x="556" y="${y-14}" width="56" height="10" rx="5" style="fill:var(--panel-2)"/><rect x="556" y="${y-14}" width="${f1(56*pc/100)}" height="10" rx="5" style="fill:${KN[k][2]}"/>`});
+      const ox=N?18:496;
+      s+=`<g style="opacity:${f1(op)}"><text x="${ox}" y="${N?456:160}" class="t-sm">per child</text>`;
+      ['dom','two','car','none'].filter(k=>cnt[k]).forEach((k,i)=>{const y=N?490+i*44:196+i*58,pc=cnt[k]*25*ease(ramp(t,.84,.97));
+        s+=`<text x="${ox}" y="${y}" class="t-big" style="fill:${KN[k][2]};font-size:26px">${Math.round(pc)}%</text><text x="${N?96:ox}" y="${N?y:y+16}" class="t-xs">${KN[k][0]}</text>`;
+        const bx=N?200:556,bw=N?130:56;
+        s+=`<rect x="${bx}" y="${y-14}" width="${bw}" height="10" rx="5" style="fill:var(--panel-2)"/><rect x="${bx}" y="${y-14}" width="${f1(bw*pc/100)}" height="10" rx="5" style="fill:${KN[k][2]}"/>`});
       s+='</g>'}
     /* legend */
-    s+=chip(40,378,'V',9)+`<text x="54" y="382" class="t-xs">FMF variant</text>`+chip(150,378,'+',9)+`<text x="164" y="382" class="t-xs">usual copy</text>`;
-    if(X.id==='dn')s+=chip(260,378,'D',9)+`<text x="274" y="382" class="t-xs">dominant-acting variant (M694del, T577)</text>`;
+    const ly=N?624:378,lx0=N?26:40;
+    s+=chip(lx0,ly,'V',9)+`<text x="${lx0+14}" y="${ly+4}" class="t-xs">FMF variant</text>`+chip(150,ly,'+',9)+`<text x="164" y="${ly+4}" class="t-xs">usual copy</text>`;
+    if(X.id==='dn')s+=chip(N?lx0:260,N?ly+24:ly,'D',9)+`<text x="${(N?lx0:260)+14}" y="${(N?ly+24:ly)+4}" class="t-xs">dominant-acting variant (M694del, T577)</text>`;
     ps.innerHTML=s;
     const p=phaseOf(GN_P,t);setP(p);const P=Object.assign({},GN_P[p]);if(p===3)P.txt=X.txt;$('#gnPNote').innerHTML=noteHTML(P);
   }

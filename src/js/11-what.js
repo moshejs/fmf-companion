@@ -83,47 +83,69 @@ inits.what=()=>{
     else g+=`<circle cy="-9" r="4.2" style="fill:${fill}"/><path d="M-6 8v-5a6 6 0 0 1 12 0v5z" style="fill:${fill}"/>`;
     return g+'</g>'};
   const oneIn=n=>{if(n<1000)return Math.round(n).toLocaleString('en-US');const p=Math.pow(10,Math.floor(Math.log10(n))-1);return (Math.round(n/p)*p).toLocaleString('en-US')};
-  const AX0=465,AX1=665,lx=n=>lerp(AX0,AX1,(Math.log10(n)-1)/4);
   function draw(t){
+    /* narrow: the grid, the family and the prevalence scale stack in one column */
+    const N=vb(svg,'720 420','400 896');
+    const L=N
+      ? {tx:20,ty:22, gx:36,gdx:36,gy:60,gdy:30, bigY:366,subY:386, div:'M20 404H380',
+         famTx:20,famTy:432, paX:[130,270],paY:486,carY:522,
+         conn:'M155 482H245M200 482V546M46 546H352', kidX:[46,148,250,352], stemY:[546,558],
+         kidY:588,kidLab:618,ringY:581, oddX:46,oddY:646,oddY2:660,
+         l3x:20,l3y:700, AX0:56,AX1:370, gTop:716, axY:846, tickY:862, rarerY:878,
+         rowY:i=>740+i*40, noneY:i=>740+i*40-14}
+      : {tx:30,ty:34, gx:46,gdx:26,gy:78,gdy:29, bigY:378,subY:398, div:'M318 40V400',
+         famTx:336,famTy:34, paX:[430,560],paY:96,carY:132,
+         conn:'M455 92H535M495 92V150M372 150H582', kidX:[372,442,512,582], stemY:[150,162],
+         kidY:192,kidLab:222,ringY:185, oddX:614,oddY:186,oddY2:202,
+         l3x:336,l3y:252, AX0:465,AX1:665, gTop:266, axY:370, tickY:386, rarerY:402,
+         rowY:i=>i?288+i*30:286, noneY:i=>288+i*30+4};
+    const lx=n=>lerp(L.AX0,L.AX1,(Math.log10(n)-1)/4);
     const c=pop.c,nLit=c>=1?Math.round(c*ramp(t,.03,.46)):(t>.3?1:0);
-    let s=`<rect x="0" y="0" width="720" height="420" style="fill:var(--field)"/>`;
-    s+=`<text x="30" y="34" class="t-lbl">100 people · ${pop.n}</text>`;
-    for(let i=0;i<100;i++){const k=order.indexOf(i),r=Math.floor(i/10),q=i%10,x=46+q*26,y=78+r*29;
+    let s=`<rect x="0" y="0" width="100%" height="100%" style="fill:var(--field)"/>`;
+    s+=`<text x="${L.tx}" y="${L.ty}" class="t-lbl">100 people · ${pop.n}</text>`;
+    for(let i=0;i<100;i++){const k=order.indexOf(i),r=Math.floor(i/10),q=i%10,x=L.gx+q*L.gdx,y=L.gy+r*L.gdy;
       const lit=k<nLit;s+=person(x,y,1,lit?'var(--terra)':'var(--line)');
       if(lit&&k===nLit-1&&t<.48)s+=`<circle cx="${x}" cy="${y-2}" r="13" style="fill:none;stroke:var(--terra);stroke-width:1.5;opacity:.6"/>`}
     const shown=c>=1?nLit:(nLit?.7:0);
-    s+=`<text x="30" y="378" class="t-big" style="fill:var(--terra)">${c>=1?shown:(nLit?'0.7':'0')} ${c>=1?'carriers in 100':'carriers in 100'}</text>`;
-    s+=`<text x="30" y="398" class="t-sm">${nLit?'about 1 in '+(100/c<10?f1(100/c):Math.round(100/c)):'carry one MEFV variant'}${c<1&&nLit?' (shown as 1 figure)':''}</text>`;
-    s+=`<line x1="318" y1="40" x2="318" y2="400" class="axis"/>`;
+    s+=`<text x="${L.tx}" y="${L.bigY}" class="t-big" style="fill:var(--terra)">${c>=1?shown:(nLit?'0.7':'0')} ${c>=1?'carriers in 100':'carriers in 100'}</text>`;
+    s+=`<text x="${L.tx}" y="${L.subY}" class="t-sm">${nLit?'about 1 in '+(100/c<10?f1(100/c):Math.round(100/c)):'carry one MEFV variant'}${c<1&&nLit?' (shown as 1 figure)':''}</text>`;
+    s+=`<path d="${L.div}" class="axis"/>`;
     /* layer 2: family */
     const o2=ramp(t,.5,.56);
-    if(o2>0){s+=`<g style="opacity:${f1(o2)}"><text x="336" y="34" class="t-lbl">If two carriers have children</text>`;
-      s+=person(430,96,2,'',true)+person(560,96,2,'',true);
-      s+=`<text x="430" y="132" class="t-xs t-mid">carrier</text><text x="560" y="132" class="t-xs t-mid">carrier</text>`;
-      s+=`<path d="M455 92H535M495 92V150M372 150H582" style="fill:none;stroke:var(--muted);stroke-width:1.4"/>`;
-      const kids=[['VV',372,'2 variants'],['V+',442,'carrier'],['+V',512,'carrier'],['++',582,'neither']];
-      kids.forEach(([g,x,l],i)=>{const o=ramp(t,.56+i*.035,.6+i*.035);if(o<=0)return;
-        s+=`<g style="opacity:${f1(o)}"><path d="M${x} 150V162" style="stroke:var(--muted);stroke-width:1.4"/>`;
-        s+=g==='VV'?person(x,192,1.6,'var(--terra)'):g==='++'?person(x,192,1.6,'var(--line)'):person(x,192,1.6,'',true);
-        s+=`<text x="${x}" y="222" class="t-xs t-mid" ${g==='VV'?'style="fill:var(--terra);font-weight:700"':''}>${l}</text></g>`});
+    if(o2>0){s+=`<g style="opacity:${f1(o2)}"><text x="${L.famTx}" y="${L.famTy}" class="t-lbl">If two carriers have children</text>`;
+      s+=person(L.paX[0],L.paY,2,'',true)+person(L.paX[1],L.paY,2,'',true);
+      s+=`<text x="${L.paX[0]}" y="${L.carY}" class="t-xs t-mid">carrier</text><text x="${L.paX[1]}" y="${L.carY}" class="t-xs t-mid">carrier</text>`;
+      s+=`<path d="${L.conn}" style="fill:none;stroke:var(--muted);stroke-width:1.4"/>`;
+      const kids=[['VV','2 variants'],['V+','carrier'],['+V','carrier'],['++','neither']];
+      kids.forEach(([g,l],i)=>{const o=ramp(t,.56+i*.035,.6+i*.035);if(o<=0)return;const x=L.kidX[i];
+        s+=`<g style="opacity:${f1(o)}"><path d="M${x} ${L.stemY[0]}V${L.stemY[1]}" style="stroke:var(--muted);stroke-width:1.4"/>`;
+        s+=g==='VV'?person(x,L.kidY,1.6,'var(--terra)'):g==='++'?person(x,L.kidY,1.6,'var(--line)'):person(x,L.kidY,1.6,'',true);
+        s+=`<text x="${x}" y="${L.kidLab}" class="t-xs t-mid" ${g==='VV'?'style="fill:var(--terra);font-weight:700"':''}>${l}</text></g>`});
       const o3=ramp(t,.7,.74);
-      if(o3>0)s+=`<g style="opacity:${f1(o3)}"><circle cx="372" cy="185" r="24" style="fill:none;stroke:var(--terra);stroke-width:2;stroke-dasharray:4 3"/><text x="614" y="186" class="t-big">1 in 4</text><text x="614" y="202" class="t-xs">per child</text></g>`;
+      if(o3>0)s+=`<g style="opacity:${f1(o3)}"><circle cx="${L.kidX[0]}" cy="${L.ringY}" r="24" style="fill:none;stroke:var(--terra);stroke-width:2;stroke-dasharray:4 3"/><text x="${L.oddX}" y="${L.oddY}" class="t-big${N?' t-mid':''}">1 in 4</text><text x="${L.oddX}" y="${L.oddY2}" class="t-xs${N?' t-mid':''}">per child</text></g>`;
       s+='</g>'}
     /* layer 3: predicted vs observed, log axis */
     const o4=ramp(t,.75,.8);
     if(o4>0){const pred=1/Math.pow(c/200,2),slide=ease(ramp(t,.78,.9));
-      s+=`<g style="opacity:${f1(o4)}"><text x="336" y="252" class="t-lbl">How common? 1 in N, log scale</text>`;
-      s+=`<line x1="${AX0}" y1="370" x2="${AX1}" y2="370" style="stroke:var(--muted);stroke-width:1.2"/>`;
-      [[10,'1:10'],[100,'1:100'],[1e3,'1:1k'],[1e4,'1:10k'],[1e5,'1:100k']].forEach(([n,l])=>{const x=lx(n);s+=`<line x1="${f1(x)}" x2="${f1(x)}" y1="266" y2="370" class="grid"/><text x="${f1(x)}" y="386" class="t-xs t-mid">${l}</text>`});
-      s+=`<text x="${AX1}" y="402" class="t-xs t-end">rarer →</text>`;
-      const row=(y,lab,col)=>`<text x="336" y="${y+4}" class="t-sm" style="fill:${col}">${lab}</text>`;
-      s+=row(286,'Predicted (est.)','var(--sea)');
-      const px=lerp(AX0,lx(pred),slide);
-      s+=`<path d="M${f1(px)} ${286-7}l7 7-7 7-7-7z" style="fill:var(--sea)"/><text x="${f1(px)}" y="272" class="t-xs t-mid" style="fill:var(--sea);font-weight:700">1:${oneIn(pred)}</text>`;
-      pop.obs.forEach((ob,i)=>{const y=318+i*30;s+=row(y,ob.l,'var(--terra)');
-        if(ob.r){const xa=lerp(AX0,lx(ob.r[0]),slide),xb=lerp(AX0,lx(ob.r[1]),slide);s+=`<rect x="${f1(xa-4)}" y="${y-5}" width="${f1(xb-xa+8)}" height="10" rx="5" style="fill:var(--terra);opacity:.85"/><text x="${f1((xa+xb)/2)}" y="${y-10}" class="t-xs t-mid" style="fill:var(--terra);font-weight:700">1:${ob.r[0]}–1:1,000</text>`}
-        else{const x=lerp(AX0,lx(ob.v),slide);s+=`<circle cx="${f1(x)}" cy="${y}" r="6" style="fill:var(--terra)"/><text x="${f1(x)}" y="${y-10}" class="t-xs t-mid" style="fill:var(--terra);font-weight:700">1:${oneIn(ob.v)}</text>`}});
-      if(pop.none)s+=`<text x="336" y="${318+pop.obs.length*30+4}" class="t-sm">${pop.none}</text>`;
+      s+=`<g style="opacity:${f1(o4)}"><text x="${L.l3x}" y="${L.l3y}" class="t-lbl">How common? 1 in N, log scale</text>`;
+      s+=`<line x1="${L.AX0}" y1="${L.axY}" x2="${L.AX1}" y2="${L.axY}" style="stroke:var(--muted);stroke-width:1.2"/>`;
+      [[10,'1:10'],[100,'1:100'],[1e3,'1:1k'],[1e4,'1:10k'],[1e5,'1:100k']].forEach(([n,l])=>{const x=lx(n);s+=`<line x1="${f1(x)}" x2="${f1(x)}" y1="${L.gTop}" y2="${L.axY}" class="grid"/><text x="${f1(x)}" y="${L.tickY}" class="t-xs t-mid">${l}</text>`});
+      s+=`<text x="${L.AX1}" y="${L.rarerY}" class="t-xs t-end">rarer →</text>`;
+      /* narrow has no room for a label column beside the axis: the row label and its
+         value share one line above the marker instead */
+      const row=(y,lab,col,val)=>N
+        ? `<text x="${L.l3x}" y="${y-14}" class="t-sm" style="fill:${col}">${lab} · ${val}</text>`
+        : `<text x="${L.l3x}" y="${y+4}" class="t-sm" style="fill:${col}">${lab}</text>`;
+      const val=(y,x,col,v)=>N?'':`<text x="${f1(x)}" y="${y-10}" class="t-xs t-mid" style="fill:${col};font-weight:700">${v}</text>`;
+      const py=L.rowY(0),pv='1:'+oneIn(pred);
+      s+=row(py,'Predicted (est.)','var(--sea)',pv);
+      const px=lerp(L.AX0,lx(pred),slide);
+      s+=`<path d="M${f1(px)} ${py-7}l7 7-7 7-7-7z" style="fill:var(--sea)"/>`+val(py,px,'var(--sea)',pv);
+      pop.obs.forEach((ob,i)=>{const y=L.rowY(i+1),ov=ob.r?`1:${ob.r[0]}–1:1,000`:'1:'+oneIn(ob.v);
+        s+=row(y,ob.l,'var(--terra)',ov);
+        if(ob.r){const xa=lerp(L.AX0,lx(ob.r[0]),slide),xb=lerp(L.AX0,lx(ob.r[1]),slide);s+=`<rect x="${f1(xa-4)}" y="${y-5}" width="${f1(xb-xa+8)}" height="10" rx="5" style="fill:var(--terra);opacity:.85"/>`+val(y,(xa+xb)/2,'var(--terra)',ov)}
+        else{const x=lerp(L.AX0,lx(ob.v),slide);s+=`<circle cx="${f1(x)}" cy="${y}" r="6" style="fill:var(--terra)"/>`+val(y,x,'var(--terra)',ov)}});
+      if(pop.none)s+=`<text x="${L.l3x}" y="${L.noneY(pop.obs.length+1)}" class="t-sm">${pop.none}</text>`;
       s+='</g>'}
     svg.innerHTML=s;
     const p=phaseOf(WH_STEPS,t);setSt(p);$('#whNote').innerHTML=noteHTML(WH_STEPS[p]);
@@ -139,20 +161,25 @@ inits.what=()=>{
 
   /* ---------- 2. heterozygote advantage ---------- */
   const sv=$('#whSel'),rs=$('#whSelT');
-  const Y0=-200,Y1=2000,X0=84,X1=672,PY0=330,PY1=84,L0=-4.5,L1=-1;
-  const xy=y=>lerp(X0,X1,(y-Y0)/(Y1-Y0)),yl=l=>lerp(PY0,PY1,(l-L0)/(L1-L0));
+  const Y0=-200,Y1=2000,L0=-4.5,L1=-1;
   const VAR=[{n:'M694V',s:.077,o:2000-2108,ci:[2000-2501,2000-1798],col:'var(--terra)'},{n:'V726A',s:.068,o:2000-2192,ci:[2000-2754,2000-1826],col:'var(--crocus)'}];
   const P0=5e-5,pf=(v,yr)=>{if(yr<v.o)return null;const e=Math.exp(v.s*(yr-v.o)/25);return P0*e/(1-P0+P0*e)};
   const yrLbl=y=>y<0?Math.round(-y)+' BCE':Math.round(y)+' CE';
   const pct=p=>p<.001?(p*100).toFixed(3)+'%':p<.01?(p*100).toFixed(2)+'%':(p*100).toFixed(1)+'%';
   function drawSel(t){const yr=lerp(Y0,Y1,t);
-    let s=`<rect x="0" y="0" width="720" height="400" style="fill:var(--field)"/>`;
+    /* narrow: one chart at the full 400 width, taller, with fewer x ticks */
+    const N=vb(sv,'720 400','400 520');
+    const X0=N?46:84,X1=N?380:672,PY0=N?440:330,PY1=N?100:84;
+    const xy=y=>lerp(X0,X1,(y-Y0)/(Y1-Y0)),yl=l=>lerp(PY0,PY1,(l-L0)/(L1-L0));
+    let s=`<rect x="0" y="0" width="100%" height="100%" style="fill:var(--field)"/>`;
     [[-4,'0.01%'],[-3,'0.1%'],[-2,'1%'],[-1,'10%']].forEach(([l,lb])=>{s+=`<line x1="${X0}" x2="${X1}" y1="${f1(yl(l))}" y2="${f1(yl(l))}" class="grid"/><text x="${X0-6}" y="${f1(yl(l)+3)}" class="t-xs t-end">${lb}</text>`});
-    s+=`<text x="16" y="${(PY0+PY1)/2}" class="t-xs t-mid" transform="rotate(-90 16 ${(PY0+PY1)/2})">allele frequency, log scale</text>`;
+    s+=N?`<text x="14" y="26" class="t-xs">allele frequency, log scale</text>`
+        :`<text x="16" y="${(PY0+PY1)/2}" class="t-xs t-mid" transform="rotate(-90 16 ${(PY0+PY1)/2})">allele frequency, log scale</text>`;
     s+=`<line x1="${X0}" x2="${X1}" y1="${PY0}" y2="${PY0}" class="axis"/>`;
-    [[-200,'200 BCE'],[0,'0'],[500,'500'],[1000,'1000'],[1500,'1500'],[2000,'2000 CE']].forEach(([y,l])=>{const x=xy(y);s+=`<line x1="${f1(x)}" x2="${f1(x)}" y1="${PY0}" y2="${PY0+4}" class="axis"/><text x="${f1(x)}" y="${PY0+16}" class="t-xs ${y===-200?'':y===2000?'t-end':'t-mid'}">${l}</text>`});
+    (N?[[-200,'200 BCE'],[600,'600'],[1300,'1300'],[2000,'2000 CE']]
+      :[[-200,'200 BCE'],[0,'0'],[500,'500'],[1000,'1000'],[1500,'1500'],[2000,'2000 CE']]).forEach(([y,l])=>{const x=xy(y);s+=`<line x1="${f1(x)}" x2="${f1(x)}" y1="${PY0}" y2="${PY0+4}" class="axis"/><text x="${f1(x)}" y="${PY0+16}" class="t-xs ${y===-200?'':y===2000?'t-end':'t-mid'}">${l}</text>`});
     /* plague events */
-    [[541,'Plague of Justinian','541 CE'],[1347,'Black Death','1347 CE']].forEach(([y,a,b])=>{const x=xy(y),on=yr>=y,o=on?1:.45;
+    [[541,N?'Justinian plague':'Plague of Justinian','541 CE'],[1347,'Black Death','1347 CE']].forEach(([y,a,b])=>{const x=xy(y),on=yr>=y,o=on?1:.45;
       s+=`<line x1="${f1(x)}" x2="${f1(x)}" y1="${PY1-12}" y2="${PY0}" style="stroke:var(--bad);stroke-width:${on?2:1.2};stroke-dasharray:5 4;opacity:${o}"/>`;
       s+=`<text x="${f1(x)}" y="${PY1-36}" class="t-lbl t-mid" style="fill:var(--bad);opacity:${o}">${a}</text><text x="${f1(x)}" y="${PY1-20}" class="t-xs t-mid" style="fill:var(--bad);opacity:${o}">${b}</text>`});
     /* curves */
@@ -160,7 +187,7 @@ inits.what=()=>{
       if(d){const pe=pf(v,yr),hx=xy(yr),hy=yl(Math.log10(pe));
         s+=`<path d="${d}L${f1(hx)} ${f1(hy)}" style="fill:none;stroke:${v.col};stroke-width:3;stroke-linecap:round"/>`;
         s+=`<circle cx="${f1(hx)}" cy="${f1(hy)}" r="5" style="fill:${v.col}"/>`;
-        const nr=hx>X1-110;s+=`<text x="${f1(nr?hx-8:hx+8)}" y="${f1(i?hy+16:hy-9)}" class="t-sm${nr?' t-end':''}" style="fill:${v.col};font-weight:600">${v.n} ${pct(pe)}</text>`}
+        const nr=hx>X1-(N?96:110);s+=`<text x="${f1(nr?hx-8:hx+8)}" y="${f1(i?hy+16:hy-9)}" class="t-sm${nr?' t-end':''}" style="fill:${v.col};font-weight:600">${v.n} ${pct(pe)}</text>`}
       /* age CI bars */
       const by=PY0+34+i*16,xa=xy(Math.max(Y0,v.ci[0])),xb=xy(v.ci[1]);
       s+=`<line x1="${f1(xa)}" x2="${f1(xb)}" y1="${by}" y2="${by}" style="stroke:${v.col};stroke-width:3;opacity:.55"/><circle cx="${f1(xy(v.o))}" cy="${by}" r="4" style="fill:${v.col}"/>`;
@@ -168,7 +195,7 @@ inits.what=()=>{
       s+=`<text x="${f1(xb+8)}" y="${by+3}" class="t-xs">${v.n} age ≈ ${(2000-v.o).toLocaleString('en-US')} y (HMM, 95% CI)</text>`});
     /* playhead */
     const hx=xy(yr);s+=`<line x1="${f1(hx)}" x2="${f1(hx)}" y1="${PY1}" y2="${PY0}" style="stroke:var(--ink);stroke-width:1;opacity:.35"/>`;
-    s+=`<text x="${f1(clamp(hx,120,X1-24))}" y="${PY1-2}" class="t-sm t-mid" style="fill:var(--ink);font-weight:600">${yrLbl(yr)}</text>`;
+    s+=`<text x="${f1(clamp(hx,N?74:120,X1-(N?20:24)))}" y="${PY1-2}" class="t-sm t-mid" style="fill:var(--ink);font-weight:600">${yrLbl(yr)}</text>`;
     s+=`<text x="${X1}" y="${PY0-8}" class="t-xs t-end">schematic model</text>`;
     sv.innerHTML=s;
     const a=pf(VAR[0],yr),b=pf(VAR[1],yr);
