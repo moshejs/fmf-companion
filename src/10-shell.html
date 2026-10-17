@@ -1,0 +1,42 @@
+<div class="app">
+<nav class="side" id="side" aria-label="Modules">
+  <button class="brand" data-go="home" aria-label="FMF Companion home">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" style="fill:var(--sea)"/><path d="M5 25c5 0 5-6 10-6s5 6 10 6 5-6 10-6" style="fill:none;stroke:var(--panel);stroke-width:3;stroke-linecap:round"/><path d="M9 15l5-6 4 9 5-12 4 9h5" style="fill:none;stroke:var(--terra-soft);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round"/></svg>
+    <span>FMF Companion<span class="sm">Familial Mediterranean Fever</span></span>
+  </button>
+  <div id="navgroups" style="display:contents"></div>
+  <div class="side-foot">
+    <button class="themebtn" id="themeBtn">Theme: auto</button>
+    <p>An animated, cited guide for students and patients. Educational only, not medical advice. Your place is saved on this device.</p>
+  </div>
+</nav>
+
+<main id="main">
+<header class="disclaimer" role="note"><b>Not medical advice</b><span>FMF Companion is an educational synthesis of published literature for study and patient understanding. It does not replace a clinician. Doses and guideline statements are reported as published, not as instructions for any individual.</span></header>
+
+<!-- ================= HOME ================= -->
+<section class="mod" id="m-home" data-mod="home">
+  <div class="hero">
+    <div class="mhead">
+      <p class="eyebrow">Familial Mediterranean Fever · animated companion</p>
+      <h1>FMF Companion</h1>
+      <p class="lede">The most common inherited autoinflammatory disease, explained by moving pictures. Watch a single protein misfire, follow an attack hour by hour, see why colchicine takes months to show its full effect, and look honestly at what a cure would take.</p>
+      <div class="ctrls" style="margin-top:6px">
+        <button class="btn primary" data-go="what">Start at the beginning</button>
+        <button class="btn" data-go="colmonths">Colchicine over months</button>
+        <button class="btn" data-go="cure">Toward a cure</button>
+      </div>
+    </div>
+    <div class="stage">
+      <svg id="heroSvg" viewBox="0 0 520 300" role="img" aria-label="A year of attacks before and after colchicine"></svg>
+      <div class="ctrls"><button class="btn primary" id="heroPlay">Play</button><label class="stage-cap tl" for="heroT">Two years <input type="range" id="heroT" min="0" max="1" step="0.002" value="1"></label></div>
+      <p class="stage-cap" id="heroCap">Schematic. Each spike is an attack. Colchicine starts at month 12.</p>
+    </div>
+  </div>
+  <div class="units" id="homeUnits"></div>
+  <div class="cards">
+    <div class="card"><h4>For students</h4><p>Every module has an <b>Exam hook</b> box and a citation trail. Finish with flashcards, mnemonics and a quiz.</p></div>
+    <div class="card"><h4>For patients and families</h4><p>Look for the <b>In plain words</b> boxes. Bring questions to your own doctor: the app reports what guidelines say, not what you should do.</p></div>
+    <div class="card"><h4>How sure is each claim?</h4><p>Research claims carry a label: <span class="ev est">Established</span> <span class="ev early">Early evidence</span> <span class="ev hyp">Hypothesis</span>. Small numbers link to the Sources list.</p></div>
+  </div>
+</section>
