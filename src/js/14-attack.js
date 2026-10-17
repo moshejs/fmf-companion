@@ -53,7 +53,8 @@ inits.attack=()=>{
     const joint=site==='joint'&&vk==='typ', sx=joint?.65:1; // joint attacks run longer
     const val=k=>C[k](x*sx);
     const nf=val('neut'),fever=val('temp');
-    let s=`<rect x="0" y="0" width="330" height="420" rx="12" style="fill:var(--field)"/>`;
+    const N=vb(svg,'720 420','400 960');
+    let s=(N?`<g transform="scale(1.212)">`:'')+`<rect x="0" y="0" width="330" height="420" rx="12" style="fill:var(--field)"/>`;
     // tissue scene
     const isSkin=site==='skin'&&vk==='typ';
     const cav=vk==='peri'?'PERICARDIAL SPACE':vk==='pfm'?'MUSCLE':S.cav;
@@ -84,15 +85,18 @@ inits.attack=()=>{
     // fever thermometer
     const T=37+2.8*fever;s+=`<g transform="translate(18 360)"><rect x="0" y="0" width="200" height="12" rx="6" style="fill:var(--panel-2)"/><rect x="0" y="0" width="${f1(200*fever)}" height="12" rx="6" style="fill:var(--terra)"/><text x="0" y="32" class="t-lbl">Temperature ${T.toFixed(1)} °C</text></g>`;
     s+=`<text x="16" y="408" class="t-sm">${V.fmt(x)}</text><text x="318" y="408" class="t-xs t-end" style="fill:var(--warn)">ILLUSTRATIVE</text>`;
-    // charts
+    if(N)s+='</g>';
+    // charts: beside the scene when wide, stacked under it when narrow
+    const CX0=N?48:372, CX1=N?392:708, CY=N?548:14;
     const CH=[['temp','Fever','var(--terra)'],['pain','Pain','var(--bad)'],['crp','CRP','var(--sea)'],['saa','SAA','var(--gold)']];
-    CH.forEach(([k,l,c],i)=>{const y0=14+i*100,y1=y0+78,x0=372,x1=708;
+    CH.forEach(([k,l,c],i)=>{const y0=CY+i*100,y1=y0+78,x0=CX0,x1=CX1;
       s+=`<line x1="${x0}" x2="${x1}" y1="${y1}" y2="${y1}" class="axis"/><text x="${x0}" y="${y0-2}" class="t-sm" style="fill:${c}">${l.toUpperCase()}</text>`;
       s+=`<path d="${pathFn(v=>C[k](v*V.axis*sx),x0,x1,y1,y0+10)}" style="fill:none;stroke:${c};stroke-width:1.2;opacity:.35"/>`;
       s+=`<path d="${pathFn(v=>v<=u?C[k](v*V.axis*sx):NaN,x0,x1,y1,y0+10).replace(/[ML][^ML]*NaN[^ML]*/g,'')}" style="fill:none;stroke:${c};stroke-width:3"/>`;
       const cx=lerp(x0,x1,u),cy=lerp(y1,y0+10,C[k](x*sx));s+=`<circle cx="${f1(cx)}" cy="${f1(cy)}" r="5" style="fill:${c}"/>`;
-      if(i===3){const ticks=vk==='pfm'?[0,14,28,42,56]:[0,24,48,72,96,120];ticks.forEach(tk=>s+=`<text x="${f1(lerp(x0,x1,tk/V.axis))}" y="${y1+14}" class="t-xs t-mid">${vk==='pfm'?'d'+tk:tk+'h'}</text>`)}});
-    s+=`<line x1="${f1(lerp(372,708,u))}" x2="${f1(lerp(372,708,u))}" y1="8" y2="394" style="stroke:var(--ink);stroke-width:1;opacity:.25"/>`;
+      if(i===3){const ticks=vk==='pfm'?[0,14,28,42,56]:[0,24,48,72,96,120];ticks.forEach((tk,ti)=>{const last=ti===ticks.length-1,first=ti===0;
+        s+=`<text x="${f1(lerp(x0,x1,tk/V.axis))}" y="${y1+14}" class="t-xs ${last?'t-end':first?'':'t-mid'}">${vk==='pfm'?'d'+tk:tk+'h'}</text>`})}});
+    s+=`<line x1="${f1(lerp(CX0,CX1,u))}" x2="${f1(lerp(CX0,CX1,u))}" y1="${CY-6}" y2="${CY+380}" style="stroke:var(--ink);stroke-width:1;opacity:.25"/>`;
     svg.innerHTML=s;
     const p=phaseOf(V.steps,u);setSt(p);const P=V.steps[p];
     $('#atNote').innerHTML=noteHTML(P)+(vk==='typ'?`<div class="kv"><div><dt>This site: ${S.n}</dt><dd>${S.txt}</dd></div></div>`+(p===2?`<div class="pt"><b>In plain words</b>${S.pt}</div><div class="hook"><b>Exam hook</b>${S.hook}</div>`:''):'');
@@ -115,14 +119,17 @@ inits.attack=()=>{
       if(rr()<p){out.push({tY,s:.5+rr()*.5,site:Math.floor(rr()*4)});d+=4}}
     return out}
   let EV=gen();
-  function drawY(t){const T=t*5;let s='';const x0=60,x1=706;
-    for(let y=0;y<5;y++){const yy=24+y*38;s+=`<text x="10" y="${yy+16}" class="t-sm">Year ${y+1}</text><line x1="${x0}" x2="${x1}" y1="${yy+24}" y2="${yy+24}" class="axis"/>`;
-      ['J','F','M','A','M','J','J','A','S','O','N','D'].forEach((m,i)=>{if(y===4)s+=`<text x="${f1(x0+(i+.5)/12*(x1-x0))}" y="${yy+40}" class="t-xs t-mid">${m}</text>`});
-      const n=EV.filter(e=>Math.floor(e.tY)===y&&e.tY<=T).length;s+=`<text x="${x1}" y="${yy+6}" class="t-xs t-end">${n} attacks</text>`}
-    if(col){const yy=24+2*38;s+=`<rect x="${x0}" y="${yy-4}" width="${x1-x0}" height="${3*38+6}" rx="6" style="fill:var(--crocus-soft);opacity:.55"/><text x="${x0+4}" y="${yy+6}" class="t-xs" style="fill:var(--crocus)">on colchicine →</text>`}
+  function drawY(t){const T=t*5;let s='';
+    const NY=vb(ys,'720 230','400 300');
+    const x0=NY?14:60, x1=NY?392:706, rowH=NY?52:38, top=NY?30:24, trk=NY?22:24;
+    for(let y=0;y<5;y++){const yy=top+y*rowH;
+      s+=`<text x="${NY?x0:10}" y="${f1(yy+(NY?-4:16))}" class="t-sm">Year ${y+1}</text><line x1="${x0}" x2="${x1}" y1="${yy+trk}" y2="${yy+trk}" class="axis"/>`;
+      ['J','F','M','A','M','J','J','A','S','O','N','D'].forEach((m,i)=>{if(y===4)s+=`<text x="${f1(x0+(i+.5)/12*(x1-x0))}" y="${yy+trk+16}" class="t-xs t-mid">${m}</text>`});
+      const n=EV.filter(e=>Math.floor(e.tY)===y&&e.tY<=T).length;s+=`<text x="${x1}" y="${f1(yy+(NY?-4:6))}" class="t-xs t-end">${n} attacks</text>`}
+    if(col){const yy=top+2*rowH;s+=`<rect x="${x0}" y="${f1(yy-(NY?18:4))}" width="${x1-x0}" height="${3*rowH+6}" rx="6" style="fill:var(--crocus-soft);opacity:.55"/><text x="${x0+4}" y="${f1(yy+(NY?-6:6))}" class="t-xs" style="fill:var(--crocus)">on colchicine →</text>`}
     const cols=['var(--terra)','var(--sea)','var(--gold)','var(--bad)'];
-    EV.forEach(e=>{if(e.tY>T)return;const y=Math.floor(e.tY),xx=x0+(e.tY-y)*(x1-x0),yy=24+y*38+24;s+=`<path d="M${f1(xx-4)} ${yy} L${f1(xx)} ${f1(yy-20*e.s)} L${f1(xx+4)} ${yy}" style="fill:${cols[e.site]};opacity:.9"/>`});
-    if(t<1){const y=Math.min(4,Math.floor(T)),xx=x0+(T-y)*(x1-x0);s+=`<line x1="${f1(xx)}" x2="${f1(xx)}" y1="${24+y*38}" y2="${24+y*38+26}" style="stroke:var(--ink);stroke-width:2"/>`}
+    EV.forEach(e=>{if(e.tY>T)return;const y=Math.floor(e.tY),xx=x0+(e.tY-y)*(x1-x0),yy=top+y*rowH+trk;s+=`<path d="M${f1(xx-4)} ${yy} L${f1(xx)} ${f1(yy-20*e.s)} L${f1(xx+4)} ${yy}" style="fill:${cols[e.site]};opacity:.9"/>`});
+    if(t<1){const y=Math.min(4,Math.floor(T)),xx=x0+(T-y)*(x1-x0);s+=`<line x1="${f1(xx)}" x2="${f1(xx)}" y1="${top+y*rowH}" y2="${top+y*rowH+trk+2}" style="stroke:var(--ink);stroke-width:2"/>`}
     ys.innerHTML=s;
     const pre=EV.filter(e=>e.tY<2).length/2,post=EV.filter(e=>e.tY>=2.5).length/2.5;
     $('#ayCap').textContent=col?`Schematic simulation. About ${pre.toFixed(1)} attacks a year before colchicine, about ${post.toFixed(1)} a year once the drug has had months to work. Colors mark different sites.`:'Schematic simulation of an untreated course. Colors mark different attack sites (abdomen, chest, joint, skin).'}

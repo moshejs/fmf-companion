@@ -93,6 +93,21 @@ document.addEventListener('click',e=>{
   function apply(){if(m==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.setAttribute('data-theme',m);btn.textContent='Theme: '+m}
   btn.addEventListener('click',()=>{m=modes[(modes.indexOf(m)+1)%3];store.set('theme',m);apply()});apply();
 })();
+/* ---- narrow mode ----
+   Phone stages are too small for the 720-wide layouts, so draw() asks NARROW()
+   and lays its panels out in a tall column instead of a wide row. Modules that
+   register a player are redrawn automatically when the stage crosses the
+   threshold, so a rotation or a window resize re-lays-out the scene. */
+const NARROW=()=>matchMedia('(max-width:820px)').matches;
+const redraws={};
+let _wasNarrow=NARROW(),_rt;
+addEventListener('resize',()=>{clearTimeout(_rt);_rt=setTimeout(()=>{
+  const n=NARROW();if(n===_wasNarrow)return;_wasNarrow=n;
+  const f=redraws[cur];if(f)try{f()}catch(e){}
+},160)});
+/* fit the viewBox to the mode: wide|narrow are "w h" pairs */
+function vb(svg,wide,narrow){const v=NARROW()?narrow:wide;svg.setAttribute('viewBox','0 0 '+v);svg.dataset.mode=NARROW()?'n':'w';return NARROW()}
+
 /* the shared player: a range input + a play button drive draw(t) */
 function playWire(rg,pb,draw,dur,doneLabel='Replay',hideKey){
   let stopA=null;function stop(){if(stopA)stopA();stopA=null;pb.textContent='Play'}
@@ -100,6 +115,7 @@ function playWire(rg,pb,draw,dur,doneLabel='Replay',hideKey){
   pb.addEventListener('click',()=>{if(stopA){stop();return}let t0=+rg.value;const mx=+rg.max||1,mn=+rg.min||0;if(t0>=mx-(mx-mn)*.01)t0=mn;pb.textContent='Pause';
     stopA=animate((mx-t0)/(mx-mn)*dur,p=>{const t=t0+(mx-t0)*p;rg.value=t;draw(t)},()=>{stopA=null;pb.textContent=doneLabel})});
   if(hideKey){const prev=onHide[hideKey];onHide[hideKey]=()=>{prev&&prev();stop()}}
+  if(hideKey)redraws[hideKey]=()=>{stop();draw(+rg.value)};
   return stop;
 }
 /* stepper buttons that jump the timeline */
