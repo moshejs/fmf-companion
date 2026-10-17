@@ -10,7 +10,7 @@ const CI=[
   pt:'The liver sends the drug out in bile, and the gut takes some of it back up, so it lingers in the body.',
   hook:'Enterohepatic recirculation helps explain the long half-life and why hepatic or biliary disease raises exposure.'},
  {from:.26,at:.34,k:'Scene 3 · Neutrophils',t:'It piles up in white cells',
-  txt:'Granulocytes carry no working P-glycoprotein pump, so colchicine that enters them is not pushed back out. Leukocyte levels peak about two days after a dose, long after the plasma peak at about one hour, and neutrophil concentrations can exceed peak plasma levels more than 16-fold. Why neutrophils trap the drug is a well-supported hypothesis. [[Chappey1993,Klimecki1994,Leung2015,BenChetrit1998MH]]',
+  txt:'Granulocytes carry no working P-glycoprotein pump, so colchicine that enters them is not pushed back out. Leukocyte levels peak about two days after a dose, long after the plasma peak at about one hour, and neutrophil concentrations can exceed peak plasma levels more than 16-fold. Why neutrophils trap the drug is a well-supported hypothesis. Levels vary a lot between people: in 30 patients taking 0.5 to 2 mg a day, plasma and leukocyte levels did not track the dose taken, and uptake into leukocytes was saturable. [[Chappey1993,Chappey1994,Klimecki1994,Leung2015,BenChetrit1998MH]]',
   pt:'White blood cells soak the drug up and hold on to it. Plasma levels fall within hours, but levels inside the white cells stay up for days.',
   hook:'Low P-gp in neutrophils = intracellular trapping. This is part of why the drug is so selective for neutrophil-driven inflammation.'},
  {from:.45,at:.5,k:'Scene 4 · Tubulin',t:'Binding free tubulin',
@@ -115,7 +115,7 @@ inits.colin=()=>{
   const stop=playWire(rg,$('#ciPlay'),draw,26000,'Replay','colin');
   const setSt=stepWire($('#ciSteps'),CI,rg,draw,stop);
   $('#ciCards').innerHTML=`
-   <div class="card"><span class="ev est">Established</span><h4>It binds tubulin and disrupts microtubules</h4><p>This has been known for decades and is the starting point of every proposed mechanism. [[Leung2015]]</p></div>
+   <div class="card"><span class="ev est">Established</span><h4>It binds tubulin and disrupts microtubules</h4><p>This has been known for decades and is the starting point of every proposed mechanism. Pyrin itself was found sitting on microtubules in 2001, long before anyone knew why that mattered. [[Leung2015,Mansfield2001]]</p></div>
    <div class="card"><span class="ev est">Established</span><h4>It suppresses the pyrin inflammasome selectively</h4><p>In cell experiments colchicine blocked pyrin-driven IL-1β release without a consistent effect on NLRP3, NLRC4 or AIM2 at the concentrations tested. [[Gao2016,Park2016]]</p></div>
    <div class="card"><span class="ev early">Debated</span><h4>Which route matters most?</h4><p>GEF-H1/RhoA re-activation (route 1) and loss of the microtubule-dependent step (route 2) were both shown in cultured cells. The results differ partly because studies used different drug concentrations. [[Park2016,Gao2016,Schnappauf2019]]</p></div>
    <div class="card"><span class="ev early">A puzzle</span><h4>FMF pyrin can fire without microtubules</h4><p>In patients' cells, FMF variants removed the need for microtubules, yet colchicine still works clinically. Proposed explanations include its effects on neutrophil migration and adhesion, and a remaining partial dependence on microtubules in the body. This is an open question. [[VanGorp2016,Magnotti2019]]</p></div>`;
