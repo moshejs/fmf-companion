@@ -10,7 +10,7 @@ const MX=[
   pt:'Some germs switch RhoA off. Pyrin notices the switch going quiet.',
   hook:'Xu et al. 2014 showed pyrin senses <b>modification of Rho GTPases</b>, not the bacterium itself.'},
  {from:.32,at:.38,k:'Step 3 · Release',t:'PKN stops, phosphates drop off',
-  txt:'Without RhoA, PKN activity falls, pyrin is dephosphorylated and 14-3-3 lets go. A second, microtubule-dependent step is then needed for pyrin to assemble in normal cells. FMF-associated B30.2 variants make pyrin need less: dephosphorylation alone can be enough. FMF cells are not switched on all the time: they respond to stimuli too weak to move normal cells, more strongly with two variants than one. [[Park2016,VanGorp2016,Magnotti2019,Jamilloux2018]]',
+  txt:'Without RhoA, PKN activity falls, pyrin is dephosphorylated and 14-3-3 lets go. A second, microtubule-dependent step is then needed for pyrin to assemble in normal cells. FMF-associated B30.2 variants make pyrin need less: dephosphorylation alone can be enough. FMF cells are not switched on all the time: they respond to stimuli too weak to move normal cells, more strongly with two variants than one. [[Park2016,VanGorp2016,Magnotti2019,Jamilloux2018]] Exactly how the variants weaken the brake is debated: Park 2016 found reduced PKN and 14-3-3 binding, while other work points to the later, microtubule-dependent control step. [[Park2016,Masters2016,Magnotti2019]]',
   pt:'With the switch off, the brakes on pyrin come off. In FMF the brakes are weaker to begin with.',
   hook:'Normal pyrin needs <b>two</b> steps (dephosphorylation + a microtubule-dependent step). FMF pyrin needs less, so it fires at a lower threshold.'},
  {from:.45,at:.53,k:'Step 4 · Inflammasome',t:'Pyrin–ASC–caspase-1 speck',

@@ -83,7 +83,7 @@ inits.attack=()=>{
     s+=body();
     // fever thermometer
     const T=37+2.8*fever;s+=`<g transform="translate(18 360)"><rect x="0" y="0" width="200" height="12" rx="6" style="fill:var(--panel-2)"/><rect x="0" y="0" width="${f1(200*fever)}" height="12" rx="6" style="fill:var(--terra)"/><text x="0" y="32" class="t-lbl">Temperature ${T.toFixed(1)} °C</text></g>`;
-    s+=`<text x="16" y="408" class="t-sm">${V.fmt(x)}</text>`;
+    s+=`<text x="16" y="408" class="t-sm">${V.fmt(x)}</text><text x="318" y="408" class="t-xs t-end" style="fill:var(--warn)">ILLUSTRATIVE</text>`;
     // charts
     const CH=[['temp','Fever','var(--terra)'],['pain','Pain','var(--bad)'],['crp','CRP','var(--sea)'],['saa','SAA','var(--gold)']];
     CH.forEach(([k,l,c],i)=>{const y0=14+i*100,y1=y0+78,x0=372,x1=708;

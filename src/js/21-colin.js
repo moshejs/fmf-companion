@@ -6,7 +6,7 @@ const CI=[
   pt:'The tablet is absorbed from the gut. Only part of each dose gets into the body.',
   hook:'Colchicine is a P-glycoprotein (ABCB1) and CYP3A4 substrate. Both matter for drug interactions.'},
  {from:.12,at:.17,k:'Scene 2 · Liver and bile',t:'Recycling through bile',
-  txt:'The liver metabolizes part of the drug through CYP3A4 and secretes some into bile. Bile returns it to the gut, where some is absorbed again: enterohepatic recycling, seen as a second plasma peak within hours. The kidneys excrete a large share unchanged (40–65% of a dose in urine). A huge volume of distribution (about 5–8 L/kg) and binding inside cells give a long half-life, about 27–31 hours with repeated dosing, though studies range widely. [[Ferron1996,FDA-Colcrys,Finkelstein2010]]',
+  txt:'The liver metabolizes part of the drug through CYP3A4 and secretes some into bile. Bile returns it to the gut, where some is absorbed again: enterohepatic recycling, seen as a second plasma peak within hours. The kidneys excrete a share unchanged; the US label reports 40–65% of a dose in urine, while some reviews give lower figures. A huge volume of distribution (about 5–8 L/kg) and binding inside cells give a long half-life, about 27–31 hours with repeated dosing, though studies range widely. [[Ferron1996,FDA-Colcrys,Finkelstein2010]]',
   pt:'The liver sends the drug out in bile, and the gut takes some of it back up, so it lingers in the body.',
   hook:'Enterohepatic recirculation helps explain the long half-life and why hepatic or biliary disease raises exposure.'},
  {from:.26,at:.34,k:'Scene 3 · Neutrophils',t:'It piles up in white cells',
@@ -26,7 +26,7 @@ const CI=[
   pt:'Researchers have two explanations for how this keeps pyrin quiet. Both may be partly right.',
   hook:'Exam answer: colchicine → tubulin → microtubule disruption → <b>reduced pyrin inflammasome activation</b> and reduced neutrophil function.'},
  {from:.87,at:.93,k:'Scene 7 · The neutrophil',t:'Less crawling, less sticking',
-  txt:'Without a working microtubule network, neutrophils polarize and migrate poorly toward chemoattractants. Colchicine also alters adhesion: it changes the distribution of E-selectin on endothelial cells and causes neutrophils to shed L-selectin, so fewer neutrophils stick and leave the bloodstream. It can also dampen NLRP3 assembly, which needs microtubules to bring its parts together, though in the lab this takes higher concentrations. [[Cronstein1995,Leung2015,Misawa2013]]',
+  txt:'Without a working microtubule network, neutrophils polarize and migrate poorly toward chemoattractants. Colchicine also alters adhesion at two concentration levels: at very low, prophylactic-range levels (IC50 about 3 nM) it changes the distribution, not the amount, of E-selectin on endothelial cells, abolishing their stickiness for neutrophils; at higher, therapeutic-range levels (IC50 about 300 nM) neutrophils lose L-selectin. Fewer neutrophils stick and leave the bloodstream. It can also dampen NLRP3 assembly, which needs microtubules to bring its parts together, though in the lab this takes higher concentrations. [[Cronstein1995,Leung2015,Misawa2013]]',
   pt:'White cells move and stick less, so fewer of them reach the lining where attacks happen.',
   hook:'Two layers of effect: <b>inside</b> the cell (pyrin, NLRP3) and <b>between</b> cells (chemotaxis, selectin-mediated adhesion).'}
 ];

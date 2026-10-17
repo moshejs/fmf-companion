@@ -50,7 +50,7 @@ inits.colmonths=()=>{
     const panel=(y0,h,title,c)=>`<text x="${X0}" y="${y0-3}" class="t-sm" style="fill:${c}">${title}</text><line x1="${X0}" x2="${X1}" y1="${y0+h}" y2="${y0+h}" class="axis"/>`;
     // month grid
     for(let m=-3;m<=24;m+=3){const x=xd(m*30.4);s+=`<line x1="${f1(x)}" x2="${f1(x)}" y1="16" y2="440" class="grid"/><text x="${f1(x)}" y="456" class="t-xs t-mid">${m}</text>`}
-    s+=`<text x="${X1}" y="468" class="t-xs t-end">months since starting colchicine</text>`;
+    s+=`<text x="${X1}" y="468" class="t-xs t-end">months since starting colchicine</text><text x="${X0}" y="468" class="t-xs" style="fill:var(--warn)">ILLUSTRATIVE MODEL · not measured kinetics</text>`;
     s+=`<rect x="${f1(xd(0))}" y="14" width="${f1(X1-xd(0))}" height="428" style="fill:var(--crocus-soft);opacity:.35"/>`;
     // panel 1 drug
     const y1=24,h1=78;s+=panel(y1,h1,'COLCHICINE INSIDE LEUKOCYTES · dashed = prescribed dose','var(--crocus)');
@@ -111,5 +111,6 @@ inits.colmonths=()=>{
   $('#cmCards').innerHTML=`
    <div class="card"><h4>Why the benefit is not immediate</h4><ul><li>The drug needs days of daily dosing to build up in leukocytes.</li><li>Attacks were weeks apart, so fewer attacks only shows up over months.</li><li>Doses are adjusted in steps over months.</li><li>The biggest benefit, amyloid prevention, accrues over years.</li></ul></div>
    <div class="card"><h4>It does not treat an attack in progress</h4><p>EULAR 2016 advises continuing the usual daily dose during an attack and adding NSAIDs. A temporary dose increase may be considered during stressful periods known to trigger attacks. [[Ozen2016,Ozen2017]]</p></div>
+   <div class="card"><span class="ev early">Evidence check</span><h4>The trial base is thinner than the reputation</h4><p>In the Cochrane re-analysis only one of the 1974 placebo-controlled trials (Goldstein, RR 0.21, 95% CI 0.05–0.95) was clearly positive; the Zemer 1974 trial was not significant. No randomized trial measured amyloidosis: that benefit rests on Zemer\'s 1986 cohort. [[Yin2022,Goldstein1974,Zemer1974,Zemer1986]]</p></div>
    <div class="card"><h4>Protection without perfection</h4><p>Even patients who still have some attacks are protected from amyloidosis if they take colchicine regularly, because SAA between attacks stays lower. [[Zemer1986,Lachmann2007]]</p></div>`;
 };
