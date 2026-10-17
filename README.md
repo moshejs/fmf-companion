@@ -15,14 +15,14 @@ One self-contained page (`index.html`): a left rail of modules, one module on st
 | 1 · The disease | What FMF is · The gene & inheritance (animated Punnett square, genetic-result reader) · Pyrin, animated (normal vs M694V) · An attack, hour by hour (72 h, site by site) |
 | 2 · Colchicine | Inside the cell (pill → neutrophil → microtubule → pyrin) · Over months (why benefit is gradual; decades of amyloid risk) · Dosing, safety, interactions |
 | 3 · Complications & diagnosis | AA amyloidosis · Diagnosis & criteria (Eurofever/PRINTO calculator) · The differential |
-| 4 · Treatment & the future | Treatment ladder (CLUSTER) · Living with FMF · Toward a cure (evidence-labeled routes) |
+| 4 · Treatment & the future | Treatment ladder (CLUSTER) · Living with FMF · Nursing care (assessment, administration, teaching, documentation) · Toward a cure (evidence-labeled routes) |
 | 5 · Context & review | History & people · Flashcards & mnemonics · Quiz · Glossary · Sources |
 
 Every research claim links to a numbered entry in the Sources module. Research-landscape claims carry an evidence label: *Established*, *Early evidence* or *Hypothesis*.
 
 ## How it was made
 
-Six research passes (epidemiology and history; genetics and diagnosis; mechanism; colchicine; amyloidosis, treatment and living; research toward a cure) each returned cited facts. Those reference lists were merged into `src/sources.json`, and the modules were written against them.
+Seven research passes (epidemiology and history; genetics and diagnosis; mechanism; colchicine; amyloidosis, treatment and living; research toward a cure; nursing care) each returned cited facts. Those reference lists were merged into `src/sources.json`, and the modules were written against them.
 
 ## Building
 
@@ -30,11 +30,16 @@ The page is assembled from parts in `src/`:
 
 ```bash
 cd src
-python3 build.py            # writes ../index.html; fails on an unknown citation key
+python3 build.py                     # writes ../index.html; fails on an unknown citation key
 python3 smoke.py ../index.html all   # headless-Chrome check: no JS errors, no empty animations
+python3 make_artifact.py             # derives the Claude artifact copy
 ```
 
+`compile_sources.py` rebuilds `sources.json` from the research files; `source-corrections.json`
+is applied afterwards, so validated fixes survive a regeneration.
+
 - `00-head.html` holds all CSS (theme tokens for light and dark).
+- Animations have two layouts. `draw()` asks `NARROW()` and reads coordinates from the matching table, so a phone gets its own arrangement rather than a shrunken one.
 - `sections/*.html` and `js/*.js` hold one module each; `js/00-core.js` has the shared helpers (`playWire`, `stepWire`, `noteHTML`, routing).
 - Citations are written as `[[Key]]` and become numbered links at build time.
 

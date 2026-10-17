@@ -37,6 +37,15 @@
   "unverified": false
  },
  {
+  "key": "ArcalystPI",
+  "text": "ARCALYST (rilonacept) injection, for subcutaneous use, US prescribing information (Kiniksa), revised 10/2025. DailyMed setid ad965f38-dd22-4607-a673-2fb92f3b527a; current label version 16 Dec 2025. https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ad965f38-dd22-4607-a673-2fb92f3b527a",
+  "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ad965f38-dd22-4607-a673-2fb92f3b527a",
+  "areas": [
+   "G"
+  ],
+  "unverified": false
+ },
+ {
   "key": "ARUP2023",
   "text": "ARUP Laboratories. Familial Mediterranean Fever (MEFV) Sequencing, test 3004434: test fact sheet (last literature review Oct 2021; updated Sep 2023). https://ltd.aruplab.com/api/ltd/pdf/219",
   "link": "https://ltd.aruplab.com/api/ltd/pdf/219",
@@ -50,7 +59,8 @@
   "text": "Autoinflammatory Alliance (US 501(c)(3) nonprofit). https://www.autoinflammatory.org (Description drawn from third-party listings; the organisation's own site was not fetched.)",
   "link": "https://www.autoinflammatory.org",
   "areas": [
-   "E"
+   "E",
+   "G"
   ],
   "unverified": false
  },
@@ -132,7 +142,8 @@
   "text": "Ben-Chetrit E. Colchicine. In: Hashkes PJ, Laxer RM, Simon A, eds. Textbook of Autoinflammation. Cham: Springer; 2019 (online 2018):729–749. PMCID PMC7120738. doi:10.1007/978-3-319-98605-0_40.",
   "link": "https://doi.org/10.1007/978-3-319-98605-0_40",
   "areas": [
-   "D"
+   "D",
+   "G"
   ],
   "unverified": false
  },
@@ -196,7 +207,8 @@
   "text": "Bodakçi E, Yaşar Bilge NŞ, Ataş N, et al. Appendectomy history is associated with severe disease and colchicine resistance in adult familial Mediterranean fever patients. Turk J Med Sci. 2021;51(4):1706-1711. DOI 10.3906/sag-2011-74.",
   "link": "https://doi.org/10.3906/sag-2011-74",
   "areas": [
-   "E"
+   "E",
+   "G"
   ],
   "unverified": false
  },
@@ -205,7 +217,8 @@
   "text": "Bolek EC, Bilgin E, Kardas RC, Kilic L, Kiraz S, Ertenli AI, Sari A, et al. Sociodemographic and clinical determinants of colchicine adherence in adults with familial Mediterranean fever: a cross-sectional study. Rheumatol Ther. 2026;13:1357–1377. PMID 42789246. PMCID PMC13624199. doi:10.1007/s40744-026-00883-w.",
   "link": "https://doi.org/10.1007/s40744-026-00883-w",
   "areas": [
-   "D"
+   "D",
+   "G"
   ],
   "unverified": false
  },
@@ -405,6 +418,15 @@
   "unverified": false
  },
  {
+  "key": "DellaCasa2022",
+  "text": "Della Casa F, Vitale A, Lopalco G, et al., Cantarini L. Development and implementation of the AIDA international registry for patients with undifferentiated systemic autoinflammatory diseases. Front Med (Lausanne). 2022;9:908501. PMID 35755024. PMCID PMC9226373. doi:10.3389/fmed.2022.908501. ClinicalTrials.gov NCT05200715.",
+  "link": "https://doi.org/10.3389/fmed.2022.908501",
+  "areas": [
+   "G"
+  ],
+  "unverified": false
+ },
+ {
   "key": "Delplanque2024",
   "text": "Delplanque M, Benech N, Rolhion N, Oeuvray C, Straube M, Galbert C, Brot L, Henry T, Jamilloux Y, Savey L, Grateau G, Sokol H, Georgin-Lavialle S. Gut microbiota in familial Mediterranean fever. Rheumatology (Oxford). 2024;63(4):1039-1048. doi:10.1093/rheumatology/kead322",
   "link": "https://doi.org/10.1093/rheumatology/kead322",
@@ -428,6 +450,24 @@
   "link": "https://doi.org/10.3899/jrheum.141249",
   "areas": [
    "B"
+  ],
+  "unverified": false
+ },
+ {
+  "key": "DemirkayaISSF2016",
+  "text": "Demirkaya E, Acikel C, Hashkes P, Gattorno M, Gul A, Ozdogan H, Turker T, Karadag O, Livneh A, Ben-Chetrit E, et al.; FMF Arthritis Vasculitis and Orphan Disease Research in Paediatric Rheumatology (FAVOR). Development and initial validation of international severity scoring system for familial Mediterranean fever (ISSF). Ann Rheum Dis. 2016;75(6):1051–1056. PMID 26823530. doi:10.1136/annrheumdis-2015-208671. (Abstract read; full text paywalled, so the exact nine-domain wording and per-item points are taken from secondary sources and marked unverified. This is a different paper from [Demirkaya2016] in file B, which is the J Rheumatol diagnostic-criteria performance study.)",
+  "link": "https://doi.org/10.1136/annrheumdis-2015-208671",
+  "areas": [
+   "G"
+  ],
+  "unverified": true
+ },
+ {
+  "key": "Denke2026",
+  "text": "Denke NJ. Navigating colchicine toxicity: essential management for a timeless therapy. J Emerg Nurs. 2026;52(5):1125–1131. PMID 42618164. doi:10.1016/j.jen.2026.03.003. (Abstract read; full text not opened.)",
+  "link": "https://doi.org/10.1016/j.jen.2026.03.003",
+  "areas": [
+   "G"
   ],
   "unverified": false
  },
@@ -503,7 +543,8 @@
   "text": "Ehlers L, Rolfes E, Lieber M, Müller D, Lainka E, Gohar F, Klaus G, Girschick H, et al., Kallinich T. Treat-to-target strategies for the management of familial Mediterranean fever in children. Pediatr Rheumatol Online J. 2023;21:108. PMID 37752496. PMCID PMC10521475. doi:10.1186/s12969-023-00875-y.",
   "link": "https://doi.org/10.1186/s12969-023-00875-y",
   "areas": [
-   "D"
+   "D",
+   "G"
   ],
   "unverified": false
  },
@@ -512,7 +553,8 @@
   "text": "Erdem Torun Ş, Çelikel E, Ekici Tekin Z, Ertem Ş, Özçelik MA, et al. Assessment of colchicine adherence and influencing factors in paediatric familial Mediterranean fever. Scand J Rheumatol. 2026;55:289–297. PMID 41693473. doi:10.1080/03009742.2026.2618334.",
   "link": "https://doi.org/10.1080/03009742.2026.2618334",
   "areas": [
-   "D"
+   "D",
+   "G"
   ],
   "unverified": false
  },
@@ -539,7 +581,8 @@
   "text": "COLCRYS (colchicine, USP) tablets, US prescribing information (Takeda/AR Scientific; repackager SPL version published 21 Oct 2022). DailyMed setid d6adc880-5499-4691-93f3-27c87902d5fc. https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=d6adc880-5499-4691-93f3-27c87902d5fc",
   "link": "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=d6adc880-5499-4691-93f3-27c87902d5fc",
   "areas": [
-   "D"
+   "D",
+   "G"
   ],
   "unverified": false
  },
@@ -594,7 +637,8 @@
   "text": "FMF & AID Global Association (Familial Mediterranean Fever & Autoinflammatory Diseases Global Association), Zürich, Switzerland. https://fmfandaid.org (Description drawn from third-party directory listings; the organisation's own site was not fetched.)",
   "link": "https://fmfandaid.org",
   "areas": [
-   "E"
+   "E",
+   "G"
   ],
   "unverified": false
  },
@@ -632,7 +676,8 @@
   "text": "Furer V, Rondaan C, Heijstek MW, Agmon-Levin N, van Assen S, Bijl M, et al. 2019 update of EULAR recommendations for vaccination in adult patients with autoimmune inflammatory rheumatic diseases. Ann Rheum Dis. 2020;79(1):39-52. PMID 31413005. DOI 10.1136/annrheumdis-2019-215882.",
   "link": "https://doi.org/10.1136/annrheumdis-2019-215882",
   "areas": [
-   "E"
+   "E",
+   "G"
   ],
   "unverified": false
  },
@@ -662,7 +707,8 @@
   "link": "https://www.ncbi.nlm.nih.gov/books/NBK1227/",
   "areas": [
    "A",
-   "B"
+   "B",
+   "G"
   ],
   "unverified": false
  },
@@ -689,7 +735,8 @@
   "text": "Gezgin Yildirim D, Seven MB, Gönen S, Söylemezoğlu O. Erysipelas-like erythema in children with familial Mediterranean fever. Clin Exp Rheumatol. 2020;38 Suppl 127(5):101-104. PMID 33124556",
   "link": "https://pubmed.ncbi.nlm.nih.gov/33124556/",
   "areas": [
-   "A"
+   "A",
+   "G"
   ],
   "unverified": false
  },
@@ -818,7 +865,8 @@
   "link": "https://doi.org/10.7326/0003-4819-157-8-201210160-00003",
   "areas": [
    "E",
-   "F"
+   "F",
+   "G"
   ],
   "unverified": false
  },
@@ -885,7 +933,8 @@
   "text": "Hospach T, Blankenburg F, Heinkele A, et al. Protracted febrile myalgia syndrome in children with familial Mediterranean fever – systematic review and a case report. Pediatr Rheumatol Online J. 2024;22:85. PMID 39256780; PMCID PMC11389256; doi:10.1186/s12969-024-01019-6",
   "link": "https://doi.org/10.1186/s12969-024-01019-6",
   "areas": [
-   "A"
+   "A",
+   "G"
   ],
   "unverified": false
  },
@@ -912,7 +961,8 @@
   "text": "Hung IF, Wu AK, Cheng VC, Tang BS, To KW, Yeung CK, Woo PC, Lau SK, et al. Fatal interaction between clarithromycin and colchicine in patients with renal insufficiency: a retrospective study. Clin Infect Dis. 2005;41(3):291–300. PMID 16007523. doi:10.1086/431592.",
   "link": "https://doi.org/10.1086/431592",
   "areas": [
-   "D"
+   "D",
+   "G"
   ],
   "unverified": false
  },
@@ -926,13 +976,27 @@
   "unverified": false
  },
  {
-  "key": "IlarisPI",
-  "text": "Novartis. ILARIS (canakinumab) injection, US prescribing information (Highlights: immunizations; FMF dosing). https://www.novartis.com/us-en/sites/novartis_us/files/ilaris.pdf (Wording confirmed from search snippets of the label and drugs.com, not a full read of the current label.)",
-  "link": "https://www.novartis.com/us-en/sites/novartis_us/files/ilaris.pdf",
+  "key": "IlarisPIG",
+  "text": "ILARIS (canakinumab) injection, US prescribing information (Novartis), revised 11/2024. DailyMed setid 7d271f3b-e4f9-4d80-8dcf-28d49123f80e; current label version 8 Jun 2026. https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=7d271f3b-e4f9-4d80-8dcf-28d49123f80e (full label read for this file; supersedes the partially verified note on this key in file E).",
+  "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=7d271f3b-e4f9-4d80-8dcf-28d49123f80e",
   "areas": [
+   "G",
    "E"
   ],
-  "unverified": false
+  "unverified": false,
+  "aliases": [
+   "IlarisPI"
+  ],
+  "note": "Full label read on DailyMed for the nursing research pass."
+ },
+ {
+  "key": "IllnessPerceptionFMF",
+  "text": "Cross-sectional study of illness perception and medication adherence in familial Mediterranean fever (Turkey), reporting lower illness-perception scores in the personal control, treatment control and illness comprehensibility domains among adherent patients. Identified only through search results; the article record (journal, year, volume, pages, PMID) was not confirmed and the full text was not read (unverified). Candidate record to check: \"The impact of illness perception on medication adherence in patients with familial Mediterranean fever,\" indexed at https://avesis.akdeniz.edu.tr/yayin/6fc4d3c4-09f2-4abc-a353-b0af47d4e9cf/",
+  "link": "https://avesis.akdeniz.edu.tr/yayin/6fc4d3c4-09f2-4abc-a353-b0af47d4e9cf/",
+  "areas": [
+   "G"
+  ],
+  "unverified": true
  },
  {
   "key": "Indraratna2018",
@@ -1007,7 +1071,8 @@
   "text": "Jeyaratnam J, Ter Haar NM, Lachmann HJ, Kasapcopur O, Ombrello AK, Rigante D, Dedeoglu F, Baris EH, Vastert SJ, Wulffraat NM, Frenkel J. The safety of live-attenuated vaccines in patients using IL-1 or IL-6 blockade: an international survey. Pediatr Rheumatol Online J. 2018;16(1):19. PMID 29562920. DOI 10.1186/s12969-018-0235-z.",
   "link": "https://doi.org/10.1186/s12969-018-0235-z",
   "areas": [
-   "E"
+   "E",
+   "G"
   ],
   "unverified": false
  },
@@ -1017,6 +1082,15 @@
   "link": "https://doi.org/10.1186/s12969-022-00716-4",
   "areas": [
    "F"
+  ],
+  "unverified": false
+ },
+ {
+  "key": "Kacan2023",
+  "text": "Kaçan H, Kaş Alay G, Yildiz E. The effect of education given to Turkish adolescents with familial Mediterranean fever on anxiety, depression, and quality of life. Eur J Pediatr. 2023;182(7):3063–3073. PMID 37069356. doi:10.1007/s00431-023-04975-5. (Abstract read; full text not opened.)",
+  "link": "https://doi.org/10.1007/s00431-023-04975-5",
+  "areas": [
+   "G"
   ],
   "unverified": false
  },
@@ -1049,6 +1123,15 @@
   "unverified": false
  },
  {
+  "key": "KasAlay2026",
+  "text": "Kaş Alay G, Mutlu B. The effect of a mobile game developed for children with familial Mediterranean fever on disease management and quality of life: a randomized controlled trial. Games Health J. 2026;15(3):144–154. PMID 41700777. doi:10.1177/2161783X251414694. (Abstract read; full text not opened.)",
+  "link": "https://doi.org/10.1177/2161783X251414694",
+  "areas": [
+   "G"
+  ],
+  "unverified": false
+ },
+ {
   "key": "Kasifoglu2014",
   "text": "Kasifoglu T, Bilge SY, Sari I, et al. Amyloidosis and its related factors in Turkish patients with familial Mediterranean fever: a multicentre study. Rheumatology (Oxford). 2014;53(4):741-745. PMID 24369413. DOI 10.1093/rheumatology/ket400.",
   "link": "https://doi.org/10.1093/rheumatology/ket400",
@@ -1071,7 +1154,8 @@
   "text": "Kees S, Langevitz P, Zemer D, Padeh S, Pras M, Livneh A. Attacks of pericarditis as a manifestation of familial Mediterranean fever (FMF). QJM. 1997;90:643-647. PMID 9415347; doi:10.1093/qjmed/90.10.643",
   "link": "https://doi.org/10.1093/qjmed/90.10.643",
   "areas": [
-   "A"
+   "A",
+   "G"
   ],
   "unverified": false
  },
@@ -1099,6 +1183,15 @@
   "link": "https://clinicaltrials.gov/study/NCT01215747",
   "areas": [
    "E"
+  ],
+  "unverified": false
+ },
+ {
+  "key": "KineretPI",
+  "text": "KINERET (anakinra) injection, solution, US prescribing information with Instructions for Use (Swedish Orphan Biovitrum). DailyMed setid d9d74915-6606-4570-9c52-c4001d3177de; current label version 10 Apr 2026. https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d9d74915-6606-4570-9c52-c4001d3177de (full label and IFU read).",
+  "link": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d9d74915-6606-4570-9c52-c4001d3177de",
+  "areas": [
+   "G"
   ],
   "unverified": false
  },
@@ -1170,11 +1263,30 @@
   "unverified": false
  },
  {
+  "key": "Konukbay2016",
+  "text": "Konukbay D, Gattorno M, Yildiz D, et al. A novel assessment tool for clinical care of patients with autoinflammatory disease: juvenile autoinflammatory disease multidimensional assessment report. Clin Exp Rheumatol. 2016;34(6 Suppl 102):129–135. PMID 27791950.",
+  "link": "https://pubmed.ncbi.nlm.nih.gov/27791950/",
+  "areas": [
+   "G"
+  ],
+  "unverified": false
+ },
+ {
   "key": "Korkmaz2002",
   "text": "Korkmaz C, Ozdogan H, Kasapçopur O, Yazici H. Acute phase response in familial Mediterranean fever. Ann Rheum Dis. 2002;61(1):79–81. PMID 11779767. doi:10.1136/ard.61.1.79",
   "link": "https://doi.org/10.1136/ard.61.1.79",
   "areas": [
-   "B"
+   "B",
+   "G"
+  ],
+  "unverified": false
+ },
+ {
+  "key": "Kosan2019",
+  "text": "Koşan Z, Yılmaz S, Bilge Yerli E, Köyceğiz E. Evaluation of the burden of care and the quality of life in the parents of Turkish children with familial Mediterranean fever. J Pediatr Nurs. 2019;48:e21–e26. PMID 31176497. doi:10.1016/j.pedn.2019.05.017. (Abstract read; full text not opened.)",
+  "link": "https://doi.org/10.1016/j.pedn.2019.05.017",
+  "areas": [
+   "G"
   ],
   "unverified": false
  },
@@ -1192,7 +1304,8 @@
   "text": "Kukuy OL, Beckerman P, Dinour D, Ben-Zvi I, Livneh A. Amyloid storm: acute kidney injury and massive proteinuria, rapidly progressing to end-stage kidney disease in AA amyloidosis of familial Mediterranean fever. Rheumatology (Oxford). 2021;60(7):3235-3242. PMID 33291151. DOI 10.1093/rheumatology/keaa772.",
   "link": "https://doi.org/10.1093/rheumatology/keaa772",
   "areas": [
-   "E"
+   "E",
+   "G"
   ],
   "unverified": false
  },
@@ -1212,7 +1325,8 @@
   "areas": [
    "A",
    "B",
-   "D"
+   "D",
+   "G"
   ],
   "unverified": false
  },
@@ -1258,7 +1372,8 @@
   "text": "Langevitz P, Zemer D, Livneh A, Shemer J, Pras M. Protracted febrile myalgia in patients with familial Mediterranean fever. J Rheumatol. 1994;21:1708-1709. PMID 7799354",
   "link": "https://pubmed.ncbi.nlm.nih.gov/7799354/",
   "areas": [
-   "A"
+   "A",
+   "G"
   ],
   "unverified": false
  },
@@ -1268,6 +1383,15 @@
   "link": "https://doi.org/10.1016/j.semarthrit.2015.06.013",
   "areas": [
    "D"
+  ],
+  "unverified": false
+ },
+ {
+  "key": "Levinsky2023",
+  "text": "Levinsky Y, Azani L, Shkalim Zemer V, Chodick G, Tal R, Harel L, Amarilyo G. Adherence to colchicine prophylaxis among patients with familial Mediterranean fever treated with interleukin-1 inhibitors. Semin Arthritis Rheum. 2023;61:152211. PMID 37201215. doi:10.1016/j.semarthrit.2023.152211.",
+  "link": "https://doi.org/10.1016/j.semarthrit.2023.152211",
+  "areas": [
+   "G"
   ],
   "unverified": false
  },
@@ -1285,7 +1409,8 @@
   "text": "Lidar M, Doron A, Kedem R, Yosepovich A, Langevitz P, Livneh A. Appendectomy in familial Mediterranean fever: clinical, genetic and pathological findings. Clin Exp Rheumatol. 2008;26(4):568–573. PMID 18799086.",
   "link": "https://pubmed.ncbi.nlm.nih.gov/18799086/",
   "areas": [
-   "B"
+   "B",
+   "G"
   ],
   "unverified": false
  },
@@ -1367,7 +1492,8 @@
   "link": "https://doi.org/10.1002/art.1780401023",
   "areas": [
    "A",
-   "B"
+   "B",
+   "G"
   ],
   "unverified": false
  },
@@ -1412,7 +1538,8 @@
   "text": "Majeed HA, Ghandour K, Shahin HM. The acute scrotum in Arab children with familial Mediterranean fever. Pediatr Surg Int. 2000;16:72-74. PMID 10663841; doi:10.1007/s003830050019",
   "link": "https://doi.org/10.1007/s003830050019",
   "areas": [
-   "A"
+   "A",
+   "G"
   ],
   "unverified": false
  },
@@ -1703,6 +1830,15 @@
   "unverified": false
  },
  {
+  "key": "Ozdemir2021",
+  "text": "Özdemir Atmaca FM, Gülez N, Makay B. Evaluation of the international severity score for FMF (ISSF) scores in Turkish children diagnosed with FMF: a single-center experience. Clin Rheumatol. 2021;40(8):3219–3225. PMID 33619627. doi:10.1007/s10067-021-05652-4. (Abstract read; the first author's given names should be confirmed against the journal page before publishing.)",
+  "link": "https://doi.org/10.1007/s10067-021-05652-4",
+  "areas": [
+   "G"
+  ],
+  "unverified": false
+ },
+ {
   "key": "Ozen1998",
   "text": "Ozen S, Karaaslan Y, Ozdemir O, et al. Prevalence of juvenile chronic arthritis and familial Mediterranean fever in Turkey: a field study. J Rheumatol. 1998;25:2445-2449. PMID 9858443",
   "link": "https://pubmed.ncbi.nlm.nih.gov/9858443/",
@@ -1716,7 +1852,8 @@
   "text": "Ozen S, Demirkaya E, Duzova A, Erdogan O, Erken E, Gul A, Kasapcopur O, et al. FMF50: a score for assessing outcome in familial Mediterranean fever. Ann Rheum Dis. 2014;73(5):897–901. PMID 24570027. doi:10.1136/annrheumdis-2013-204719.",
   "link": "https://doi.org/10.1136/annrheumdis-2013-204719",
   "areas": [
-   "D"
+   "D",
+   "G"
   ],
   "unverified": false
  },
@@ -1728,7 +1865,8 @@
    "B",
    "D",
    "E",
-   "F"
+   "F",
+   "G"
   ],
   "unverified": false
  },
@@ -1738,7 +1876,8 @@
   "link": "https://doi.org/10.3389/fimmu.2017.00253",
   "areas": [
    "B",
-   "D"
+   "D",
+   "G"
   ],
   "unverified": false
  },
@@ -1757,7 +1896,8 @@
   "link": "https://doi.org/10.1093/rheumatology/keaa863",
   "areas": [
    "D",
-   "E"
+   "E",
+   "G"
   ],
   "unverified": false
  },
@@ -1768,19 +1908,31 @@
   "areas": [
    "D",
    "E",
+   "G",
    "F"
   ],
   "unverified": false,
   "aliases": [
    "EULAR2025"
-  ]
+  ],
+  "note": "Full typeset text read for the nursing research pass, so recommendation numbers, evidence levels and agreement figures quoted in this app come from the article itself rather than its abstract. Its two supplementary tables were not read."
+ },
+ {
+  "key": "Ozkurt2025",
+  "text": "Özkurt S, Cansu DÜ, Yildirim U, Yaldir E, Yalçin AU, Korkmaz C. From ulcerative colitis to amyloid storm: a case-based review. Rheumatol Int. 2025;45(11):263. PMID 41165831. doi:10.1007/s00296-025-06015-x.",
+  "link": "https://doi.org/10.1007/s00296-025-06015-x",
+  "areas": [
+   "G"
+  ],
+  "unverified": false
  },
  {
   "key": "Ozturk2022",
   "text": "Öztürk K, Coşkuner T, Baglan E, Sönmez HE, Yener GO, et al. Real-life data from the largest pediatric familial Mediterranean fever cohort. Front Pediatr. 2022;9:805919. DOI 10.3389/fped.2021.805919.",
   "link": "https://doi.org/10.3389/fped.2021.805919",
   "areas": [
-   "E"
+   "E",
+   "G"
   ],
   "unverified": false
  },
@@ -1826,6 +1978,33 @@
   "unverified": false
  },
  {
+  "key": "Piram2011",
+  "text": "Piram M, Frenkel J, Gattorno M, Ozen S, Lachmann HJ, Goldbach-Mansky R, et al. A preliminary score for the assessment of disease activity in hereditary recurrent fevers: results from the AIDAI (Auto-Inflammatory Diseases Activity Index) Consensus Conference. Ann Rheum Dis. 2011;70(2):309–314. PMID 21081528. doi:10.1136/ard.2010.132613.",
+  "link": "https://doi.org/10.1136/ard.2010.132613",
+  "areas": [
+   "G"
+  ],
+  "unverified": false
+ },
+ {
+  "key": "Piram2014",
+  "text": "Piram M, Koné-Paut I, Lachmann HJ, Frenkel J, Ozen S, Kuemmerle-Deschner J, et al. Validation of the auto-inflammatory diseases activity index (AIDAI) for hereditary recurrent fever syndromes. Ann Rheum Dis. 2014;73(12):2168–2173. PMID 24026675. doi:10.1136/annrheumdis-2013-203666.",
+  "link": "https://doi.org/10.1136/annrheumdis-2013-203666",
+  "areas": [
+   "G"
+  ],
+  "unverified": false
+ },
+ {
+  "key": "Piskin2022",
+  "text": "Piskin D, Arici ZS, Konukbay D, et al. Number of episodes can be used as a disease activity measure in familial Mediterranean fever. Front Pediatr. 2022;10:822473. PMID 35573940. PMCID PMC9091585. doi:10.3389/fped.2022.822473.",
+  "link": "https://doi.org/10.3389/fped.2022.822473",
+  "areas": [
+   "G"
+  ],
+  "unverified": false
+ },
+ {
   "key": "Polat2016",
   "text": "Polat A, Acikel C, Sozeri B, Dursun I, Kasapcopur O, Gulez N, Simsek D, Saldir M, et al. Comparison of the efficacy of once- and twice-daily colchicine dosage in pediatric patients with familial Mediterranean fever—a randomized controlled noninferiority trial. Arthritis Res Ther. 2016;18:85. PMID 27055417. PMCID PMC4823910. doi:10.1186/s13075-016-0980-7.",
   "link": "https://doi.org/10.1186/s13075-016-0980-7",
@@ -1854,13 +2033,26 @@
   "unverified": false
  },
  {
-  "key": "PRINTO2016",
-  "text": "PRINTO/PReS. Familial Mediterranean Fever – patient information (2016 version). IRCCS Istituto G. Gaslini / Università di Genova. https://www.printo.it/pediatric-rheumatology/GB/info/20/ (patient-education source; no named authors)",
-  "link": "https://www.printo.it/pediatric-rheumatology/GB/info/20/",
+  "key": "PRINTO2016G",
+  "text": "PRINTO/PReS. Familial Mediterranean Fever – information for patients and families. IRCCS Istituto G. Gaslini / Università di Genova. https://www.printo.it/pediatric-rheumatology/GB/info/20/Familial-Mediterranean-Fever (patient-education source; no named authors; page read in full for this file).",
+  "link": "https://www.printo.it/pediatric-rheumatology/GB/info/20/Familial-Mediterranean-Fever",
   "areas": [
+   "G",
    "A"
   ],
-  "unverified": false
+  "unverified": false,
+  "aliases": [
+   "PRINTO2016"
+  ]
+ },
+ {
+  "key": "ProcalcitoninFMF",
+  "text": "Procalcitonin in FMF attacks — two conflicting Turkish studies, neither full text read (unverified): (a) Yüksel S, et al. The value of procalcitonin measurements in children with familial Mediterranean fever. Rheumatol Int. 2012;32(11):3443–3447. doi:10.1007/s00296-011-2206-2 (median procalcitonin 0.044 ng/mL during attacks vs 0.028 ng/mL attack-free); (b) an Ankara University study evaluating procalcitonin and factor VIII as acute-phase markers in FMF, concluding they cannot be used diagnostically during attacks, published in Turkish and indexed at https://dergiler.ankara.edu.tr/items/7e676fc8-9301-4ccb-a2ca-c757a1d4e35a. Cohorts, assays and cut-offs must be checked before either figure is published.",
+  "link": "https://dergiler.ankara.edu.tr/items/7e676fc8-9301-4ccb-a2ca-c757a1d4e35a",
+  "areas": [
+   "G"
+  ],
+  "unverified": true
  },
  {
   "key": "PubMedSweep2026",
@@ -1868,6 +2060,15 @@
   "link": "",
   "areas": [
    "F"
+  ],
+  "unverified": false
+ },
+ {
+  "key": "PubMedSweepNursing2026",
+  "text": "Own literature sweep for this file, October 2026: PubMed query \"familial Mediterranean fever\" AND (nursing OR nurse), all years, 25 records, of which several use \"nursing\" in the breastfeeding sense (https://pubmed.ncbi.nlm.nih.gov/?term=%22familial+Mediterranean+fever%22+AND+(nursing+OR+nurse)); plus targeted searches for FMF with nurse-led education, adherence interventions, teach-back and motivational interviewing. Documents the absence of a nursing clinical practice guideline for FMF, of a nurse-led adherence trial, and of FMF-specific teach-back or motivational-interviewing studies. A negative search result, not a publication.",
+  "link": "https://pubmed.ncbi.nlm.nih.gov/?term=%22familial+Mediterranean+fever%22+AND+(nursing+OR+nurse",
+  "areas": [
+   "G"
   ],
   "unverified": false
  },
@@ -1904,6 +2105,15 @@
   "link": "https://doi.org/10.1074/jbc.M104730200",
   "areas": [
    "C"
+  ],
+  "unverified": false
+ },
+ {
+  "key": "Ritschl2021",
+  "text": "Ritschl V, Stamm TA, Aletaha D, Bijlsma JWJ, Böhm P, Dragoi RG, Dures E, Estévez-López F, Gossec L, Iagnocco A, Marques A, Moholt E, Nudel M, van den Bemt BJF, Viktil K, Voshaar M, de Thurah A, Carmona L. 2020 EULAR points to consider for the prevention, screening, assessment and management of non-adherence to treatment in people with rheumatic and musculoskeletal diseases for use in clinical practice. Ann Rheum Dis. 2021;80(6):707–713. PMID 33355152. doi:10.1136/annrheumdis-2020-218986. (Abstract read plus a secondary summary of the four-phase scheme; the wording of the four overarching principles and the nine individual points to consider was not read.)",
+  "link": "https://doi.org/10.1136/annrheumdis-2020-218986",
+  "areas": [
+   "G"
   ],
   "unverified": false
  },
@@ -2003,6 +2213,15 @@
   "unverified": false
  },
  {
+  "key": "SeverityScoreComparisons",
+  "text": "Pras and Mor severity scores and their comparisons with the ISSF — originals not read (unverified). Primary sources to check before publishing: Pras E, Livneh A, Balow JE Jr, et al. Clinical differences between North African and Iraqi Jews with familial Mediterranean fever. Am J Med Genet. 1998;75(2):216–219 (the Pras severity score); Mor A, Shinar Y, Zaks N, et al. Evaluation of disease severity in familial Mediterranean fever. Semin Arthritis Rheum. 2005;35(1):57–64. doi:10.1016/j.semarthrit.2005.02.002. Comparison read as abstract only: Ozcan S, et al. Is the performance of the international severity scoring system for familial Mediterranean fever in children better than other scoring systems? Int J Clin Pract. 2021;75(11):e14678. PMID 34328662. doi:10.1111/ijcp.14678.",
+  "link": "https://doi.org/10.1016/j.semarthrit.2005.02.002",
+  "areas": [
+   "G"
+  ],
+  "unverified": true
+ },
+ {
   "key": "Sezer2024",
   "text": "Sezer M, Çelikel E, Ekici Tekin Z, et al. Assessment of quality of life, school performance, and physical activity in adolescents with familial Mediterranean fever. Mod Rheumatol. 2024;34(2):405-409. PMID 36790108. DOI 10.1093/mr/road022.",
   "link": "https://doi.org/10.1093/mr/road022",
@@ -2091,7 +2310,8 @@
   "link": "https://doi.org/10.2147/JIR.S91352",
   "areas": [
    "A",
-   "B"
+   "B",
+   "G"
   ],
   "unverified": false
  },
@@ -2177,6 +2397,15 @@
   "unverified": false
  },
  {
+  "key": "Tekgoz2021",
+  "text": "Tekgöz E, Çolak S, Çınar Fİ, Yılmaz S, Çınar M. Non-adherence to colchicine treatment is a common misevaluation in familial Mediterranean fever. Turk J Med Sci. 2021;51(5):2357–2363. PMID 33957721. doi:10.3906/sag-2102-328.",
+  "link": "https://doi.org/10.3906/sag-2102-328",
+  "areas": [
+   "G"
+  ],
+  "unverified": false
+ },
+ {
   "key": "TerHaar2016",
   "text": "Ter Haar NM, Jeyaratnam J, Lachmann HJ, et al. The phenotype and genotype of mevalonate kinase deficiency: a series of 114 cases from the Eurofever registry. Arthritis Rheumatol. 2016;68(11):2795–2805. PMID 27213830. doi:10.1002/art.39763",
   "link": "https://doi.org/10.1002/art.39763",
@@ -2190,7 +2419,8 @@
   "text": "Terkeltaub RA, Furst DE, Digiacinto JL, Kook KA, Davis MW. Novel evidence-based colchicine dose-reduction algorithm to predict and prevent colchicine toxicity in the presence of cytochrome P450 3A4/P-glycoprotein inhibitors. Arthritis Rheum. 2011;63(8):2226–2237. PMID 21480191. doi:10.1002/art.30389.",
   "link": "https://doi.org/10.1002/art.30389",
   "areas": [
-   "D"
+   "D",
+   "G"
   ],
   "unverified": false
  },
@@ -2202,6 +2432,15 @@
    "B"
   ],
   "unverified": false
+ },
+ {
+  "key": "Toplak2011",
+  "text": "Toplak N, Frenkel J, Ozen S, De Benedetti F, Hofer M, Kone-Paut I, Gattorno M, Ruperto N, Martini A, et al.; PRINTO and Eurofever/Eurotraps projects. The Eurofever registry for autoinflammatory diseases: results of the first 15 months of enrolment. Pediatr Rheumatol Online J. 2011;9(Suppl 1):P303. PMCID PMC3194673. doi:10.1186/1546-0096-9-S1-P303. (Conference abstract; registry design statements corroborated by the Eurofever registry page at https://printo.it/eurofever/registry. A later report, \"The Eurofever Project: towards the longitudinal stage,\" PMCID PMC4599901, describes the move to longitudinal data capture — not read, unverified.)",
+  "link": "https://printo.it/eurofever/registry",
+  "areas": [
+   "G"
+  ],
+  "unverified": true
  },
  {
   "key": "Touitou2001",
@@ -2236,7 +2475,8 @@
   "text": "Tufan A, Lachmann HJ. Familial Mediterranean fever, from pathogenesis to treatment: a contemporary review. Turk J Med Sci. 2020;50(SI-2):1591-1610. PMID 32806879; PMCID PMC7672358; doi:10.3906/sag-2008-11 (open full text read)",
   "link": "https://doi.org/10.3906/sag-2008-11",
   "areas": [
-   "A"
+   "A",
+   "G"
   ],
   "unverified": false
  },
@@ -2247,7 +2487,8 @@
   "areas": [
    "E",
    "A",
-   "B"
+   "B",
+   "G"
   ],
   "unverified": false,
   "aliases": [
@@ -2332,7 +2573,8 @@
   "text": "Vitale A, Caggiano V, Sbalchiero J, Tufan A, Batu ED, Ragab G, et al. Predictors of proteinuria, amyloidosis and kidney failure in familial Mediterranean fever: data from the International AIDA Network Registry. Rheumatology (Oxford). 2025;64(8):4776-4787. PMID 40175882. DOI 10.1093/rheumatology/keaf181.",
   "link": "https://doi.org/10.1093/rheumatology/keaf181",
   "areas": [
-   "E"
+   "E",
+   "G"
   ],
   "unverified": false
  },
@@ -2375,11 +2617,38 @@
   "unverified": false
  },
  {
+  "key": "YasarBilge2020",
+  "text": "Yaşar Bilge NŞ, Bodakçi E, Bilgin M, Kaşifoğlu T. Comparison of clinical features in FMF patients according to severity scores: an analysis with the ISSF scoring system. Eur J Rheumatol. 2020;7(2):68–70. PMID 32644926. PMCID PMC7343229. doi:10.5152/eurjrheum.2020.19136.",
+  "link": "https://doi.org/10.5152/eurjrheum.2020.19136",
+  "areas": [
+   "G"
+  ],
+  "unverified": false
+ },
+ {
   "key": "Yenokyan2012",
   "text": "Yenokyan G, Armenian HK. Triggers for attacks in familial Mediterranean fever: application of the case-crossover design. Am J Epidemiol. 2012;175:1054-1061. PMID 22234484; doi:10.1093/aje/kwr460",
   "link": "https://doi.org/10.1093/aje/kwr460",
   "areas": [
    "A"
+  ],
+  "unverified": false
+ },
+ {
+  "key": "Yesilkaya2015",
+  "text": "Yesilkaya S, Acikel C, Fidanci BE, et al. Development of a medication adherence scale for familial Mediterranean fever (MASIF) in a cohort of Turkish children. Clin Exp Rheumatol. 2015;33(6 Suppl 94):S156–S162. PMID 26393894.",
+  "link": "https://pubmed.ncbi.nlm.nih.gov/26393894/",
+  "areas": [
+   "G"
+  ],
+  "unverified": false
+ },
+ {
+  "key": "Yildirim2021",
+  "text": "Yıldırım DG, Bakkaloğlu SA, Soysal-Acar AŞ, Buyan N. Parental knowledge about familial Mediterranean fever: a cross-sectional study. Turk J Pediatr. 2021;63(6):1048–1055. doi:10.24953/turkjped.2021.06.013. https://turkjpediatr.org/article/view/393 (no PMID shown on the journal page).",
+  "link": "https://turkjpediatr.org/article/view/393",
+  "areas": [
+   "G"
   ],
   "unverified": false
  },
@@ -2400,6 +2669,15 @@
   "areas": [
    "D",
    "E"
+  ],
+  "unverified": false
+ },
+ {
+  "key": "Zangi2015",
+  "text": "Zangi HA, Ndosi M, Adams J, Andersen L, Bode C, Boström C, van Eijk-Hustings Y, Gossec L, Korandová J, Mendes G, Niedermann K, Primdahl J, Stoffer M, Voshaar M, van Tubergen A; EULAR. EULAR recommendations for patient education for people with inflammatory arthritis. Ann Rheum Dis. 2015;74(6):954–962. PMID 25735643. doi:10.1136/annrheumdis-2014-206807. Table 1 (two overarching principles, eight recommendations with evidence categories, strengths and agreement scores) read from the accepted manuscript at White Rose eprints: https://eprints.whiterose.ac.uk/id/eprint/83967/",
+  "link": "https://eprints.whiterose.ac.uk/id/eprint/83967/",
+  "areas": [
+   "G"
   ],
   "unverified": false
  },

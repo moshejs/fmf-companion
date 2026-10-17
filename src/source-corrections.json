@@ -125,5 +125,16 @@
  },
  "NCT04868968": {
   "note": "Recorded in the registry as COMPLETED, with an actual enrolment of 4 participants."
+ },
+ "Ozen2025": {
+  "verified": true,
+  "note": "Full typeset text read for the nursing research pass, so recommendation numbers, evidence levels and agreement figures quoted in this app come from the article itself rather than its abstract. Its two supplementary tables were not read."
+ },
+ "IlarisPIG": {
+  "verified": true,
+  "note": "Full label read on DailyMed for the nursing research pass."
+ },
+ "PRINTO2016G": {
+  "verified": true
  }
 }

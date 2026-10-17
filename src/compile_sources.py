@@ -10,7 +10,7 @@ import json, re, sys, pathlib
 
 AREAS = {"A": "Epidemiology, attacks & history", "B": "Genetics & diagnosis",
          "C": "Mechanism", "D": "Colchicine", "E": "Amyloidosis, treatment & living",
-         "F": "Research & cure"}
+         "F": "Research & cure", "G": "Nursing care"}
 rd = pathlib.Path(sys.argv[1])
 out = pathlib.Path(__file__).resolve().parent / "sources.json"
 line_re = re.compile(r"^\s*[-*]\s*(?:\*\*)?\[([A-Za-z0-9_\-]+)\](?:\*\*)?\s*[:\-–]?\s*(.+)$")
@@ -39,7 +39,7 @@ def clean(t):
     return t
 
 srcs, renames = {}, []
-for f in sorted(rd.glob("[A-F]-*.md")):
+for f in sorted(rd.glob("[A-G]-*.md")):
     area = f.name[0]
     body = f.read_text(encoding="utf-8")
     if "## Sources" not in body: continue
@@ -63,7 +63,7 @@ for f in sorted(rd.glob("[A-F]-*.md")):
         srcs[key] = rec
 
 # merge different keys that point at the same work
-MANUAL = {"Henes2022F": "Henes2022"}
+MANUAL = {"Henes2022F": "Henes2022", "IlarisPI": "IlarisPIG", "PRINTO2016": "PRINTO2016G"}
 alias = {}
 for drop, keep in MANUAL.items():
     if drop in srcs and keep in srcs:
