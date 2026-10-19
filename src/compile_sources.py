@@ -15,21 +15,39 @@ rd = pathlib.Path(sys.argv[1])
 out = pathlib.Path(__file__).resolve().parent / "sources.json"
 line_re = re.compile(r"^\s*[-*]\s*(?:\*\*)?\[([A-Za-z0-9_\-]+)\](?:\*\*)?\s*[:\-–]?\s*(.+)$")
 
+def _doi(text):
+    """A DOI may legitimately contain brackets, as Lancet and Elsevier ones do
+    (10.1016/S1474-4422(24)00038-3). Stopping at the first ')' truncates those to a
+    prefix that every paper from the same journal and year shares, which then looks
+    like a matching identifier. Take the whole run and trim only what cannot belong:
+    trailing punctuation, and a ')' with no '(' to close."""
+    m = re.search(r"(10\.\d{4,}/[^\s;,]+)", text, re.I)
+    if not m: return None
+    d = m.group(1).rstrip(".")
+    while d.endswith(")") and d.count("(") < d.count(")"): d = d[:-1]
+    return d.lower().rstrip(".")
+
 def ids(text):
     out = set()
     m = re.search(r"PMID[:\s]*(\d+)", text)
     if m: out.add("pmid" + m.group(1))
-    m = re.search(r"(10\.\d{4,}/[^\s;,)]+)", text, re.I)
-    if m: out.add("doi" + m.group(1).lower().rstrip("."))
+    d = _doi(text)
+    if d: out.add("doi" + d)
     m = re.search(r"\b(NCT\d{8})\b", text)
     if m and not out: out.add(m.group(1))
     parts = re.split(r"\.\s+", text)
     if len(parts) > 1: out.add("t" + re.sub(r"\W+", "", parts[1].lower())[:50])
     return out
 def same(a, b):
+    """Let the strongest identifier both entries carry decide. A PMID is unique to a
+    paper, so when both have one it settles the question either way; only fall back to
+    the DOI, and then to the title, when that is all there is."""
     ia, ib = ids(a), ids(b)
-    ha = {x for x in ia if x.startswith(("pmid", "doi"))}; hb = {x for x in ib if x.startswith(("pmid", "doi"))}
-    if ha and hb: return bool(ha & hb)
+    pa = {x for x in ia if x.startswith("pmid")}; pb = {x for x in ib if x.startswith("pmid")}
+    if pa and pb: return bool(pa & pb)
+    da = {x for x in ia if x.startswith("doi")}; db = {x for x in ib if x.startswith("doi")}
+    if da and db: return bool(da & db)
+    if (pa or da) and (pb or db): return bool((pa | da) & (pb | db))
     ta = [x for x in ia if x.startswith("t") and len(x) > 35]; tb = [x for x in ib if x.startswith("t") and len(x) > 35]
     return bool(ta and tb and ta[0] == tb[0])
 def ident(text): return ids(text)
