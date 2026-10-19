@@ -193,10 +193,13 @@ inits.nursing=()=>{
     isv.innerHTML=s;
     $('#nuInjNote').innerHTML='<div class="kicker">Subcutaneous sites</div><h4>Rotating them</h4><p>These are the sites the labels name. Anakinra\'s instructions list the outer upper arms, the abdomen except the 2-inch area around the navel, the front of the middle thighs and the upper outer buttocks, and tell the patient to choose a new site each time, which may reduce the risk of injection-site amyloid deposits. Skin that is bruised, red, scarred, hard, thickened or lumpy is avoided. No minimum distance from the last site is given. [[KineretPI]]</p><div class="hook"><b>Exam hook</b>Injection-site reactions differ sharply: 71% with anakinra in the rheumatoid arthritis trials, 48% with rilonacept in the CAPS placebo-controlled phase against 13% on placebo, and 10.1% with canakinumab in the TRAPS, HIDS/MKD and FMF study, all mild or moderate. [[KineretPI,ArcalystPI,IlarisPI]]</div><div class="pt"><b>In plain words</b>The injection goes in a different spot each time, so the skin in any one place gets a rest.</div>';
   }
+  /* with reduced motion the button steps one site at a time instead of looping */
+  if(RM)$('#nuInjPlay').textContent='Next site';
   $('#nuInjPlay').onclick=()=>{
+    if(RM){injI=(injI+1)%NU_INJ.length;drawInj(injI);return}
     if(injTimer){clearInterval(injTimer);injTimer=null;$('#nuInjPlay').textContent='Rotate through the sites';return}
     $('#nuInjPlay').textContent='Stop';
-    injTimer=setInterval(()=>{injI=(injI+1)%NU_INJ.length;drawInj(injI)},RM?400:1300);
+    injTimer=setInterval(()=>{injI=(injI+1)%NU_INJ.length;drawInj(injI)},1300);
   };
   const prevH=onHide.nursing;onHide.nursing=()=>{prevH&&prevH();if(injTimer){clearInterval(injTimer);injTimer=null;$('#nuInjPlay').textContent='Rotate through the sites'}};
   $('#nuBio').innerHTML=NU_BIO.map(b=>`<div class="nu-card"><span class="tag ${b.s.startsWith('FMF')?'good':'warn'}">${b.s}</span><h5>${b.n}</h5><ul>${b.b.map(x=>`<li>${x}</li>`).join('')}</ul><p class="stage-cap">${b.c}</p></div>`).join('');

@@ -76,6 +76,7 @@ function show(id,keepScroll){
   $$('.navbtn').forEach(b=>b.setAttribute('aria-current',b.dataset.go===id?'page':'false'));
   cur=id;
   if(inits[id]&&!inits[id].done){inits[id].done=true;inits[id]()}
+  guardLive($('#m-'+id)||document);
   if(onShow[id])onShow[id]();
   store.set('last',id);
   try{history.replaceState(null,'','#'+id)}catch(e){}
@@ -109,10 +110,27 @@ addEventListener('resize',()=>{clearTimeout(_rt);_rt=setTimeout(()=>{
 /* fit the viewBox to the mode: wide|narrow are "w h" pairs */
 function vb(svg,wide,narrow){const v=NARROW()?narrow:wide;svg.setAttribute('viewBox','0 0 '+v);svg.dataset.mode=NARROW()?'n':'w';return NARROW()}
 
+/* ---- live regions ----
+   Every frame of an animation rewrites its note panel, and a screen reader will
+   announce an aria-live region each time its contents are replaced, even with the
+   same text. Shadow innerHTML on those elements so an identical write is dropped:
+   the reader hears the note once per real change, not sixty times a second. */
+const _ihDesc=Object.getOwnPropertyDescriptor(Element.prototype,'innerHTML');
+function guardLive(root=document){
+  $$('[aria-live]',root).forEach(el=>{
+    if(el._lguard)return;el._lguard=true;
+    Object.defineProperty(el,'innerHTML',{configurable:true,
+      get(){return _ihDesc.get.call(this)},
+      set(v){if(v===this._lastHTML)return;this._lastHTML=v;_ihDesc.set.call(this,v)}});
+  });
+}
+
 /* the shared player: a range input + a play button drive draw(t) */
 function playWire(rg,pb,draw,dur,doneLabel='Replay',hideKey){
   let stopA=null;function stop(){if(stopA)stopA();stopA=null;pb.textContent='Play'}
   rg.addEventListener('input',()=>{stop();draw(+rg.value)});
+  rg.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pb.click()}});
+  if(!rg.getAttribute('aria-keyshortcuts'))rg.setAttribute('aria-keyshortcuts','Enter Space');
   pb.addEventListener('click',()=>{if(stopA){stop();return}let t0=+rg.value;const mx=+rg.max||1,mn=+rg.min||0;if(t0>=mx-(mx-mn)*.01)t0=mn;pb.textContent='Pause';
     stopA=animate((mx-t0)/(mx-mn)*dur,p=>{const t=t0+(mx-t0)*p;rg.value=t;draw(t)},()=>{stopA=null;pb.textContent=doneLabel})});
   if(hideKey){const prev=onHide[hideKey];onHide[hideKey]=()=>{prev&&prev();stop()}}

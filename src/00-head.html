@@ -37,13 +37,13 @@
 :root{
   --bg:#f5f0e6; --panel:#fffdf8; --panel-2:#efe8da; --ink:#1b2a2c; --muted:#5a6866; --line:#e0d7c5;
   --sea:#0d6e78; --sea-soft:#d5edef; --on-sea:#ffffff;
-  --terra:#c0492a; --terra-soft:#f9e0d4;
+  --terra:#af4226; --terra-soft:#f9e0d4;
   --crocus:#7652b3; --crocus-soft:#ece4f7;
-  --gold:#b07a08; --gold-soft:#f7ebcc;
-  --congo:#c93a4b; --apple:#5fa52f;
+  --gold:#8b6006; --gold-soft:#f7ebcc;
+  --congo:#bd3747; --apple:#437522;
   --cyto:#fdf0e2; --memb:#c58757; --nuc:#2c5872; --nuc-deep:#183445; --neut:#efe6f7; --field:#fbf8f1;
   --tub-a:#4f9bb0; --tub-b:#9cc9d4;
-  --good:#1d7f5c; --good-soft:#d8efe4; --warn:#9b6206; --warn-soft:#f7e8cf; --bad:#b9302c; --bad-soft:#f7dad8;
+  --good:#1b7756; --good-soft:#d8efe4; --warn:#935d06; --warn-soft:#f7e8cf; --bad:#b9302c; --bad-soft:#f7dad8;
   --display:"Fraunces",Georgia,"Times New Roman",serif;
   --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
@@ -83,6 +83,11 @@ i,em{font-style:italic}
 button{font:inherit;color:inherit}
 a{color:var(--sea)}
 :focus-visible{outline:2px solid var(--sea);outline-offset:2px;border-radius:6px}
+svg :focus-visible{outline:2px solid var(--sea);outline-offset:1px}
+.skip{position:absolute;left:-9999px;top:0;z-index:60;background:var(--sea);color:var(--on-sea);
+  padding:10px 16px;border-radius:0 0 10px 0;font-weight:700;text-decoration:none}
+.skip:focus{left:0}
+@media (forced-colors:active){ .btn,.navbtn,.opt,.nu-q{border:1px solid ButtonText} }
 h1,h2,h3,h4{text-wrap:balance}
 sup.c{font:600 10px var(--mono);color:var(--sea);cursor:pointer;margin-left:1px;white-space:nowrap}
 sup.c:hover{text-decoration:underline}
@@ -192,6 +197,8 @@ tr.hl td,tr.hl th{background:var(--terra-soft)}
 .card p,.card li{font-size:14.5px}
 .card ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
+#hiYears .tag{cursor:pointer;border:1px solid transparent;text-transform:none;letter-spacing:0;font:500 12.5px var(--body);text-align:left;max-width:100%;white-space:normal}
+#hiYears .tag:hover,#hiYears .tag:focus-visible{border-color:var(--sea)}
 .pager{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:18px;margin-top:10px}
 .pager button{background:none;border:0;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:2px;padding:6px 0;max-width:48%}
 .pager button.next{text-align:right;margin-left:auto}

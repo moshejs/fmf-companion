@@ -37,13 +37,13 @@
 :root{
   --bg:#f5f0e6; --panel:#fffdf8; --panel-2:#efe8da; --ink:#1b2a2c; --muted:#5a6866; --line:#e0d7c5;
   --sea:#0d6e78; --sea-soft:#d5edef; --on-sea:#ffffff;
-  --terra:#c0492a; --terra-soft:#f9e0d4;
+  --terra:#af4226; --terra-soft:#f9e0d4;
   --crocus:#7652b3; --crocus-soft:#ece4f7;
-  --gold:#b07a08; --gold-soft:#f7ebcc;
-  --congo:#c93a4b; --apple:#5fa52f;
+  --gold:#8b6006; --gold-soft:#f7ebcc;
+  --congo:#bd3747; --apple:#437522;
   --cyto:#fdf0e2; --memb:#c58757; --nuc:#2c5872; --nuc-deep:#183445; --neut:#efe6f7; --field:#fbf8f1;
   --tub-a:#4f9bb0; --tub-b:#9cc9d4;
-  --good:#1d7f5c; --good-soft:#d8efe4; --warn:#9b6206; --warn-soft:#f7e8cf; --bad:#b9302c; --bad-soft:#f7dad8;
+  --good:#1b7756; --good-soft:#d8efe4; --warn:#935d06; --warn-soft:#f7e8cf; --bad:#b9302c; --bad-soft:#f7dad8;
   --display:"Fraunces",Georgia,"Times New Roman",serif;
   --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
@@ -83,6 +83,11 @@ i,em{font-style:italic}
 button{font:inherit;color:inherit}
 a{color:var(--sea)}
 :focus-visible{outline:2px solid var(--sea);outline-offset:2px;border-radius:6px}
+svg :focus-visible{outline:2px solid var(--sea);outline-offset:1px}
+.skip{position:absolute;left:-9999px;top:0;z-index:60;background:var(--sea);color:var(--on-sea);
+  padding:10px 16px;border-radius:0 0 10px 0;font-weight:700;text-decoration:none}
+.skip:focus{left:0}
+@media (forced-colors:active){ .btn,.navbtn,.opt,.nu-q{border:1px solid ButtonText} }
 h1,h2,h3,h4{text-wrap:balance}
 sup.c{font:600 10px var(--mono);color:var(--sea);cursor:pointer;margin-left:1px;white-space:nowrap}
 sup.c:hover{text-decoration:underline}
@@ -192,6 +197,8 @@ tr.hl td,tr.hl th{background:var(--terra-soft)}
 .card p,.card li{font-size:14.5px}
 .card ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
+#hiYears .tag{cursor:pointer;border:1px solid transparent;text-transform:none;letter-spacing:0;font:500 12.5px var(--body);text-align:left;max-width:100%;white-space:normal}
+#hiYears .tag:hover,#hiYears .tag:focus-visible{border-color:var(--sea)}
 .pager{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:18px;margin-top:10px}
 .pager button{background:none;border:0;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:2px;padding:6px 0;max-width:48%}
 .pager button.next{text-align:right;margin-left:auto}
@@ -282,6 +289,7 @@ tr.hl td,tr.hl th{background:var(--terra-soft)}
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to the module</a>
 <div class="app">
 <nav class="side" id="side" aria-label="Modules">
   <button class="brand" data-go="home" aria-label="FMF Companion home">
@@ -346,6 +354,7 @@ tr.hl td,tr.hl th{background:var(--terra-soft)}
       <p class="eyebrow">Familial Mediterranean Fever · animated companion</p>
       <h1>FMF Companion</h1>
       <p class="lede">Familial Mediterranean fever is the most common inherited autoinflammatory disease. Here it is in moving pictures: watch a single protein misfire, follow an attack hour by hour, see why colchicine takes months to show its full effect, and look honestly at what a cure would take.</p>
+      <p class="stage-cap" style="margin-top:2px">Every animation can be driven from the keyboard: Tab to its timeline, then arrow keys to scrub and Enter to play or pause.</p>
       <div class="ctrls" style="margin-top:6px">
         <button class="btn primary" data-go="what">Start at the beginning</button>
         <button class="btn" data-go="colmonths">Colchicine over months</button>
@@ -1242,6 +1251,10 @@ tr.hl td,tr.hl th{background:var(--terra-soft)}
 
   <h3 class="sub">Names it has carried</h3>
   <div class="prose"><p>Before 1958 the same illness went by many names, often after the doctors who described it or the people who had it. Click a dated name to jump the timeline. <sup class="c" data-ref="Adwan2015" title="Source 1">1</sup></p></div>
+  <h3 class="sub">Every milestone</h3>
+  <p class="prose">The dots on the timeline are also listed here, so they can be reached with the keyboard and read in order.</p>
+  <div class="chips" id="hiYears" role="group" aria-label="Jump to a milestone"></div>
+  <h3 class="sub">What it was called</h3>
   <div class="chips hi-chips" id="hiChips"></div>
 
   <div class="split2">
@@ -1378,6 +1391,7 @@ function show(id,keepScroll){
   $$('.navbtn').forEach(b=>b.setAttribute('aria-current',b.dataset.go===id?'page':'false'));
   cur=id;
   if(inits[id]&&!inits[id].done){inits[id].done=true;inits[id]()}
+  guardLive($('#m-'+id)||document);
   if(onShow[id])onShow[id]();
   store.set('last',id);
   try{history.replaceState(null,'','#'+id)}catch(e){}
@@ -1411,10 +1425,27 @@ addEventListener('resize',()=>{clearTimeout(_rt);_rt=setTimeout(()=>{
 /* fit the viewBox to the mode: wide|narrow are "w h" pairs */
 function vb(svg,wide,narrow){const v=NARROW()?narrow:wide;svg.setAttribute('viewBox','0 0 '+v);svg.dataset.mode=NARROW()?'n':'w';return NARROW()}
 
+/* ---- live regions ----
+   Every frame of an animation rewrites its note panel, and a screen reader will
+   announce an aria-live region each time its contents are replaced, even with the
+   same text. Shadow innerHTML on those elements so an identical write is dropped:
+   the reader hears the note once per real change, not sixty times a second. */
+const _ihDesc=Object.getOwnPropertyDescriptor(Element.prototype,'innerHTML');
+function guardLive(root=document){
+  $$('[aria-live]',root).forEach(el=>{
+    if(el._lguard)return;el._lguard=true;
+    Object.defineProperty(el,'innerHTML',{configurable:true,
+      get(){return _ihDesc.get.call(this)},
+      set(v){if(v===this._lastHTML)return;this._lastHTML=v;_ihDesc.set.call(this,v)}});
+  });
+}
+
 /* the shared player: a range input + a play button drive draw(t) */
 function playWire(rg,pb,draw,dur,doneLabel='Replay',hideKey){
   let stopA=null;function stop(){if(stopA)stopA();stopA=null;pb.textContent='Play'}
   rg.addEventListener('input',()=>{stop();draw(+rg.value)});
+  rg.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pb.click()}});
+  if(!rg.getAttribute('aria-keyshortcuts'))rg.setAttribute('aria-keyshortcuts','Enter Space');
   pb.addEventListener('click',()=>{if(stopA){stop();return}let t0=+rg.value;const mx=+rg.max||1,mn=+rg.min||0;if(t0>=mx-(mx-mn)*.01)t0=mn;pb.textContent='Pause';
     stopA=animate((mx-t0)/(mx-mn)*dur,p=>{const t=t0+(mx-t0)*p;rg.value=t;draw(t)},()=>{stopA=null;pb.textContent=doneLabel})});
   if(hideKey){const prev=onHide[hideKey];onHide[hideKey]=()=>{prev&&prev();stop()}}
@@ -4273,10 +4304,13 @@ inits.nursing=()=>{
     isv.innerHTML=s;
     $('#nuInjNote').innerHTML='<div class="kicker">Subcutaneous sites</div><h4>Rotating them</h4><p>These are the sites the labels name. Anakinra\'s instructions list the outer upper arms, the abdomen except the 2-inch area around the navel, the front of the middle thighs and the upper outer buttocks, and tell the patient to choose a new site each time, which may reduce the risk of injection-site amyloid deposits. Skin that is bruised, red, scarred, hard, thickened or lumpy is avoided. No minimum distance from the last site is given. <sup class="c" data-ref="KineretPI" title="Source 127">127</sup></p><div class="hook"><b>Exam hook</b>Injection-site reactions differ sharply: 71% with anakinra in the rheumatoid arthritis trials, 48% with rilonacept in the CAPS placebo-controlled phase against 13% on placebo, and 10.1% with canakinumab in the TRAPS, HIDS/MKD and FMF study, all mild or moderate. <sup class="c" data-ref="KineretPI,ArcalystPI,IlarisPIG" title="Source 5,105,127">5,105,127</sup></div><div class="pt"><b>In plain words</b>The injection goes in a different spot each time, so the skin in any one place gets a rest.</div>';
   }
+  /* with reduced motion the button steps one site at a time instead of looping */
+  if(RM)$('#nuInjPlay').textContent='Next site';
   $('#nuInjPlay').onclick=()=>{
+    if(RM){injI=(injI+1)%NU_INJ.length;drawInj(injI);return}
     if(injTimer){clearInterval(injTimer);injTimer=null;$('#nuInjPlay').textContent='Rotate through the sites';return}
     $('#nuInjPlay').textContent='Stop';
-    injTimer=setInterval(()=>{injI=(injI+1)%NU_INJ.length;drawInj(injI)},RM?400:1300);
+    injTimer=setInterval(()=>{injI=(injI+1)%NU_INJ.length;drawInj(injI)},1300);
   };
   const prevH=onHide.nursing;onHide.nursing=()=>{prevH&&prevH();if(injTimer){clearInterval(injTimer);injTimer=null;$('#nuInjPlay').textContent='Rotate through the sites'}};
   $('#nuBio').innerHTML=NU_BIO.map(b=>`<div class="nu-card"><span class="tag ${b.s.startsWith('FMF')?'good':'warn'}">${b.s}</span><h5>${b.n}</h5><ul>${b.b.map(x=>`<li>${x}</li>`).join('')}</ul><p class="stage-cap">${b.c}</p></div>`).join('');
@@ -4951,6 +4985,8 @@ inits.history=()=>{
   const setSt=stepWire($('#hiSteps'),steps,rg,draw,stop);
   const jump=y=>{stop();const t=clamp(tOfY(y)+.002);rg.value=t;draw(t)};
   svg.addEventListener('click',e=>{const d=e.target.closest('[data-hy]');if(d)jump(+d.dataset.hy)});
+  $('#hiYears').innerHTML=HI_EV.map(e=>`<button class="tag sea" data-hy2="${e.y}"><b style="font-weight:700">${Math.floor(e.y)}</b>&nbsp;${e.h.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</button>`).join('');
+  $('#hiYears').addEventListener('click',ev=>{const b=ev.target.closest('[data-hy2]');if(b){jump(+b.dataset.hy2);$('#hiSvg').scrollIntoView({block:'nearest',behavior:RM?'auto':'smooth'})}});
   $('#hiChips').innerHTML=HI_NAMES.map(([n,y])=>y?`<button class="tag sea" data-hn="${y}">${n}<small>${Math.floor(y)}</small></button>`:`<span class="tag">${n}</span>`).join('');
   $('#hiChips').addEventListener('click',e=>{const b=e.target.closest('[data-hn]');if(b){jump(+b.dataset.hn);$('#hiSvg').scrollIntoView({block:'nearest',behavior:RM?'auto':'smooth'})}});
   $('#hiCards').innerHTML=`
