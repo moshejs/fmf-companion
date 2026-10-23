@@ -1,4 +1,4 @@
-> **This project has moved** to [moshejs/medical-companions](https://github.com/moshejs/medical-companions), and the site to https://moshejs.github.io/medical-companions/fmf/. The pages here now forward there; the history below is kept for reference.
+> **This project has moved** to [moshejs/medical-companions](https://github.com/moshejs/medical-companions), and the site to https://www.medcompanions.org/fmf/. The pages here now forward there; the history below is kept for reference.
 
 # FMF Companion
 
